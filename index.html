@@ -4,9 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SlavCoin (SLAV) — Meme Coin on BNB Chain</title>
-  <meta name="description" content="SlavCoin (SLAV) — community-driven meme coin on BNB Chain. Buy on PancakeSwap, add token to MetaMask, read tokenomics. Multilingual site." />
+  <meta name="description" content="SlavCoin (SLAV) — community-driven meme coin on BNB Chain. Buy on PancakeSwap, add token to MetaMask, see tokenomics, roadmap & FAQ. Multilingual: UA, EN, FR, PT, ES." />
   <meta property="og:title" content="SlavCoin (SLAV) — Meme Coin on BNB Chain" />
-  <meta property="og:description" content="Buy SLAV on PancakeSwap. Connect wallet, view tokenomics. Multilingual: EN / UA / PL / RU." />
+  <meta property="og:description" content="Buy SLAV on PancakeSwap. Connect wallet, add token to MetaMask, view tokenomics & roadmap." />
+  <meta property="og:type" content="website" />
   <meta property="og:image" content="/logo.png" />
   <link rel="icon" type="image/png" href="/logo.png" />
   <meta name="theme-color" content="#111827" />
@@ -18,187 +19,462 @@
       theme: {
         extend: {
           colors: {
-            slav: {
-              50:'#f7f9ff',100:'#ebf2ff',200:'#cfe1ff',300:'#a6c7ff',
-              400:'#7daeff',500:'#5e96ff',600:'#3876f6',
-              700:'#2e5fd1',800:'#254ea9',900:'#1e428a'
-            }
+            slav: {50:'#f7f9ff',100:'#ebf2ff',200:'#cfe1ff',300:'#a6c7ff',400:'#7daeff',500:'#5e96ff',600:'#3876f6',700:'#2e5fd1',800:'#254ea9',900:'#1e428a'}
           }
         }
       }
     }
   </script>
 
-  <!-- Ethers.js -->
+  <!-- Ethers.js (for wallet & balances if needed) -->
   <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.min.js"></script>
 
   <style>
-    .glass{backdrop-filter:saturate(180%) blur(10px);background:rgba(17,24,39,.6)}
-    .btn{ display:inline-flex; align-items:center; gap:.5rem; padding:.5rem 1rem; border-radius:.75rem; font-weight:500; transition:.15s transform; box-shadow:0 1px 1px rgba(0,0,0,.1) }
-    .btn:active{ transform:scale(.98) }
-    .btn-primary{ background:#0ea5e9; color:#fff }
-    .btn-primary:hover{ background:#0284c7 }
-    .btn-secondary{ background:#0f172a; color:#e5e7eb }
-    .btn-secondary:hover{ background:#111827 }
-    .btn-outline{ border:1px solid #334155; color:#e5e7eb }
-    .btn-outline:hover{ border-color:#94a3b8 }
+    .glass{backdrop-filter:saturate(180%) blur(10px); background:rgba(17,24,39,.55)}
+    .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.5rem 1rem;border-radius:.75rem;font-weight:600;transition:.15s transform;box-shadow:0 1px 1px rgba(0,0,0,.1)}
+    .btn:active{transform:scale(.98)}
+    .btn-primary{background:#0ea5e9;color:#fff}
+    .btn-primary:hover{background:#0284c7}
+    .btn-secondary{background:#0f172a;color:#e5e7eb}
+    .btn-secondary:hover{background:#111827}
+    .btn-outline{border:1px solid #334155;color:#e5e7eb}
+    .btn-outline:hover{border-color:#94a3b8}
+    .menu-card{box-shadow:0 10px 30px rgba(0,0,0,.35)}
+    .faq-item summary{cursor:pointer}
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 selection:bg-sky-500/30">
 
-  <!-- HEADER -->
-  <header class="sticky top-0 z-40 bg-slate-950/80 backdrop-blur border-b border-slate-800">
+  <!-- ============ HEADER ============ -->
+  <header class="sticky top-0 z-40 glass border-b border-slate-800/70">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <!-- Лого ліворуч -->
       <a href="/" class="flex items-center gap-3">
         <img src="/logo.png" alt="SLAV logo" class="w-9 h-9 rounded-xl ring-1 ring-slate-700 object-cover">
-        <div>
-          <div class="font-bold text-lg">SlavCoin <span class="text-slate-400">(SLAV)</span></div>
-          <div id="shortAddr" class="text-xs text-slate-400"></div>
-        </div>
+        <span class="sr-only">SlavCoin (SLAV)</span>
       </a>
 
-      <nav class="hidden md:flex gap-6 text-sm text-slate-300">
-        <a href="#about" class="hover:text-white">About</a>
-        <a href="#tokenomics" class="hover:text-white">Tokenomics</a>
-        <a href="#how" class="hover:text-white">How to buy</a>
-      </nav>
-
-      <div class="flex items-center gap-2">
-        <a href="https://x.com/memecoinslav" target="_blank" class="btn btn-outline">Twitter</a>
-        <a href="https://www.tiktok.com/@slavcoin" target="_blank" class="btn btn-outline">TikTok</a>
-        <a href="https://www.instagram.com/memecoinslav" target="_blank" class="btn btn-outline">Instagram</a>
-        <button id="connectBtn" class="btn btn-primary">Connect wallet</button>
+      <!-- Кнопка меню праворуч -->
+      <div class="relative">
+        <button id="menuBtn" class="btn btn-secondary" aria-haspopup="true" aria-expanded="false">
+          Menu
+        </button>
+        <!-- Спливаюче меню -->
+        <div id="menuCard" class="hidden absolute right-0 mt-2 w-64 rounded-xl border border-slate-800 bg-slate-900/95 menu-card">
+          <div class="p-3 border-b border-slate-800">
+            <div class="text-xs text-slate-400 mb-1" data-i18n="menu.socials">Socials</div>
+            <div class="grid grid-cols-1 gap-2">
+              <a href="https://x.com/memecoinslav" target="_blank" rel="noopener noreferrer" class="btn btn-outline justify-center">X (Twitter)</a>
+              <a href="https://www.tiktok.com/@slavcoin" target="_blank" rel="noopener noreferrer" class="btn btn-outline justify-center">TikTok</a>
+              <!-- Instagram як окремий пункт у спливаючому меню -->
+              <a href="https://www.instagram.com/memecoinslav" target="_blank" rel="noopener noreferrer" class="btn btn-outline justify-center">Instagram</a>
+            </div>
+          </div>
+          <div class="p-3 border-b border-slate-800">
+            <div class="text-xs text-slate-400 mb-1" data-i18n="menu.nav">Navigation</div>
+            <div class="grid grid-cols-1 gap-2 text-sm">
+              <a href="#about" class="btn btn-secondary justify-center" data-i18n="nav.about">About</a>
+              <a href="#tokenomics" class="btn btn-secondary justify-center" data-i18n="nav.tokenomics">Tokenomics</a>
+              <a href="#how" class="btn btn-secondary justify-center" data-i18n="nav.how">How to buy</a>
+              <a href="#roadmap" class="btn btn-secondary justify-center" data-i18n="nav.roadmap">Roadmap</a>
+              <a href="#faq" class="btn btn-secondary justify-center" data-i18n="nav.faq">FAQ</a>
+            </div>
+          </div>
+          <div class="p-3">
+            <div class="text-xs text-slate-400 mb-1" data-i18n="menu.lang">Language</div>
+            <select id="lang" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm">
+              <option value="en">English</option>
+              <option value="ua">Українська</option>
+              <option value="fr">Français</option>
+              <option value="pt">Português</option>
+              <option value="es">Español</option>
+            </select>
+          </div>
+        </div>
       </div>
     </div>
   </header>
 
-  <!-- HERO -->
+  <!-- ============ HERO ============ -->
   <main class="max-w-6xl mx-auto px-4">
-    <section class="py-12 md:py-16 grid md:grid-cols-2 gap-8 items-center">
+    <section class="py-10 md:py-14 grid md:grid-cols-2 gap-8 items-center">
       <div>
-        <h1 class="text-4xl md:text-5xl font-extrabold">SlavCoin <span class="text-sky-400">(SLAV)</span></h1>
-        <p class="mt-4 text-slate-300 text-lg">The unstoppable Slav-energy meme coin on BNB Chain. Community first. Zero fluff.</p>
-        <div class="mt-6 flex gap-3 flex-wrap">
-          <a id="buyLink" target="_blank" class="btn btn-primary">Buy on PancakeSwap</a>
-          <button id="addTokenBtn" class="btn btn-secondary">Add SLAV to MetaMask</button>
-          <button id="copyBtn" class="btn btn-outline">Copy token</button>
+        <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">
+          SlavCoin <span class="text-sky-400">(SLAV)</span>
+        </h1>
+        <p class="mt-4 text-slate-300 text-lg" data-i18n="hero.lead">
+          The unstoppable Slav-energy meme coin on BNB Chain. Community first. Zero fluff.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a id="buyLink" target="_blank" rel="noopener noreferrer" class="btn btn-primary" data-i18n="cta.buy">Buy on PancakeSwap</a>
+          <a id="liqLink" target="_blank" rel="noopener noreferrer" class="btn btn-outline" data-i18n="cta.addLiq">Add Liquidity</a>
+          <button id="addTokenBtn" class="btn btn-secondary" data-i18n="cta.add">Add SLAV to MetaMask</button>
+          <button id="copyBtn" class="btn btn-outline" data-i18n="cta.copy">Copy token</button>
+        </div>
+
+        <!-- Wallet box -->
+        <div id="walletBox" class="mt-6 hidden rounded-2xl border border-slate-800 p-4 bg-slate-900/40">
+          <div class="text-sm text-slate-400" data-i18n="wallet.status.disconnected">Wallet: Not connected</div>
+          <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div>
+              <div class="text-xs text-slate-400" data-i18n="wallet.addr">Your address</div>
+              <div id="addr" class="font-mono break-all"></div>
+            </div>
+            <div>
+              <div class="text-xs text-slate-400" data-i18n="wallet.balance">SLAV balance</div>
+              <div id="balance" class="font-mono">–</div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="rounded-3xl border border-slate-800 p-6 bg-slate-900/30">
-        <h3 class="font-semibold text-slate-200 mb-2">Quick links</h3>
+      <!-- Quick links card -->
+      <div class="rounded-3xl border border-slate-800 p-6 bg-gradient-to-br from-slate-900 to-slate-900/30">
+        <h3 class="font-semibold text-slate-200 mb-2" data-i18n="box.quick">Quick links</h3>
         <ul class="space-y-2 text-sm">
-          <li><a id="scanLink" target="_blank" class="text-sky-400 hover:underline">BscScan</a></li>
-          <li><a id="liqLink" target="_blank" class="text-sky-400 hover:underline">Add Liquidity</a></li>
-          <li><a id="swapLink" target="_blank" class="text-sky-400 hover:underline">Open Swap</a></li>
+          <li><a id="scanLink" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:underline">BscScan</a></li>
+          <li><a id="swapLink" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:underline" data-i18n="links.swap">Open Swap</a></li>
         </ul>
-        <div class="mt-4 text-xs text-slate-400">Contract: <span id="fullAddr" class="font-mono"></span></div>
+        <div class="mt-4 text-xs text-slate-400">
+          <span data-i18n="box.contract">Contract</span>:
+          <span id="fullAddr" class="font-mono"></span>
+        </div>
       </div>
     </section>
 
-    <!-- ABOUT -->
+    <!-- ============ ABOUT ============ -->
     <section id="about" class="py-10 border-t border-slate-800">
-      <h2 class="text-2xl font-bold mb-3">What is SlavCoin?</h2>
-      <p class="text-slate-300">SLAV is a community-driven meme coin built for fun and utility. Zero taxes, renounced vibes. Trade it on PancakeSwap and join the movement.</p>
+      <h2 class="text-2xl font-bold mb-3" data-i18n="about.title">What is SlavCoin?</h2>
+      <p class="text-slate-300" data-i18n="about.text">
+        SLAV is a community-driven meme coin built for fun and utility on BNB Smart Chain. Zero taxes, transparent liquidity, open community. Swap on PancakeSwap and join the movement.
+      </p>
     </section>
 
-    <!-- TOKENOMICS -->
+    <!-- ============ TOKENOMICS ============ -->
     <section id="tokenomics" class="py-10 border-t border-slate-800">
-      <h2 class="text-2xl font-bold mb-6">Tokenomics</h2>
+      <h2 class="text-2xl font-bold mb-6" data-i18n="tok.title">Tokenomics</h2>
       <div class="grid md:grid-cols-3 gap-4">
         <div class="rounded-2xl border border-slate-800 p-5">
-          <div class="text-slate-400 text-sm">Total Supply</div>
-          <div class="text-2xl font-bold">550,000,000 SLAV</div>
+          <div class="text-slate-400 text-sm" data-i18n="tok.supply">Total Supply</div>
+          <div class="text-2xl font-bold">550,000,000 <span class="text-slate-400">SLAV</span></div>
         </div>
         <div class="rounded-2xl border border-slate-800 p-5">
-          <div class="text-slate-400 text-sm">Chain</div>
+          <div class="text-slate-400 text-sm" data-i18n="tok.chain">Chain</div>
           <div class="text-2xl font-bold">BNB Smart Chain (BEP-20)</div>
         </div>
         <div class="rounded-2xl border border-slate-800 p-5">
-          <div class="text-slate-400 text-sm">Buy/Sell Tax</div>
-          <div class="text-2xl font-bold">0% / 0%</div>
+          <div class="text-slate-400 text-sm" data-i18n="tok.tax">Buy/Sell Tax</div>
+          <div class="text-2xl font-bold" data-i18n="tok.zero">0% / 0%</div>
+        </div>
+      </div>
+      <p class="text-xs text-slate-500 mt-4" data-i18n="tok.note">
+        NOTE: Wallet price may show $0 until aggregators index enough trading data.
+      </p>
+    </section>
+
+    <!-- ============ HOW TO BUY ============ -->
+    <section id="how" class="py-10 border-t border-slate-800">
+      <h2 class="text-2xl font-bold mb-4" data-i18n="how.title">How to buy</h2>
+      <ol class="list-decimal pl-6 space-y-2 text-slate-300">
+        <li data-i18n="how.s1">Install MetaMask and create a wallet.</li>
+        <li data-i18n="how.s2">Switch to BNB Smart Chain.</li>
+        <li data-i18n="how.s3">Top up a little BNB for gas.</li>
+        <li data-i18n="how.s4">Open PancakeSwap, import SLAV and swap BNB → SLAV.</li>
+        <li data-i18n="how.s5">Click “Add SLAV to MetaMask” to see your balance.</li>
+      </ol>
+    </section>
+
+    <!-- ============ ROADMAP ============ -->
+    <section id="roadmap" class="py-10 border-t border-slate-800">
+      <h2 class="text-2xl font-bold mb-4" data-i18n="road.title">Roadmap</h2>
+      <div class="grid md:grid-cols-3 gap-4 text-slate-300">
+        <div class="rounded-2xl border border-slate-800 p-5">
+          <div class="text-slate-400 text-sm" data-i18n="road.q1">Phase 1 — Launch</div>
+          <ul class="list-disc pl-5">
+            <li data-i18n="road.q1a">Token launch on BSC</li>
+            <li data-i18n="road.q1b">Initial liquidity</li>
+            <li data-i18n="road.q1c">Website + socials</li>
+          </ul>
+        </div>
+        <div class="rounded-2xl border border-slate-800 p-5">
+          <div class="text-slate-400 text-sm" data-i18n="road.q2">Phase 2 — Growth</div>
+          <ul class="list-disc pl-5">
+            <li data-i18n="road.q2a">Community campaigns & memes</li>
+            <li data-i18n="road.q2b">DEX tracking & token logo</li>
+            <li data-i18n="road.q2c">Partnerships</li>
+          </ul>
+        </div>
+        <div class="rounded-2xl border border-slate-800 p-5">
+          <div class="text-slate-400 text-sm" data-i18n="road.q3">Phase 3 — Utility</div>
+          <ul class="list-disc pl-5">
+            <li data-i18n="road.q3a">Staking/utility exploration</li>
+            <li data-i18n="road.q3b">More listings</li>
+            <li data-i18n="road.q3c">Merch & events</li>
+          </ul>
         </div>
       </div>
     </section>
 
-    <!-- HOW TO BUY -->
-    <section id="how" class="py-10 border-t border-slate-800">
-      <h2 class="text-2xl font-bold mb-4">How to buy</h2>
-      <ol class="list-decimal pl-6 space-y-2 text-slate-300">
-        <li>Install MetaMask and create a wallet.</li>
-        <li>Switch to BNB Smart Chain.</li>
-        <li>Top up some BNB for gas fees.</li>
-        <li>Click “Buy on PancakeSwap”, import SLAV and swap BNB → SLAV.</li>
-        <li>Click “Add SLAV to MetaMask” to see your balance.</li>
-      </ol>
+    <!-- ============ FAQ ============ -->
+    <section id="faq" class="py-10 border-t border-slate-800">
+      <h2 class="text-2xl font-bold mb-4" data-i18n="faq.title">FAQ</h2>
+      <div class="space-y-3">
+        <details class="bg-slate-900/40 border border-slate-800 rounded-xl p-4 faq-item">
+          <summary class="font-semibold" data-i18n="faq.q1">Is there any tax?</summary>
+          <p class="mt-2 text-slate-300" data-i18n="faq.a1">No, buy/sell tax is 0%.</p>
+        </details>
+        <details class="bg-slate-900/40 border border-slate-800 rounded-xl p-4 faq-item">
+          <summary class="font-semibold" data-i18n="faq.q2">Why price may show $0 in wallets?</summary>
+          <p class="mt-2 text-slate-300" data-i18n="faq.a2">Aggregators need some trading history before showing price.</p>
+        </details>
+        <details class="bg-slate-900/40 border border-slate-800 rounded-xl p-4 faq-item">
+          <summary class="font-semibold" data-i18n="faq.q3">Where can I trade?</summary>
+          <p class="mt-2 text-slate-300" data-i18n="faq.a3">On PancakeSwap (links above).</p>
+        </details>
+      </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="py-10 border-t border-slate-800 text-sm text-slate-400 flex flex-col md:flex-row justify-between gap-4">
-      <div>© <span id="year"></span> SLAV — Community project. No promises, just memes.</div>
-      <div class="flex gap-3">
-        <a id="bscBtn" target="_blank" class="btn btn-outline">BscScan</a>
-        <a href="https://x.com/memecoinslav" target="_blank" class="btn btn-outline">Twitter</a>
-        <a href="https://www.tiktok.com/@slavcoin" target="_blank" class="btn btn-outline">TikTok</a>
-        <a href="https://www.instagram.com/memecoinslav" target="_blank" class="btn btn-outline">Instagram</a>
+    <!-- ============ FOOTER ============ -->
+    <footer class="py-10 border-t border-slate-800 text-sm text-slate-400">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div>© <span id="year"></span> SLAV. <span data-i18n="foot.community">Community project. No promises, just memes.</span></div>
+        <div class="flex gap-3">
+          <a id="bscBtn" target="_blank" rel="noopener noreferrer" class="btn btn-outline">BscScan</a>
+          <a href="https://x.com/memecoinslav" target="_blank" rel="noopener noreferrer" class="btn btn-outline">X (Twitter)</a>
+          <a href="https://www.tiktok.com/@slavcoin" target="_blank" rel="noopener noreferrer" class="btn btn-outline">TikTok</a>
+          <a href="https://www.instagram.com/memecoinslav" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Instagram</a>
+        </div>
       </div>
     </footer>
   </main>
 
   <script>
+    // ====== CONFIG ======
     const CONTRACT_ADDRESS = '0x7f0a062c4c9611c487461497f6ec9181518844ad';
     const TOKEN_SYMBOL = 'SLAV';
     const TOKEN_DECIMALS = 18;
-    const TOKEN_IMAGE = '/logo.png';
+    const TOKEN_IMAGE = '/logo.png'; // place logo.png in repo root
 
-    const pancakeSwap = `https://pancakeswap.finance/swap?outputCurrency=${CONTRACT_ADDRESS}&chain=bsc`;
-    const addLiquidity = `https://pancakeswap.finance/add/BNB/${CONTRACT_ADDRESS}?chain=bsc`;
-    const bscScan = `https://bscscan.com/token/${CONTRACT_ADDRESS}`;
+    const PANCAKE_SWAP = `https://pancakeswap.finance/swap?outputCurrency=${CONTRACT_ADDRESS}&chain=bsc`;
+    const ADD_LIQ      = `https://pancakeswap.finance/add/BNB/${CONTRACT_ADDRESS}?chain=bsc`;
+    const BSCSCAN      = `https://bscscan.com/token/${CONTRACT_ADDRESS}`;
 
-    // UI
+    // ====== I18N ======
+    const I18N = {
+      en: {
+        'menu.socials':'Socials','menu.nav':'Navigation','menu.lang':'Language',
+        'nav.about':'About','nav.tokenomics':'Tokenomics','nav.how':'How to buy','nav.roadmap':'Roadmap','nav.faq':'FAQ',
+        'hero.lead':'The unstoppable Slav-energy meme coin on BNB Chain. Community first. Zero fluff.',
+        'cta.buy':'Buy on PancakeSwap','cta.addLiq':'Add Liquidity','cta.add':'Add SLAV to MetaMask','cta.copy':'Copy token',
+        'wallet.status.disconnected':'Wallet: Not connected','wallet.addr':'Your address','wallet.balance':'SLAV balance',
+        'box.quick':'Quick links','links.swap':'Open Swap','box.contract':'Contract',
+        'about.title':'What is SlavCoin?','about.text':'SLAV is a community-driven meme coin built for fun and utility on BNB Smart Chain. Zero taxes, transparent liquidity, open community. Swap on PancakeSwap and join the movement.',
+        'tok.title':'Tokenomics','tok.supply':'Total Supply','tok.chain':'Chain','tok.tax':'Buy/Sell Tax','tok.zero':'0% / 0%','tok.note':'NOTE: Wallet price may show $0 until aggregators index enough trading data.',
+        'how.title':'How to buy','how.s1':'Install MetaMask and create a wallet.','how.s2':'Switch to BNB Smart Chain.','how.s3':'Top up a little BNB for gas.','how.s4':'Open PancakeSwap, import SLAV and swap BNB → SLAV.','how.s5':'Click “Add SLAV to MetaMask” to see your balance.',
+        'road.title':'Roadmap','road.q1':'Phase 1 — Launch','road.q1a':'Token launch on BSC','road.q1b':'Initial liquidity','road.q1c':'Website + socials',
+        'road.q2':'Phase 2 — Growth','road.q2a':'Community campaigns & memes','road.q2b':'DEX tracking & token logo','road.q2c':'Partnerships',
+        'road.q3':'Phase 3 — Utility','road.q3a':'Staking/utility exploration','road.q3b':'More listings','road.q3c':'Merch & events',
+        'faq.title':'FAQ','faq.q1':'Is there any tax?','faq.a1':'No, buy/sell tax is 0%.','faq.q2':'Why price may show $0 in wallets?','faq.a2':'Aggregators need some trading history before showing price.','faq.q3':'Where can I trade?','faq.a3':'On PancakeSwap (links above).',
+        'foot.community':'Community project. No promises, just memes.'
+      },
+      ua: {
+        'menu.socials':'Соцмережі','menu.nav':'Навігація','menu.lang':'Мова',
+        'nav.about':'Про токен','nav.tokenomics':'Токеноміка','nav.how':'Як купити','nav.roadmap':'Дорожня карта','nav.faq':'FAQ',
+        'hero.lead':'Мем-коїн з енергією слави на BNB Chain. Спільнота перш за все.',
+        'cta.buy':'Купити на PancakeSwap','cta.addLiq':'Додати ліквідність','cta.add':'Додати SLAV у MetaMask','cta.copy':'Скопіювати адресу',
+        'wallet.status.disconnected':'Гаманець: не підключено','wallet.addr':'Ваша адреса','wallet.balance':'Баланс SLAV',
+        'box.quick':'Швидкі посилання','links.swap':'Відкрити Swap','box.contract':'Контракт',
+        'about.title':'Що таке SlavCoin?','about.text':'SLAV — мем-коїн спільноти для фану та корисності в мережі BNB. Без податків, прозора ліквідність, відкрита спільнота. Міняй на PancakeSwap і приєднуйся.',
+        'tok.title':'Токеноміка','tok.supply':'Загальна емісія','tok.chain':'Мережа','tok.tax':'Податок купівля/продаж','tok.zero':'0% / 0%','tok.note':'Примітка: поки агрегатори не зберуть торги, гаманці можуть показувати $0.',
+        'how.title':'Як купити','how.s1':'Встановіть MetaMask і створіть гаманець.','how.s2':'Перейдіть на BNB Smart Chain.','how.s3':'Поповніть трохи BNB для газу.','how.s4':'Відкрийте PancakeSwap, імпортуйте SLAV і обміняйте BNB → SLAV.','how.s5':'Натисніть “Додати SLAV у MetaMask”, щоб бачити баланс.',
+        'road.title':'Дорожня карта','road.q1':'Фаза 1 — Запуск','road.q1a':'Старт токена на BSC','road.q1b':'Початкова ліквідність','road.q1c':'Сайт + соцмережі',
+        'road.q2':'Фаза 2 — Зростання','road.q2a':'Кампанії та меми','road.q2b':'Трекінг на DEX та лого токена','road.q2c':'Партнерства',
+        'road.q3':'Фаза 3 — Юзкейси','road.q3a':'Дослідження стейкінгу/утиліті','road.q3b':'Нові лістинги','road.q3c':'Мерч і події',
+        'faq.title':'FAQ','faq.q1':'Чи є податок?','faq.a1':'Ні, 0% купівля/продаж.','faq.q2':'Чому ціна може бути $0 у гаманцях?','faq.a2':'Агрегаторам потрібна історія торгів.','faq.q3':'Де торгувати?','faq.a3':'На PancakeSwap (посилання вище).',
+        'foot.community':'Проєкт спільноти. Жодних обіцянок — лише меми.'
+      },
+      fr: {
+        'menu.socials':'Réseaux','menu.nav':'Navigation','menu.lang':'Langue',
+        'nav.about':'À propos','nav.tokenomics':'Tokenomics','nav.how':'Comment acheter','nav.roadmap':'Feuille de route','nav.faq':'FAQ',
+        'hero.lead':'Meme coin à l’énergie slave sur BNB Chain. La communauté d’abord.',
+        'cta.buy':'Acheter sur PancakeSwap','cta.addLiq':'Ajouter de la liquidité','cta.add':'Ajouter SLAV à MetaMask','cta.copy':'Copier le contrat',
+        'wallet.status.disconnected':'Portefeuille : non connecté','wallet.addr':'Votre adresse','wallet.balance':'Solde SLAV',
+        'box.quick':'Liens rapides','links.swap':'Ouvrir le swap','box.contract':'Contrat',
+        'about.title':'Qu’est-ce que SlavCoin ?','about.text':'SLAV est un meme coin communautaire sur BNB Smart Chain. Zéro taxe, liquidité transparente, communauté ouverte. Échangez sur PancakeSwap.',
+        'tok.title':'Tokenomics','tok.supply':'Offre totale','tok.chain':'Réseau','tok.tax':'Taxe Achat/Vente','tok.zero':'0% / 0%','tok.note':'Remarque : le prix peut afficher 0 $ tant que les agrégateurs n’ont pas assez de données.',
+        'how.title':'Comment acheter','how.s1':'Installez MetaMask et créez un portefeuille.','how.s2':'Passez sur BNB Smart Chain.','how.s3':'Ajoutez un peu de BNB pour le gas.','how.s4':'Ouvrez PancakeSwap, importez SLAV et échangez BNB → SLAV.','how.s5':'Cliquez « Ajouter SLAV à MetaMask ».',
+        'road.title':'Feuille de route','road.q1':'Phase 1 — Lancement','road.q1a':'Lancement sur BSC','road.q1b':'Liquidité initiale','road.q1c':'Site + réseaux',
+        'road.q2':'Phase 2 — Croissance','road.q2a':'Campagnes & mèmes','road.q2b':'Tracking DEX & logo','road.q2c':'Partenariats',
+        'road.q3':'Phase 3 — Utilité','road.q3a':'Exploration staking/utilité','road.q3b':'Plus de listings','road.q3c':'Merch & événements',
+        'faq.title':'FAQ','faq.q1':'Des taxes ?','faq.a1':'Non, 0% à l’achat/vente.','faq.q2':'Pourquoi le prix peut afficher 0 $ ?','faq.a2':'Les agrégateurs ont besoin d’historique de trades.','faq.q3':'Où trader ?','faq.a3':'Sur PancakeSwap (liens ci-dessus).',
+        'foot.community':'Projet communautaire. Aucune promesse, juste des mèmes.'
+      },
+      pt: {
+        'menu.socials':'Redes','menu.nav':'Navegação','menu.lang':'Idioma',
+        'nav.about':'Sobre','nav.tokenomics':'Tokenomics','nav.how':'Como comprar','nav.roadmap':'Roteiro','nav.faq':'FAQ',
+        'hero.lead':'Meme coin com energia eslava na BNB Chain. Comunidade em primeiro lugar.',
+        'cta.buy':'Comprar na PancakeSwap','cta.addLiq':'Adicionar Liquidez','cta.add':'Adicionar SLAV ao MetaMask','cta.copy':'Copiar contrato',
+        'wallet.status.disconnected':'Carteira: não conectada','wallet.addr':'Seu endereço','wallet.balance':'Saldo SLAV',
+        'box.quick':'Links rápidos','links.swap':'Abrir Swap','box.contract':'Contrato',
+        'about.title':'O que é SlavCoin?','about.text':'SLAV é um meme coin da comunidade na BNB Smart Chain. Zero taxas, liquidez transparente, comunidade aberta. Troque na PancakeSwap.',
+        'tok.title':'Tokenomics','tok.supply':'Oferta total','tok.chain':'Rede','tok.tax':'Taxa Compra/Venda','tok.zero':'0% / 0%','tok.note':'Obs.: a carteira pode mostrar $0 até haver dados suficientes nos agregadores.',
+        'how.title':'Como comprar','how.s1':'Instale o MetaMask e crie uma carteira.','how.s2':'Mude para a BNB Smart Chain.','how.s3':'Adicione um pouco de BNB para gás.','how.s4':'Abra a PancakeSwap, importe SLAV e troque BNB → SLAV.','how.s5':'Clique em “Adicionar SLAV ao MetaMask”.',
+        'road.title':'Roteiro','road.q1':'Fase 1 — Lançamento','road.q1a':'Lançamento na BSC','road.q1b':'Liquidez inicial','road.q1c':'Site + redes',
+        'road.q2':'Fase 2 — Crescimento','road.q2a':'Campanhas & memes','road.q2b':'Rastreamento DEX & logo','road.q2c':'Parcerias',
+        'road.q3':'Fase 3 — Utilidade','road.q3a':'Explorar staking/utilidade','road.q3b':'Mais listagens','road.q3c':'Merch & eventos',
+        'faq.title':'FAQ','faq.q1':'Existe taxa?','faq.a1':'Não, 0% na compra/venda.','faq.q2':'Por que pode aparecer $0 na carteira?','faq.a2':'Agregadores precisam de histórico de negociação.','faq.q3':'Onde negociar?','faq.a3':'Na PancakeSwap (links acima).',
+        'foot.community':'Projeto da comunidade. Sem promessas, só memes.'
+      },
+      es: {
+        'menu.socials':'Redes','menu.nav':'Navegación','menu.lang':'Idioma',
+        'nav.about':'Acerca de','nav.tokenomics':'Tokenomics','nav.how':'Cómo comprar','nav.roadmap':'Hoja de ruta','nav.faq':'FAQ',
+        'hero.lead':'Meme coin con energía eslava en BNB Chain. La comunidad primero.',
+        'cta.buy':'Comprar en PancakeSwap','cta.addLiq':'Añadir Liquidez','cta.add':'Añadir SLAV a MetaMask','cta.copy':'Copiar contrato',
+        'wallet.status.disconnected':'Billetera: no conectada','wallet.addr':'Tu dirección','wallet.balance':'Saldo SLAV',
+        'box.quick':'Enlaces rápidos','links.swap':'Abrir Swap','box.contract':'Contrato',
+        'about.title':'¿Qué es SlavCoin?','about.text':'SLAV es un meme coin impulsado por la comunidad en BNB Smart Chain. Cero impuestos, liquidez transparente, comunidad abierta. Intercambia en PancakeSwap.',
+        'tok.title':'Tokenomics','tok.supply':'Suministro total','tok.chain':'Red','tok.tax':'Impuesto Compra/Venta','tok.zero':'0% / 0%','tok.note':'Nota: la billetera puede mostrar $0 hasta que los agregadores tengan datos suficientes.',
+        'how.title':'Cómo comprar','how.s1':'Instala MetaMask y crea una billetera.','how.s2':'Cámbiate a BNB Smart Chain.','how.s3':'Añade algo de BNB para gas.','how.s4':'Abre PancakeSwap, importa SLAV e intercambia BNB → SLAV.','how.s5':'Haz clic en “Añadir SLAV a MetaMask”.',
+        'road.title':'Hoja de ruta','road.q1':'Fase 1 — Lanzamiento','road.q1a':'Lanzamiento en BSC','road.q1b':'Liquidez inicial','road.q1c':'Sitio + redes',
+        'road.q2':'Fase 2 — Crecimiento','road.q2a':'Campañas y memes','road.q2b':'Seguimiento DEX y logo','road.q2c':'Alianzas',
+        'road.q3':'Fase 3 — Utilidad','road.q3a':'Exploración de staking/utilidad','road.q3b':'Más listados','road.q3c':'Merch y eventos',
+        'faq.title':'FAQ','faq.q1':'¿Hay impuestos?','faq.a1':'No, 0% compra/venta.','faq.q2':'¿Por qué puede verse $0 en la billetera?','faq.a2':'Los agregadores necesitan historial de trading.','faq.q3':'¿Dónde puedo operar?','faq.a3':'En PancakeSwap (enlaces arriba).',
+        'foot.community':'Proyecto comunitario. Sin promesas, solo memes.'
+      }
+    };
+
+    // ====== UI refs & populate ======
+    const buyLink  = document.getElementById('buyLink');
+    const liqLink  = document.getElementById('liqLink');
+    const scanLink = document.getElementById('scanLink');
+    const swapLink = document.getElementById('swapLink');
+
     document.getElementById('year').textContent = new Date().getFullYear();
     document.getElementById('fullAddr').textContent = CONTRACT_ADDRESS;
-    document.getElementById('shortAddr').textContent = `${CONTRACT_ADDRESS.slice(0,6)}…${CONTRACT_ADDRESS.slice(-4)}`;
-    document.getElementById('buyLink').href = pancakeSwap;
-    document.getElementById('scanLink').href = bscScan;
-    document.getElementById('liqLink').href = addLiquidity;
-    document.getElementById('swapLink').href = pancakeSwap;
-    document.getElementById('bscBtn').href = bscScan;
+    buyLink.href  = PANCAKE_SWAP;
+    liqLink.href  = ADD_LIQ;
+    scanLink.href = BSCSCAN;
+    swapLink.href = PANCAKE_SWAP;
 
-    const connectBtn = document.getElementById('connectBtn');
+    // ====== Menu toggle ======
+    const menuBtn  = document.getElementById('menuBtn');
+    const menuCard = document.getElementById('menuCard');
+    document.addEventListener('click', (e)=>{
+      const isBtn = menuBtn.contains(e.target);
+      const isMenu = menuCard.contains(e.target);
+      if(isBtn){ menuCard.classList.toggle('hidden'); return; }
+      if(!isMenu) menuCard.classList.add('hidden');
+    });
+
+    // ====== Lang switch ======
+    const langSel = document.getElementById('lang');
+    function applyLang(code){
+      const dict = I18N[code] || I18N.en;
+      document.querySelectorAll('[data-i18n]').forEach(el=>{
+        const key = el.getAttribute('data-i18n');
+        if(dict[key]) el.textContent = dict[key];
+      });
+      localStorage.setItem('slav_lang', code);
+    }
+    (function initLang(){
+      const saved = localStorage.getItem('slav_lang');
+      if(saved){ langSel.value = saved; applyLang(saved); }
+      else {
+        const nav = (navigator.language||'en').slice(0,2).toLowerCase();
+        const map = { 'en':'en','uk':'ua','ua':'ua','fr':'fr','pt':'pt','es':'es' };
+        const guess = map[nav] || 'en';
+        langSel.value = guess; applyLang(guess);
+      }
+    })();
+    langSel.addEventListener('change', ()=> applyLang(langSel.value));
+
+    // ====== Wallet helpers ======
+    const connectBtn  = document.getElementById('connectBtn');
     const addTokenBtn = document.getElementById('addTokenBtn');
-    const copyBtn = document.getElementById('copyBtn');
+    const copyBtn     = document.getElementById('copyBtn');
+    const addrEl      = document.getElementById('addr');
+    const balanceEl   = document.getElementById('balance');
+    const walletBox   = document.getElementById('walletBox');
+
+    function trimAddr(a){ return `${a.slice(0,6)}…${a.slice(-4)}` }
+
+    async function ensureBSC(){
+      if(!window.ethereum) throw new Error('MetaMask required');
+      const chainId = await ethereum.request({ method:'eth_chainId' });
+      const bsc = '0x38';
+      if(chainId !== bsc){
+        try{
+          await ethereum.request({ method:'wallet_switchEthereumChain', params:[{ chainId: bsc }] });
+        }catch(e){
+          if(e.code === 4902){
+            await ethereum.request({
+              method:'wallet_addEthereumChain',
+              params:[{
+                chainId: bsc,
+                chainName:'BNB Smart Chain',
+                nativeCurrency:{ name:'BNB', symbol:'BNB', decimals:18 },
+                rpcUrls:['https://bsc-dataseed.binance.org/'],
+                blockExplorerUrls:['https://bscscan.com']
+              }]
+            });
+          } else { throw e; }
+        }
+      }
+    }
 
     async function connect(){
-      if(!window.ethereum) return alert("MetaMask required");
       try{
+        await ensureBSC();
         const accounts = await ethereum.request({ method:'eth_requestAccounts' });
-        connectBtn.textContent = `${accounts[0].slice(0,6)}…${accounts[0].slice(-4)}`;
-      }catch(e){ alert(e.message); }
+        const acc = accounts[0];
+        walletBox.classList.remove('hidden');
+        addrEl.textContent = acc;
+        connectBtn.textContent = trimAddr(acc);
+        // (optional) try fetch balance if ABI available
+        try{
+          const provider = new ethers.providers.Web3Provider(window.ethereum);
+          const abi = ['function balanceOf(address) view returns (uint256)','function decimals() view returns (uint8)'];
+          const erc20 = new ethers.Contract(CONTRACT_ADDRESS, abi, provider);
+          const [bal, dec] = await Promise.all([erc20.balanceOf(acc), erc20.decimals()]);
+          balanceEl.textContent = ethers.utils.formatUnits(bal, dec);
+        }catch(_){}
+      }catch(err){ alert(err?.message || err); }
     }
 
     async function addToken(){
-      if(!window.ethereum) return alert("MetaMask required");
-      await ethereum.request({
-        method: 'wallet_watchAsset',
-        params: {
-          type: 'ERC20',
-          options: { address: CONTRACT_ADDRESS, symbol: TOKEN_SYMBOL, decimals: TOKEN_DECIMALS, image: TOKEN_IMAGE }
-        }
-      });
+      if(!window.ethereum) return alert('MetaMask required');
+      try{
+        await ensureBSC();
+        const res = await ethereum.request({
+          method:'wallet_watchAsset',
+          params:{
+            type:'ERC20',
+            options:{ address: CONTRACT_ADDRESS, symbol: TOKEN_SYMBOL, decimals: TOKEN_DECIMALS, image: TOKEN_IMAGE }
+          }
+        });
+        if(res) alert('SLAV added to MetaMask ✅');
+      }catch(e){ alert(e?.message || e); }
     }
 
     function copyAddress(){
       navigator.clipboard.writeText(CONTRACT_ADDRESS).then(()=>{
-        copyBtn.textContent = "Copied!";
-        setTimeout(()=> copyBtn.textContent = "Copy token", 1500);
+        copyBtn.textContent = 'Copied!';
+        setTimeout(()=>{ 
+          // restore by current lang
+          const code = localStorage.getItem('slav_lang') || 'en';
+          copyBtn.textContent = (I18N[code]||I18N.en)['cta.copy'];
+        }, 1200);
       });
     }
 
-    connectBtn.addEventListener("click", connect);
-    addTokenBtn.addEventListener("click", addToken);
-    copyBtn.addEventListener("click", copyAddress);
+    connectBtn.addEventListener('click', connect);
+    addTokenBtn.addEventListener('click', addToken);
+    copyBtn.addEventListener('click', copyAddress);
+
+    if(window.ethereum){
+      ethereum.on?.('accountsChanged', ()=> location.reload());
+      ethereum.on?.('chainChanged', ()=> location.reload());
+    }
   </script>
 </body>
 </html>
-
