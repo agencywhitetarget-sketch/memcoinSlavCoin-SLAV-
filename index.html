@@ -4,34 +4,38 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SlavCoin (SLAV) – Meme Coin on BNB Chain</title>
-  <meta name="description" content="SlavCoin (SLAV) – community‑driven meme coin on BNB Chain. Buy on PancakeSwap, add token to MetaMask, read tokenomics. Multilingual site." />
+  <meta name="description" content="SlavCoin (SLAV) – community-driven meme coin on BNB Chain. Buy on PancakeSwap, add token to MetaMask, read tokenomics. Multilingual site." />
   <meta property="og:title" content="SlavCoin (SLAV) – Meme Coin on BNB Chain" />
   <meta property="og:description" content="Buy SLAV on PancakeSwap. Connect wallet, view tokenomics. Multilingual: EN / UA / PL / RU." />
   <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/logo.png" />
   <meta name="theme-color" content="#111827" />
 
-  <!-- Tailwind (CDN) for quick styling -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = { theme: { extend: { colors: { slav: { 50:'#f7f9ff',100:'#ebf2ff',200:'#cfe1ff',300:'#a6c7ff',400:'#7daeff',500:'#5e96ff',600:'#3876f6',700:'#2e5fd1',800:'#254ea9',900:'#1e428a' } } } } };
   </script>
-  <!-- Ethers v5 for MetaMask interactions -->
   <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.min.js"></script>
   <style>
     .glass{backdrop-filter:saturate(180%) blur(10px);background:rgba(17,24,39,.6)}
-    .btn{ @apply inline-flex items-center gap-2 px-4 py-2 rounded-xl font-medium shadow-sm transition active:scale-95 } 
-    .btn-primary{ @apply bg-sky-500 hover:bg-sky-600 text-white }
-    .btn-secondary{ @apply bg-slate-800 hover:bg-slate-700 text-slate-100 }
-    .btn-outline{ @apply border border-slate-600 hover:border-slate-400 text-slate-100 rounded-xl px-3 py-2 }
-    .kbd{ @apply rounded-md bg-slate-800 px-2 py-0.5 text-slate-200 text-xs border border-slate-700 }
+    .btn{ display:inline-flex; align-items:center; gap:.5rem; padding:.5rem 1rem; border-radius:.75rem; font-weight:600; box-shadow:0 1px 1px rgba(0,0,0,.1); transition:.15s transform }
+    .btn:active{ transform:scale(.98) }
+    .btn-primary{ background:#0ea5e9; color:white }
+    .btn-primary:hover{ background:#0284c7 }
+    .btn-secondary{ background:#0b1220; color:#e5e7eb }
+    .btn-secondary:hover{ background:#111827 }
+    .btn-outline{ border:1px solid #334155; color:#e5e7eb; border-radius:.75rem; padding:.5rem .75rem }
+    .btn-outline:hover{ border-color:#94a3b8 }
+    .kbd{ border-radius:.375rem; background:#0b1220; padding:.125rem .375rem; color:#e5e7eb; font-size:.75rem; border:1px solid #1f2937 }
     pre,code{white-space:pre-wrap}
   </style>
+  <link rel="icon" type="image/png" href="assets/logo.png"/>
 </head>
 <body class="bg-slate-950 text-slate-100 selection:bg-sky-500/30">
   <header class="sticky top-0 z-40 bg-slate-950/80 glass border-b border-slate-800">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
       <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-2xl bg-gradient-to-br from-sky-400 to-sky-600 grid place-items-center text-slate-900 font-extrabold">S</div>
+        <img src="assets/logo.png" alt="SLAV logo" class="w-9 h-9 rounded-2xl ring-1 ring-slate-800 object-cover">
         <div class="leading-tight">
           <div class="font-bold text-lg">SlavCoin <span class="text-slate-400">(SLAV)</span></div>
           <div id="shortAddr" class="text-xs text-slate-400 cursor-pointer" title="Copy token address"></div>
@@ -43,6 +47,9 @@
         <a href="#how" class="hover:text-white" data-i18n="nav.how">How to buy</a>
       </nav>
       <div class="flex items-center gap-2">
+        <a id="xBtnTop"  class="btn btn-outline" target="_blank" rel="noopener">X</a>
+        <a id="ttBtnTop" class="btn btn-outline" target="_blank" rel="noopener">TikTok</a>
+        <a id="igBtnTop" class="btn btn-outline" target="_blank" rel="noopener">Instagram</a>
         <select id="lang" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm">
           <option value="en">EN</option>
           <option value="uk">UA</option>
@@ -59,9 +66,10 @@
     <section class="py-12 md:py-16 grid md:grid-cols-2 gap-8 items-center">
       <div>
         <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">SlavCoin <span class="text-sky-400">(SLAV)</span></h1>
-        <p class="mt-4 text-slate-300 text-lg" data-i18n="hero.tagline">The unstoppable Slav‑energy meme coin on BNB Chain. Community first. Zero fluff.</p>
+        <p class="mt-4 text-slate-300 text-lg" data-i18n="hero.tagline">The unstoppable Slav-energy meme coin on BNB Chain. Community first. Zero fluff.</p>
         <div class="mt-6 flex flex-wrap gap-3">
           <a id="buyLink" target="_blank" rel="noopener" class="btn btn-primary" data-i18n="cta.buy">Buy on PancakeSwap</a>
+          <a id="liqLink" target="_blank" rel="noopener" class="btn btn-outline" data-i18n="links.addliq">Add Liquidity</a>
           <button id="addTokenBtn" class="btn btn-secondary" data-i18n="cta.add">Add SLAV to MetaMask</button>
           <button id="copyBtn" class="btn btn-outline" data-i18n="cta.copy">Copy token</button>
         </div>
@@ -83,8 +91,10 @@
         <h3 class="font-semibold text-slate-200 mb-2" data-i18n="box.quick">Quick links</h3>
         <ul class="space-y-2 text-sm">
           <li><a id="scanLink" target="_blank" class="text-sky-400 hover:underline">BscScan</a></li>
-          <li><a id="liqLink" target="_blank" class="text-sky-400 hover:underline" data-i18n="links.addliq">Add Liquidity</a></li>
           <li><a id="swapLink" target="_blank" class="text-sky-400 hover:underline" data-i18n="links.swap">Open Swap</a></li>
+          <li><a id="xBtnCard"   target="_blank" class="text-sky-400 hover:underline">X (Twitter)</a></li>
+          <li><a id="ttBtnCard"  target="_blank" class="text-sky-400 hover:underline">TikTok</a></li>
+          <li><a id="igBtnCard"  target="_blank" class="text-sky-400 hover:underline">Instagram</a></li>
         </ul>
         <div class="mt-4 text-xs text-slate-400"><span data-i18n="box.contract">Contract</span>:
           <span class="font-mono" id="fullAddr"></span>
@@ -95,7 +105,7 @@
     <!-- ABOUT -->
     <section id="about" class="py-10 border-t border-slate-800">
       <h2 class="text-2xl font-bold mb-3" data-i18n="about.title">What is SlavCoin?</h2>
-      <p class="text-slate-300" data-i18n="about.text">SLAV is a community‑driven meme coin built for fun and utility. Zero taxes, renounced vibes. Trade it on PancakeSwap and join the movement.</p>
+      <p class="text-slate-300" data-i18n="about.text">SLAV is a community-driven meme coin built for fun and utility. Zero taxes, renounced vibes. Trade it on PancakeSwap and join the movement.</p>
     </section>
 
     <!-- TOKENOMICS -->
@@ -108,7 +118,7 @@
         </div>
         <div class="rounded-2xl border border-slate-800 p-5">
           <div class="text-slate-400 text-sm" data-i18n="tok.chain">Chain</div>
-          <div class="text-2xl font-bold">BNB Smart Chain (BEP‑20)</div>
+          <div class="text-2xl font-bold">BNB Smart Chain (BEP-20)</div>
         </div>
         <div class="rounded-2xl border border-slate-800 p-5">
           <div class="text-slate-400 text-sm" data-i18n="tok.tax">Buy/Sell Tax</div>
@@ -135,9 +145,10 @@
       <div class="flex flex-wrap items-center justify-between gap-3">
         <div>© <span id="year"></span> SLAV. <span data-i18n="foot.community">Community project. No promises, just memes.</span></div>
         <div class="flex gap-3">
-          <a id="bscBtn" target="_blank" class="btn btn-outline">BscScan</a>
-          <a id="tgBtn" target="_blank" class="btn btn-outline" href="#" aria-disabled="true">Telegram</a>
-          <a id="xBtn" target="_blank" class="btn btn-outline" href="#" aria-disabled="true">X (Twitter)</a>
+          <a id="bscBtn"  target="_blank" class="btn btn-outline">BscScan</a>
+          <a id="xBtnFoot" target="_blank" class="btn btn-outline">X (Twitter)</a>
+          <a id="ttBtnFoot" target="_blank" class="btn btn-outline">TikTok</a>
+          <a id="igBtnFoot" target="_blank" class="btn btn-outline">Instagram</a>
         </div>
       </div>
     </footer>
@@ -146,8 +157,16 @@
   <script>
     // ====== CONFIG ======
     const CONTRACT_ADDRESS = '0x7f0a062c4c9611c487461497f6ec9181518844ad';
-    const TOKEN_SYMBOL = 'SLAV';
-    const TOKEN_DECIMALS = 18;
+    const TOKEN_SYMBOL     = 'SLAV';
+    const TOKEN_DECIMALS   = 18;
+    // logo, що ми зробили — завантаж у репо як assets/logo.png
+    const TOKEN_IMAGE      = 'assets/logo.png';
+
+    // твої соцмережі
+    const TWITTER_URL = 'https://x.com/memecoinslav';
+    const TIKTOK_URL  = 'https://www.tiktok.com/@slavcoin';
+    const INSTAGRAM_URL = 'https://www.instagram.com/memecoinslav';
+
     const BSC_PARAMS = {
       chainId: '0x38',
       chainName: 'BNB Smart Chain',
@@ -162,18 +181,29 @@
     const bscScan = `https://bscscan.com/token/${CONTRACT_ADDRESS}`;
 
     // UI refs
-    const connectBtn = document.getElementById('connectBtn');
+    const connectBtn  = document.getElementById('connectBtn');
     const addTokenBtn = document.getElementById('addTokenBtn');
-    const copyBtn = document.getElementById('copyBtn');
-    const addrEl = document.getElementById('addr');
-    const fullAddrEl = document.getElementById('fullAddr');
+    const copyBtn     = document.getElementById('copyBtn');
+    const addrEl      = document.getElementById('addr');
+    const fullAddrEl  = document.getElementById('fullAddr');
     const shortAddrEl = document.getElementById('shortAddr');
-    const balanceEl = document.getElementById('balance');
-    const walletBox = document.getElementById('walletBox');
-    const buyLink = document.getElementById('buyLink');
-    const scanLink = document.getElementById('scanLink');
-    const liqLink = document.getElementById('liqLink');
-    const swapLink = document.getElementById('swapLink');
+    const balanceEl   = document.getElementById('balance');
+    const walletBox   = document.getElementById('walletBox');
+    const buyLink     = document.getElementById('buyLink');
+    const scanLink    = document.getElementById('scanLink');
+    const liqLink     = document.getElementById('liqLink');
+    const swapLink    = document.getElementById('swapLink');
+
+    // socials
+    const xTop   = document.getElementById('xBtnTop');
+    const ttTop  = document.getElementById('ttBtnTop');
+    const igTop  = document.getElementById('igBtnTop');
+    const xCard  = document.getElementById('xBtnCard');
+    const ttCard = document.getElementById('ttBtnCard');
+    const igCard = document.getElementById('igBtnCard');
+    const xFoot  = document.getElementById('xBtnFoot');
+    const ttFoot = document.getElementById('ttBtnFoot');
+    const igFoot = document.getElementById('igBtnFoot');
 
     // Populate static links/addresses
     document.getElementById('year').textContent = new Date().getFullYear();
@@ -182,26 +212,31 @@
     buyLink.href = pancakeSwap; scanLink.href = bscScan; swapLink.href = pancakeSwap; liqLink.href = addLiquidity;
     document.getElementById('bscBtn').href = bscScan;
 
+    // socials href
+    [xTop, xCard, xFoot].forEach(el => el.href = TWITTER_URL);
+    [ttTop, ttCard, ttFoot].forEach(el => el.href = TIKTOK_URL);
+    [igTop, igCard, igFoot].forEach(el => el.href = INSTAGRAM_URL);
+
     // ====== i18n ======
     const i18n = {
       en: {
         'nav.about':'About','nav.tokenomics':'Tokenomics','nav.how':'How to buy',
-        'hero.tagline':'The unstoppable Slav‑energy meme coin on BNB Chain. Community first. Zero fluff.',
+        'hero.tagline':'The unstoppable Slav-energy meme coin on BNB Chain. Community first. Zero fluff.',
         'cta.connect':'Connect wallet','cta.buy':'Buy on PancakeSwap','cta.add':'Add SLAV to MetaMask','cta.copy':'Copy token',
         'wallet.status.disconnected':'Wallet: Not connected','wallet.addr':'Your address','wallet.balance':'SLAV balance',
         'box.quick':'Quick links','links.addliq':'Add Liquidity','links.swap':'Open Swap','box.contract':'Contract',
-        'about.title':'What is SlavCoin?','about.text':'SLAV is a community‑driven meme coin built for fun and utility. Zero taxes, renounced vibes. Trade it on PancakeSwap and join the movement.',
+        'about.title':'What is SlavCoin?','about.text':'SLAV is a community-driven meme coin built for fun and utility. Zero taxes, renounced vibes. Trade it on PancakeSwap and join the movement.',
         'tok.title':'Tokenomics','tok.supply':'Total Supply','tok.chain':'Chain','tok.tax':'Buy/Sell Tax','tok.zero':'0% / 0%','tok.note':'NOTE: Price display in wallets may be 0 until enough trading data appears on aggregators.',
         'how.title':'How to buy','how.s1':'Install MetaMask and create a wallet.','how.s2':'Switch to BNB Smart Chain (the site can do this for you).','how.s3':'Top up a little BNB for gas.','how.s4':'Click “Buy on PancakeSwap”, import SLAV and swap BNB → SLAV.','how.s5':'Press “Add SLAV to MetaMask” to see your balance.',
         'foot.community':'Community project. No promises, just memes.'
       },
       uk: {
         'nav.about':'Про токен','nav.tokenomics':'Токеноміка','nav.how':'Як купити',
-        'hero.tagline':'Мем‑коїн з енергією слави на BNB Chain. Спільнота перш за все.',
+        'hero.tagline':'Мем-коїн з енергією слави на BNB Chain. Спільнота перш за все.',
         'cta.connect':'Під’єднати гаманець','cta.buy':'Купити на PancakeSwap','cta.add':'Додати SLAV у MetaMask','cta.copy':'Скопіювати адресу',
         'wallet.status.disconnected':'Гаманець: не підключено','wallet.addr':'Ваша адреса','wallet.balance':'Баланс SLAV',
         'box.quick':'Швидкі посилання','links.addliq':'Додати ліквідність','links.swap':'Відкрити Swap','box.contract':'Контракт',
-        'about.title':'Що таке SlavCoin?','about.text':'SLAV — мем‑коїн спільноти для фану та корисності. Без податків. Торгуй на PancakeSwap та приєднуйся.',
+        'about.title':'Що таке SlavCoin?','about.text':'SLAV — мем-коїн спільноти для фану та корисності. Без податків. Торгуй на PancakeSwap та приєднуйся.',
         'tok.title':'Токеноміка','tok.supply':'Загальна емісія','tok.chain':'Мережа','tok.tax':'Податок Купівля/Продаж','tok.zero':'0% / 0%','tok.note':'Примітка: поки немає достатньо торгів, гаманці можуть показувати $0.',
         'how.title':'Як купити','how.s1':'Встановіть MetaMask та створіть гаманець.','how.s2':'Переключіться на BNB Smart Chain (сайт може зробити це).','how.s3':'Поповніть трохи BNB для газу.','how.s4':'Натисніть “Купити на PancakeSwap”, імпортуйте SLAV і обміняйте BNB → SLAV.','how.s5':'Натисніть “Додати SLAV у MetaMask”, щоб бачити баланс.',
         'foot.community':'Проєкт спільноти. Жодних обіцянок — лише меми.'
@@ -214,16 +249,16 @@
         'box.quick':'Szybkie linki','links.addliq':'Dodaj płynność','links.swap':'Otwórz Swap','box.contract':'Kontrakt',
         'about.title':'Czym jest SlavCoin?','about.text':'SLAV to społecznościowy meme coin dla zabawy i użyteczności. Brak podatków. Handluj na PancakeSwap.',
         'tok.title':'Tokenomika','tok.supply':'Całkowita podaż','tok.chain':'Sieć','tok.tax':'Podatek Kupno/Sprzedaż','tok.zero':'0% / 0%','tok.note':'Uwaga: do czasu pojawienia się danych z giełd portfele mogą pokazywać 0$.',
-        'how.title':'Jak kupić','how.s1':'Zainstaluj MetaMask i utwórz portfel.','how.s2':'Przełącz się na BNB Smart Chain (strona może to zrobić).','how.s3':'Uzupełnij trochę BNB na gaz.','how.s4':'Kliknij “Kup na PancakeSwap”, zaimportuj SLAV i wymień BNB → SLAV.','how.s5':'Kliknij “Dodaj SLAV do MetaMask”, aby widzieć saldo.',
+        'how.title':'Jak kupić','how.s1':'Zainstaluj MetaMask i utwórz portfel.','how.s2':'Przełącz się na BNB Smart Chain (strona może to zrobić).','how.s3':'Uzupełnij trochę BNB для gazu.','how.s4':'Kliknij “Kup на PancakeSwap”, zaimportuj SLAV i wymień BNB → SLAV.','how.s5':'Kliknij “Dodaj SLAV do MetaMask”, aby widzieć saldo.',
         'foot.community':'Projekt społeczności. Bez obietnic, tylko memy.'
       },
       ru: {
         'nav.about':'О токене','nav.tokenomics':'Токеномика','nav.how':'Как купить',
-        'hero.tagline':'Мем‑коин со славянской энергией на BNB Chain. Сообщество на первом месте.',
+        'hero.tagline':'Мем-коин со славянской энергией на BNB Chain. Сообщество на первом месте.',
         'cta.connect':'Подключить кошелёк','cta.buy':'Купить на PancakeSwap','cta.add':'Добавить SLAV в MetaMask','cta.copy':'Скопировать адрес',
         'wallet.status.disconnected':'Кошелёк: не подключён','wallet.addr':'Ваш адрес','wallet.balance':'Баланс SLAV',
         'box.quick':'Быстрые ссылки','links.addliq':'Добавить ликвидность','links.swap':'Открыть Swap','box.contract':'Контракт',
-        'about.title':'Что такое SlavCoin?','about.text':'SLAV — мем‑коин сообщества для фана и пользы. Налогов нет. Торгуется на PancakeSwap.',
+        'about.title':'Что такое SlavCoin?','about.text':'SLAV — мем-коин сообщества для фана и пользы. Налогов нет. Торгуется на PancakeSwap.',
         'tok.title':'Токеномика','tok.supply':'Общая эмиссия','tok.chain':'Сеть','tok.tax':'Налог Покупка/Продажа','tok.zero':'0% / 0%','tok.note':'Примечание: пока мало торгов, кошельки могут показывать $0.',
         'how.title':'Как купить','how.s1':'Установите MetaMask и создайте кошелёк.','how.s2':'Переключитесь на BNB Smart Chain (сайт может помочь).','how.s3':'Пополните немного BNB на газ.','how.s4':'Нажмите «Купить на PancakeSwap», импортируйте SLAV и обменяйте BNB → SLAV.','how.s5':'Нажмите «Добавить SLAV в MetaMask», чтобы видеть баланс.',
         'foot.community':'Проект сообщества. Никаких обещаний — только мемы.'
@@ -250,7 +285,6 @@
     })();
     langSelect.addEventListener('change', e=> setLang(e.target.value));
 
-    // ====== Wallet helpers ======
     function trimAddr(a){ return `${a.slice(0,6)}…${a.slice(-4)}` }
 
     async function ensureBsc(){
@@ -274,16 +308,12 @@
         const account = accounts[0];
         addrEl.textContent = account; walletBox.classList.remove('hidden');
         connectBtn.textContent = trimAddr(account);
-        // fetch balance
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const abi = [ 'function balanceOf(address) view returns (uint256)', 'function decimals() view returns (uint8)' ];
         const erc20 = new ethers.Contract(CONTRACT_ADDRESS, abi, provider);
         const [bal, dec] = await Promise.all([ erc20.balanceOf(account), erc20.decimals() ]);
-        const fmt = ethers.utils.formatUnits(bal, dec);
-        balanceEl.textContent = fmt;
-      }catch(err){
-        alert(err.message || err);
-      }
+        balanceEl.textContent = ethers.utils.formatUnits(bal, dec);
+      }catch(err){ alert(err.message || err); }
     }
 
     async function addToken(){
@@ -294,7 +324,7 @@
           method: 'wallet_watchAsset',
           params: {
             type: 'ERC20',
-            options: { address: CONTRACT_ADDRESS, symbol: TOKEN_SYMBOL, decimals: TOKEN_DECIMALS, image: 'https://avatars.githubusercontent.com/u/11744586?s=64' }
+            options: { address: CONTRACT_ADDRESS, symbol: TOKEN_SYMBOL, decimals: TOKEN_DECIMALS, image: TOKEN_IMAGE }
           }
         });
         if(res) alert('SLAV added to MetaMask');
@@ -307,11 +337,53 @@
       });
     }
 
+    const BSC_PARAMS = {
+      chainId: '0x38',
+      chainName: 'BNB Smart Chain',
+      nativeCurrency: { name: 'BNB', symbol: 'BNB', decimals: 18 },
+      rpcUrls: ['https://bsc-dataseed.binance.org/'],
+      blockExplorerUrls: ['https://bscscan.com']
+    };
+
+    const addrEl      = document.getElementById('addr');
+    const fullAddrEl  = document.getElementById('fullAddr');
+    const shortAddrEl = document.getElementById('shortAddr');
+    const balanceEl   = document.getElementById('balance');
+    const walletBox   = document.getElementById('walletBox');
+    const buyLink     = document.getElementById('buyLink');
+    const scanLink    = document.getElementById('scanLink');
+    const liqLink     = document.getElementById('liqLink');
+    const swapLink    = document.getElementById('swapLink');
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+    fullAddrEl.textContent = CONTRACT_ADDRESS;
+    shortAddrEl.textContent = `${CONTRACT_ADDRESS.slice(0,6)}…${CONTRACT_ADDRESS.slice(-4)}`;
+    buyLink.href = `https://pancakeswap.finance/swap?outputCurrency=${CONTRACT_ADDRESS}&chain=bsc`;
+    liqLink.href = `https://pancakeswap.finance/add/BNB/${CONTRACT_ADDRESS}?chain=bsc`;
+    scanLink.href = `https://bscscan.com/token/${CONTRACT_ADDRESS}`;
+    swapLink.href = buyLink.href;
+
+    document.getElementById('bscBtn').href = scanLink.href;
+
+    // socials
+    document.getElementById('xBtnTop').href   = TWITTER_URL;
+    document.getElementById('ttBtnTop').href  = TIKTOK_URL;
+    document.getElementById('igBtnTop').href  = INSTAGRAM_URL;
+    document.getElementById('xBtnCard').href  = TWITTER_URL;
+    document.getElementById('ttBtnCard').href = TIKTOK_URL;
+    document.getElementById('igBtnCard').href = INSTAGRAM_URL;
+    document.getElementById('xBtnFoot').href  = TWITTER_URL;
+    document.getElementById('ttBtnFoot').href = TIKTOK_URL;
+    document.getElementById('igBtnFoot').href = INSTAGRAM_URL;
+
+    const connectBtn  = document.getElementById('connectBtn');
+    const addTokenBtn = document.getElementById('addTokenBtn');
+    const copyBtn     = document.getElementById('copyBtn');
+
     connectBtn.addEventListener('click', connect);
     addTokenBtn.addEventListener('click', addToken);
     copyBtn.addEventListener('click', copyAddress);
 
-    // react to chain/account changes
     if(window.ethereum){
       ethereum.on?.('accountsChanged', ()=> location.reload());
       ethereum.on?.('chainChanged', ()=> location.reload());
