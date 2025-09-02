@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SlavCoin (SLAV) — Meme Coin on BNB Chain</title>
-  <meta name="description" content="SlavCoin (SLAV) — community-driven meme coin on BNB Chain. Buy on PancakeSwap, see tokenomics, roadmap & FAQ. Multilingual: UA, EN, FR, PT, ES." />
+  <meta name="description" content="SlavCoin (SLAV) — community-driven meme coin on BNB Chain. Buy on PancakeSwap, see tokenomics, roadmap & FAQ. Multilingual: EN, PT, ES." />
   <meta property="og:title" content="SlavCoin (SLAV) — Meme Coin on BNB Chain" />
   <meta property="og:description" content="Buy SLAV on PancakeSwap. Transparent burn & circulating supply. Multilingual site." />
   <meta property="og:type" content="website" />
@@ -12,7 +12,6 @@
   <link rel="icon" type="image/png" href="/logo.png" />
   <meta name="theme-color" content="#111827" />
 
-  <!-- *** new: explicit email for scanners *** -->
   <meta name="reply-to" content="slavcoinfun@gmail.com" />
   <script type="application/ld+json">
   {
@@ -31,21 +30,9 @@
     ]
   }
   </script>
-  <!-- *** /new *** -->
 
   <!-- TailwindCSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            slav: {50:'#f7f9ff',100:'#ebf2ff',200:'#cfe1ff',300:'#a6c7ff',400:'#7daeff',500:'#5e96ff',600:'#3876f6',700:'#2e5fd1',800:'#254ea9',900:'#1e428a'}
-          }
-        }
-      }
-    }
-  </script>
 
   <style>
     .glass{backdrop-filter:saturate(180%) blur(10px); background:rgba(17,24,39,.55)}
@@ -64,20 +51,22 @@
     .kicker{letter-spacing:.08em;text-transform:uppercase}
     .lang-btn{padding:.35rem .55rem;border-radius:.6rem;font-size:.85rem;line-height:1}
     .lang-list{min-width:9rem}
+    /* bigger chart on mobile */
+    .chart-embed{position:relative;padding-bottom:65%;height:0;overflow:hidden;border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,.25)}
+    @media (max-width:640px){ .chart-embed{padding-bottom:130%} } /* ≈2x */
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 selection:bg-sky-500/30">
 
-  <!-- ============ HEADER ============ -->
+  <!-- HEADER -->
   <header class="sticky top-0 z-40 glass border-b border-slate-800/70">
     <div class="max-w-6xl mx-auto px-4 py-3 grid grid-cols-3 items-center">
-      <!-- Лого -->
       <a href="/" class="flex items-center gap-3">
         <img src="/logo.png" alt="SLAV logo" class="w-9 h-9 rounded-xl ring-1 ring-slate-700 object-cover">
         <span class="sr-only">SlavCoin (SLAV)</span>
       </a>
 
-      <!-- Маленька кнопка мови по центру -->
+      <!-- Lang -->
       <div class="flex justify-center">
         <div class="relative">
           <button id="langBtn" class="btn btn-outline lang-btn" aria-haspopup="true" aria-expanded="false">
@@ -85,19 +74,16 @@
           </button>
           <div id="langMenu" class="hidden absolute left-1/2 -translate-x-1/2 mt-2 lang-list rounded-xl border border-slate-800 bg-slate-900/95 menu-card p-2 text-sm">
             <button class="w-full text-left px-3 py-1.5 rounded-md hover:bg-slate-800" data-lang="en">English</button>
-            <button class="w-full text-left px-3 py-1.5 rounded-md hover:bg-slate-800" data-lang="ua">Українська</button>
-            <button class="w-full text-left px-3 py-1.5 rounded-md hover:bg-slate-800" data-lang="fr">Français</button>
             <button class="w-full text-left px-3 py-1.5 rounded-md hover:bg-slate-800" data-lang="pt">Português</button>
             <button class="w-full text-left px-3 py-1.5 rounded-md hover:bg-slate-800" data-lang="es">Español</button>
           </div>
         </div>
       </div>
 
-      <!-- Праворуч — Menu -->
+      <!-- Menu -->
       <div class="flex justify-end">
         <div class="relative">
           <button id="menuBtn" class="btn btn-secondary" aria-haspopup="true" aria-expanded="false">Menu</button>
-          <!-- Спливаюче меню -->
           <div id="menuCard" class="hidden absolute right-0 mt-2 w-64 rounded-xl border border-slate-800 bg-slate-900/95 menu-card">
             <div class="p-3 border-b border-slate-800">
               <div class="text-xs text-slate-400 mb-1" data-i18n="menu.socials">Socials</div>
@@ -127,8 +113,8 @@
     </div>
   </header>
 
-  <!-- ============ HERO ============ -->
   <main class="max-w-6xl mx-auto px-4">
+    <!-- HERO -->
     <section class="py-10 md:py-14 grid md:grid-cols-2 gap-8 items-center">
       <div>
         <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">
@@ -139,7 +125,6 @@
         </p>
         <div class="mt-6 flex flex-wrap gap-3">
           <a id="buyLink" target="_blank" rel="noopener noreferrer" class="btn btn-primary" data-i18n="cta.buy">Buy on PancakeSwap</a>
-          <!-- REPLACED: Add Liquidity -> View on DexScreener -->
           <a id="dsLink" target="_blank" rel="noopener noreferrer" class="btn btn-outline">View on DexScreener</a>
           <a class="btn btn-outline" href="https://t.me/memeslavcoin" target="_blank" rel="noopener noreferrer">Join Telegram</a>
           <button id="copyBtn" class="btn btn-outline" data-i18n="cta.copy">Copy token</button>
@@ -154,10 +139,10 @@
       </div>
     </section>
 
-    <!-- ============ LIVE CHART (DexScreener embed) ============ -->
+    <!-- LIVE CHART -->
     <section id="chart" class="py-10 border-t border-slate-800">
       <h2 class="text-2xl font-bold mb-4">Live Chart</h2>
-      <div style="position:relative;padding-bottom:65%;height:0;overflow:hidden;border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,.25);">
+      <div class="chart-embed">
         <iframe
           src="https://dexscreener.com/bsc/0x9b798Cc83621A83C90AdCE1B558e0A8E69eB3429?embed=1&theme=dark&trades=0"
           style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
@@ -167,7 +152,7 @@
       <div class="mt-3 text-sm text-slate-400">Data auto-updates from DexScreener (pair: SLAV/BNB).</div>
     </section>
 
-    <!-- ============ ABOUT ============ -->
+    <!-- ABOUT -->
     <section id="about" class="py-10 border-t border-slate-800">
       <h2 class="text-2xl font-bold mb-3" data-i18n="about.title">What is SlavCoin?</h2>
       <p class="text-slate-300" data-i18n="about.text">
@@ -175,7 +160,7 @@
       </p>
     </section>
 
-    <!-- ============ BIG NEWS / BURN ============ -->
+    <!-- BURN -->
     <section id="burn" class="py-10 border-t border-slate-800">
       <div class="flex items-center gap-2 text-sky-400 kicker text-xs mb-2" data-i18n="burn.kicker">🔥 Big news for our community!</div>
       <div class="space-y-4 text-slate-200">
@@ -199,7 +184,7 @@
       </div>
     </section>
 
-    <!-- ============ TOKENOMICS ============ -->
+    <!-- TOKENOMICS -->
     <section id="tokenomics" class="py-10 border-t border-slate-800">
       <h2 class="text-2xl font-bold mb-6" data-i18n="tok.title">Tokenomics</h2>
       <div class="grid md:grid-cols-3 gap-4">
@@ -222,7 +207,7 @@
       </p>
     </section>
 
-    <!-- ============ HOW TO BUY ============ -->
+    <!-- HOW TO BUY -->
     <section id="how" class="py-10 border-t border-slate-800">
       <h2 class="text-2xl font-bold mb-4" data-i18n="how.title">How to buy</h2>
       <ol class="list-decimal pl-6 space-y-2 text-slate-300">
@@ -234,7 +219,7 @@
       </ol>
     </section>
 
-    <!-- ============ ROADMAP ============ -->
+    <!-- ROADMAP -->
     <section id="roadmap" class="py-10 border-t border-slate-800">
       <h2 class="text-2xl font-bold mb-4" data-i18n="road.title">Roadmap</h2>
       <div class="grid md:grid-cols-3 gap-4 text-slate-300">
@@ -265,7 +250,19 @@
       </div>
     </section>
 
-    <!-- ============ VIDEOS & PODCASTS ============ -->
+    <!-- SOCIALS (MOVED UP) -->
+    <section id="socials" class="py-10 border-t border-slate-800">
+      <h2 class="text-2xl font-bold mb-4">Follow & Join</h2>
+      <div class="flex flex-wrap gap-3">
+        <a id="bscBtn" target="_blank" rel="noopener noreferrer" class="btn btn-outline">BscScan</a>
+        <a href="https://x.com/memecoinslav" target="_blank" rel="noopener noreferrer" class="btn btn-outline">X (Twitter)</a>
+        <a href="https://t.me/memeslavcoin" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Telegram</a>
+        <a href="https://www.tiktok.com/@slavcoin" target="_blank" rel="noopener noreferrer" class="btn btn-outline">TikTok</a>
+        <a href="https://www.instagram.com/memecoinslav" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Instagram</a>
+      </div>
+    </section>
+
+    <!-- MEDIA -->
     <section id="media" class="py-10 border-t border-slate-800">
       <h2 class="text-2xl font-bold mb-4" data-i18n="nav.media">Videos & Podcasts</h2>
       <div class="grid md:grid-cols-2 gap-4">
@@ -285,7 +282,7 @@
       </div>
     </section>
 
-    <!-- ============ FAQ ============ -->
+    <!-- FAQ -->
     <section id="faq" class="py-10 border-t border-slate-800">
       <h2 class="text-2xl font-bold mb-4" data-i18n="faq.title">FAQ</h2>
       <div class="space-y-3">
@@ -304,7 +301,7 @@
       </div>
     </section>
 
-    <!-- ============ FOOTER ============ -->
+    <!-- FOOTER (clean) -->
     <footer class="py-10 border-t border-slate-800 text-sm text-slate-400">
       <div class="flex flex-wrap items-center justify-between gap-3">
         <div>
@@ -315,13 +312,6 @@
             <a class="u-email underline decoration-slate-600 hover:decoration-slate-400"
                href="mailto:slavcoinfun@gmail.com">slavcoinfun@gmail.com</a>
           </span>
-        </div>
-        <div class="flex gap-3">
-          <a id="bscBtn" target="_blank" rel="noopener noreferrer" class="btn btn-outline">BscScan</a>
-          <a href="https://x.com/memecoinslav" target="_blank" rel="noopener noreferrer" class="btn btn-outline">X (Twitter)</a>
-          <a href="https://t.me/memeslavcoin" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Telegram</a>
-          <a href="https://www.tiktok.com/@slavcoin" target="_blank" rel="noopener noreferrer" class="btn btn-outline">TikTok</a>
-          <a href="https://www.instagram.com/memecoinslav" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Instagram</a>
         </div>
       </div>
     </footer>
@@ -340,7 +330,7 @@
         'menu.socials':'Socials','menu.nav':'Navigation',
         'nav.about':'About','nav.burn':'Big News','nav.tokenomics':'Tokenomics','nav.how':'How to buy','nav.roadmap':'Roadmap','nav.media':'Videos & Podcasts','nav.faq':'FAQ',
         'hero.lead':'The unstoppable Slav-energy meme coin on BNB Chain. Community first. Zero fluff.',
-        'cta.buy':'Buy on PancakeSwap','cta.addLiq':'Add Liquidity','cta.copy':'Copy token',
+        'cta.buy':'Buy on PancakeSwap','cta.copy':'Copy token',
         'about.title':'What is SlavCoin?','about.text':'SLAV is a community-driven meme coin built for fun and utility on BNB Smart Chain. Zero taxes, transparent liquidity, open community. Swap on PancakeSwap and join the movement.',
         'burn.kicker':'🔥 Big news for our community!',
         'burn.p1':'At launch, the total supply of <b>1,000,000,000 SLAV</b> was created. But we made a bold decision: to burn the majority of the supply — <b>600,000,000 SLAV</b> have been permanently sent to the burn address:',
@@ -360,31 +350,34 @@
         'media.yt':'Open on YouTube','media.sp':'Open on Spotify',
         'foot.community':'Community project. No promises, just memes.'
       },
-      ua: {
-        'menu.socials':'Соцмережі','menu.nav':'Навігація',
-        'nav.about':'Про токен','nav.burn':'Важливі новини','nav.tokenomics':'Токеноміка','nav.how':'Як купити','nav.roadmap':'Дорожня карта','nav.media':'Відео та подкасти','nav.faq':'FAQ',
-        'hero.lead':'Мем-коїн з енергією слави на BNB Chain. Спільнота перш за все.',
-        'cta.buy':'Купити на PancakeSwap','cta.addLiq':'Додати ліквідність','cta.copy':'Скопіювати адресу',
-        'about.title':'Що таке SlavCoin?','about.text':'SLAV — мем-коїн спільноти для фану та корисності в мережі BNB. Без податків, прозора ліквідність, відкрита спільнота. Міняй на PancakeSwap і приєднуйся.',
-        'burn.kicker':'🔥 Великі новини для нашої спільноти!',
-        'burn.p1':'Під час запуску було створено <b>1,000,000,000 SLAV</b>. Ми прийняли сміливе рішення — спалити більшість: <b>600,000,000 SLAV</b> назавжди надіслано на адресу спалення:',
-        'burn.addr':'👉 0x000000000000000000000000000000000000dEaD',
-        'burn.p2':'Це повністю перевіряється в блокчейні — кожен може переконатися сам.',
-        'burn.p3bold':'Тепер в обігу лише 400,000,000 SLAV.',
-        'burn.p3rest':'Це доказ того, що ми будуємо прозорий і надійний проєкт, де довіра — на першому місці.',
-        'burn.p4':'Наше бачення — зробити SLAV легендою кріпто, а не «ще одним токеном». Ми формуємо сильну спільноту, об’єднану зростанням, прозорістю та вірою в майбутнє.',
-        'burn.li1':'💎 Віримо в майбутнє SLAV.','burn.li2':'💎 Показуємо приклад прозорими діями.','burn.li3':'💎 З вашою підтримкою проєкт стане чимось неймовірним.',
-        'burn.p5':'Для всіх, хто поділяє наші цінності:<br>— Підписуйтеся,<br>— Пишіть думки в коментарях,<br>— Підтримуйте місію.',
-        'burn.p6':'Разом перетворимо SLAV на історію, про яку говоритиме весь світ 🌍🚀',
-        'burn.cta1':'Переглянути burn-адресу','burn.cta2':'Токен на BscScan',
-        'tok.title':'Токеноміка','tok.supply':'Загальна пропозиція (в обігу)','tok.afterburn':'Після спалення 600,000,000 SLAV','tok.chain':'Мережа','tok.tax':'Податок купівля/продаж','tok.zero':'0% / 0%','tok.note':'Примітка: поки агрегатори не зберуть торги, гаманці можуть показувати $0.',
-        'how.title':'Як купити','how.s1':'Встановіть MetaMask і створіть гаманець.','how.s2':'Перейдіть на BNB Smart Chain.','how.s3':'Поповніть трохи BNB для газу.','how.s4':'Відкрийте PancakeSwap, імпортуйте SLAV і обміняйте BNB → SLAV.','how.s5':'Натисніть “Додати SLAV у MetaMask”, щоб бачити баланс.',
-        'road.title':'Дорожня карта','road.q1':'Фаза 1 — Запуск','road.q1a':'Старт токена на BSC','road.q1b':'Початкова ліквідність','road.q1c':'Сайт + соцмережі','road.q2':'Фаза 2 — Зростання','road.q2a':'Кампанії та меми','road.q2b':'Трекінг на DEX та лого токена','road.q2c':'Партнерства','road.q3':'Фаза 3 — Юзкейси','road.q3a':'Дослідження стейкінгу/утиліті','road.q3b':'Нові лістинги','road.q3c':'Мерч і події',
-        'faq.title':'FAQ','faq.q1':'Чи є податок?','faq.a1':'Ні, 0% купівля/продаж.','faq.q2':'Чому ціна може бути $0 у гаманцях?','faq.a2':'Агрегаторам потрібна історія торгів.','faq.q3':'Де торгувати?','faq.a3':'На PancakeSwap (посилання вище).',
-        'media.yt':'Відкрити на YouTube','media.sp':'Відкрити на Spotify',
-        'foot.community':'Проєкт спільноти. Жодних обіцянок — лише меми.'
+      pt: {
+        'menu.socials':'Redes','menu.nav':'Navegação',
+        'nav.about':'Sobre','nav.burn':'Grandes notícias','nav.tokenomics':'Tokenomics','nav.how':'Como comprar','nav.roadmap':'Roteiro','nav.media':'Vídeos & Podcasts','nav.faq':'FAQ',
+        'hero.lead':'O memecoin com energia Slav na BNB Chain. Comunidade em primeiro lugar.',
+        'cta.buy':'Comprar no PancakeSwap','cta.copy':'Copiar contrato',
+        'about.title':'O que é a SlavCoin?','about.text':'SLAV é um memecoin orientado pela comunidade na BNB Smart Chain. Zero taxas, liquidez transparente, comunidade aberta.',
+        'burn.kicker':'🔥 Grandes notícias para a nossa comunidade!',
+        'burn.p3bold':'Agora, apenas 400.000.000 SLAV estão em circulação.',
+        'tok.title':'Tokenomics','tok.supply':'Oferta total (em circulação)','tok.chain':'Rede','tok.tax':'Taxa de compra/venda','tok.zero':'0% / 0%',
+        'how.title':'Como comprar',
+        'faq.title':'FAQ','faq.q1':'Existe alguma taxa?','faq.a1':'Não, 0%.','faq.q2':'Por que a carteira pode mostrar $0?','faq.a2':'Agregadores precisam de histórico de negociações.','faq.q3':'Onde negociar?','faq.a3':'No PancakeSwap.',
+        'media.yt':'Abrir no YouTube','media.sp':'Abrir no Spotify',
+        'foot.community':'Projeto da comunidade. Sem promessas — apenas memes.'
       },
-      fr:{}, pt:{}, es:{}
+      es: {
+        'menu.socials':'Redes','menu.nav':'Navegación',
+        'nav.about':'Acerca de','nav.burn':'Grandes noticias','nav.tokenomics':'Tokenomics','nav.how':'Cómo comprar','nav.roadmap':'Hoja de ruta','nav.media':'Videos y podcasts','nav.faq':'FAQ',
+        'hero.lead':'El memecoin con energía Slav en BNB Chain. La comunidad primero.',
+        'cta.buy':'Comprar en PancakeSwap','cta.copy':'Copiar contrato',
+        'about.title':'¿Qué es SlavCoin?','about.text':'SLAV es un memecoin impulsado por la comunidad en BNB Smart Chain. Cero impuestos, liquidez transparente, comunidad abierta.',
+        'burn.kicker':'🔥 ¡Grandes noticias para nuestra comunidad!',
+        'burn.p3bold':'Ahora solo circulan 400.000.000 SLAV.',
+        'tok.title':'Tokenomics','tok.supply':'Suministro total (circulante)','tok.chain':'Red','tok.tax':'Impuesto compra/venta','tok.zero':'0% / 0%',
+        'how.title':'Cómo comprar',
+        'faq.title':'FAQ','faq.q1':'¿Hay impuestos?','faq.a1':'No, 0%.','faq.q2':'¿Por qué la cartera puede mostrar $0?','faq.a2':'Los agregadores necesitan historial de comercio.','faq.q3':'¿Dónde operar?','faq.a3':'En PancakeSwap.',
+        'media.yt':'Abrir en YouTube','media.sp':'Abrir en Spotify',
+        'foot.community':'Proyecto de la comunidad. Sin promesas, solo memes.'
+      }
     };
 
     // ====== Links & year ======
@@ -397,7 +390,7 @@
     const bscBtn = document.getElementById('bscBtn');
     if(bscBtn) bscBtn.href = BSCSCAN;
 
-    // ====== Small Lang Button ======
+    // ====== Lang handling ======
     const langBtn  = document.getElementById('langBtn');
     const langMenu = document.getElementById('langMenu');
     const langBtnLabel = document.getElementById('langBtnLabel');
@@ -418,7 +411,7 @@
       if(saved){ applyLang(saved); }
       else {
         const nav = (navigator.language||'en').slice(0,2).toLowerCase();
-        const map = { 'en':'en','uk':'ua','ua':'ua','fr':'fr','pt':'pt','es':'es' };
+        const map = { 'en':'en','pt':'pt','es':'es' };
         applyLang(map[nav] || 'en');
       }
     })();
