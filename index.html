@@ -3,26 +3,26 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MUPI — AI x Pepe Meme Coin on BNB Chain</title>
-  <meta name="description" content="MUPI — the first AI x Pepe meme coin, born from the fusion of artificial intelligence and meme culture. 420,690,000,000 supply. Buy on PancakeSwap, check tokenomics, roadmap & FAQ." />
-  <meta property="og:title" content="MUPI — AI x Pepe Meme Coin" />
-  <meta property="og:description" content="Created by AI, inspired by Pepe. Community-driven meme coin on BNB Chain." />
+
+  <title>MUPI (Pepe × AI) — Meme Coin on BNB Chain</title>
+  <meta name="description" content="MUPI — AI × Pepe meme coin on BNB Chain. 420,690,000,000 supply, 0% tax, PancakeSwap, live chart & roadmap. Read the AI legend in EN/PT/HI." />
+  <meta property="og:title" content="MUPI — Pepe × AI Meme Coin" />
+  <meta property="og:description" content="Created by AI, inspired by Pepe. 420,690,000,000 supply · 0% tax · PancakeSwap V2 · BNB Chain." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="/mupi-logo.png" />
   <link rel="icon" type="image/png" href="/mupi-logo.png" />
   <meta name="theme-color" content="#111827" />
 
-  <meta name="reply-to" content="team@mupicoin.org" />
+  <!-- Schema.org -->
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "MUPI",
-    "url": "https://mupicoin.org/",
-    "email": "team@mupicoin.org",
-    "logo": "https://mupicoin.org/mupi-logo.png",
-    "sameAs": [
-      "https://x.com/mupicoin",
+    "@context":"https://schema.org",
+    "@type":"Organization",
+    "name":"MUPI",
+    "url":"https://mupicoin.org/",
+    "logo":"https://mupicoin.org/mupi-logo.png",
+    "sameAs":[
+      "https://x.com/mupicoin?s=21",
       "https://t.me/mupicoin",
       "https://www.instagram.com/mupicoin",
       "https://www.tiktok.com/@mupicoin",
@@ -31,7 +31,30 @@
   }
   </script>
 
+  <!-- TailwindCSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    .glass{backdrop-filter:saturate(180%) blur(10px); background:rgba(17,24,39,.55)}
+    .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.5rem 1rem;border-radius:.75rem;font-weight:600;transition:.15s transform;box-shadow:0 1px 1px rgba(0,0,0,.1)}
+    .btn:active{transform:scale(.98)}
+    .btn-primary{background:#0ea5e9;color:#fff}
+    .btn-primary:hover{background:#0284c7}
+    .btn-secondary{background:#0f172a;color:#e5e7eb}
+    .btn-secondary:hover{background:#111827}
+    .btn-outline{border:1px solid #334155;color:#e5e7eb}
+    .btn-outline:hover{border-color:#94a3b8}
+    .menu-card{box-shadow:0 10px 30px rgba(0,0,0,.35)}
+    .faq-item summary{cursor:pointer}
+    .ratio-16x9{position:relative; width:100%; padding-top:56.25%}
+    .ratio-16x9 > *{position:absolute; inset:0; width:100%; height:100%}
+    .kicker{letter-spacing:.08em;text-transform:uppercase}
+    .lang-btn{padding:.35rem .55rem;border-radius:.6rem;font-size:.85rem;line-height:1}
+    .lang-list{min-width:9rem}
+    .chart-embed{position:relative;padding-bottom:65%;height:0;overflow:hidden;border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,.25)}
+    @media (max-width:640px){ .chart-embed{padding-bottom:130%} }
+    .hero-img{border-radius:18px;box-shadow:0 18px 60px rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.06)}
+  </style>
 </head>
 <body class="bg-slate-950 text-slate-100 selection:bg-sky-500/30">
 
@@ -40,106 +63,228 @@
     <div class="max-w-6xl mx-auto px-4 py-3 grid grid-cols-3 items-center">
       <a href="/" class="flex items-center gap-3">
         <img src="/mupi-logo.png" alt="MUPI logo" class="w-9 h-9 rounded-xl ring-1 ring-slate-700 object-cover">
-        <span class="sr-only">MUPI Coin</span>
+        <span class="sr-only">MUPI</span>
       </a>
-      <div class="flex justify-center"></div>
-      <div class="flex justify-end">
-        <a href="https://x.com/mupicoin" target="_blank" class="btn btn-primary">Follow us</a>
+
+      <!-- Lang -->
+      <div class="flex justify-center">
+        <div class="relative">
+          <button id="langBtn" class="btn btn-outline lang-btn" aria-haspopup="true" aria-expanded="false">
+            <span id="langBtnLabel">EN</span>
+          </button>
+          <div id="langMenu" class="hidden absolute left-1/2 -translate-x-1/2 mt-2 lang-list rounded-xl border border-slate-800 bg-slate-900/95 menu-card p-2 text-sm">
+            <button class="w-full text-left px-3 py-1.5 rounded-md hover:bg-slate-800" data-lang="en">English</button>
+            <button class="w-full text-left px-3 py-1.5 rounded-md hover:bg-slate-800" data-lang="pt">Português</button>
+            <button class="w-full text-left px-3 py-1.5 rounded-md hover:bg-slate-800" data-lang="hi">हिंदी</button>
+          </div>
+        </div>
       </div>
+
+      <!-- Menu -->
+      <div class="flex justify-end">
+        <div class="relative">
+          <button id="menuBtn" class="btn btn-secondary" aria-haspopup="true" aria-expanded="false">Menu</button>
+          <div id="menuCard" class="hidden absolute right-0 mt-2 w-64 rounded-xl border border-slate-800 bg-slate-900/95 menu-card">
+            <div class="p-3 border-b border-slate-800">
+              <div class="text-xs text-slate-400 mb-1" data-i18n="menu.socials">Socials</div>
+              <div class="grid grid-cols-1 gap-2">
+                <a href="https://x.com/mupicoin?s=21" target="_blank" rel="noopener noreferrer" class="btn btn-outline justify-center">X (Twitter)</a>
+                <a href="https://t.me/mupicoin" target="_blank" rel="noopener noreferrer" class="btn btn-outline justify-center">Telegram</a>
+                <a href="https://www.tiktok.com/@mupicoin" target="_blank" rel="noopener noreferrer" class="btn btn-outline justify-center">TikTok</a>
+                <a href="https://www.instagram.com/mupicoin" target="_blank" rel="noopener noreferrer" class="btn btn-outline justify-center">Instagram</a>
+              </div>
+            </div>
+            <div class="p-3">
+              <div class="text-xs text-slate-400 mb-1" data-i18n="menu.nav">Navigation</div>
+              <div class="grid grid-cols-1 gap-2 text-sm">
+                <a href="#about" class="btn btn-secondary justify-center" data-i18n="nav.about">About</a>
+                <a href="#legend" class="btn btn-secondary justify-center" data-i18n="nav.legend">Legend</a>
+                <a href="#tokenomics" class="btn btn-secondary justify-center" data-i18n="nav.tokenomics">Tokenomics</a>
+                <a href="#how" class="btn btn-secondary justify-center" data-i18n="nav.how">How to buy</a>
+                <a href="#roadmap" class="btn btn-secondary justify-center" data-i18n="nav.roadmap">Roadmap</a>
+                <a href="#media" class="btn btn-secondary justify-center" data-i18n="nav.media">Videos & Podcasts</a>
+                <a href="#faq" class="btn btn-secondary justify-center" data-i18n="nav.faq">FAQ</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </header>
 
   <main class="max-w-6xl mx-auto px-4">
-
     <!-- HERO -->
-    <section class="py-12 grid md:grid-cols-2 gap-8 items-center">
+    <section class="py-10 md:py-14 grid md:grid-cols-2 gap-8 items-center">
       <div>
         <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">
-          MUPI <span class="text-sky-400">(AI x Pepe)</span>
+          MUPI <span class="text-sky-400">(Pepe × AI)</span>
         </h1>
-        <p class="mt-4 text-slate-300 text-lg">
-          The world’s first meme coin fully inspired by <b>AI</b> and the legendary <b>Pepe</b>.  
-          420,690,000,000 supply. Community first. No limits.
+        <p class="mt-4 text-slate-300 text-lg" data-i18n="hero.lead">
+          AI-forged meme coin with Pepe lore. 0% tax, fair tokenomics and an AI-built mini-game coming soon.
         </p>
         <div class="mt-6 flex flex-wrap gap-3">
-          <a id="buyLink" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Buy on PancakeSwap</a>
+          <a id="buyLink" target="_blank" rel="noopener noreferrer" class="btn btn-primary" data-i18n="cta.buy">Buy on PancakeSwap</a>
           <a id="dsLink" target="_blank" rel="noopener noreferrer" class="btn btn-outline">View on DexScreener</a>
           <a class="btn btn-outline" href="https://t.me/mupicoin" target="_blank" rel="noopener noreferrer">Join Telegram</a>
-          <button id="copyBtn" class="btn btn-outline">Copy contract</button>
+          <button id="copyBtn" class="btn btn-outline" data-i18n="cta.copy">Copy token</button>
         </div>
       </div>
-      <img src="/mupi-banner.png" alt="MUPI AI Meme" class="rounded-2xl shadow-lg">
+
+      <!-- Hero image (твоя AI-картинка) -->
+      <img src="/assets/mupi-ai.png" alt="MUPI AI Pepe" class="hero-img w-full h-full object-cover" loading="lazy">
+    </section>
+
+    <!-- LIVE CHART -->
+    <section id="chart" class="py-10 border-t border-slate-800">
+      <h2 class="text-2xl font-bold mb-4">Live Chart</h2>
+      <div class="chart-embed">
+        <iframe
+          src="https://dexscreener.com/bsc/0x008E12860bA1B5Ce56D6dB35d64f99942D6a56bc?embed=1&theme=dark&trades=0"
+          style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+          allow="clipboard-write; clipboard-read; fullscreen"
+        ></iframe>
+      </div>
+      <div class="mt-3 text-sm text-slate-400" data-i18n="chart.note">
+        Data auto-updates from DexScreener. Once multiple pairs exist, token page will list them.
+      </div>
     </section>
 
     <!-- ABOUT -->
-    <section id="about" class="py-12 border-t border-slate-800">
-      <h2 class="text-2xl font-bold mb-3">What is MUPI?</h2>
-      <p class="text-slate-300">
-        MUPI was created as an experiment: <b>what happens if AI gains full creative freedom?</b>  
-        Out of this experiment, Pepe met AI, and MUPI was born.  
-        A meme coin with 420,690,000,000 supply, no taxes, no blacklist, no limits. Just pure community energy.
+    <section id="about" class="py-10 border-t border-slate-800">
+      <h2 class="text-2xl font-bold mb-3" data-i18n="about.title">What is MUPI?</h2>
+      <p class="text-slate-300" data-i18n="about.text">
+        MUPI began as a question: what if AI had absolute creative freedom? The answer was a clean ERC-20 with no taxes, no blacklists, and a meme heart powered by Pepe. Built for everyone — simple, transparent, and fun.
       </p>
     </section>
 
-    <!-- TOKENOMICS -->
-    <section id="tokenomics" class="py-12 border-t border-slate-800">
-      <h2 class="text-2xl font-bold mb-6">Tokenomics</h2>
-      <div class="grid md:grid-cols-3 gap-4">
-        <div class="rounded-2xl border border-slate-800 p-5">
-          <div class="text-slate-400 text-sm">Total Supply</div>
-          <div class="text-2xl font-bold">420,690,000,000 <span class="text-slate-400">MUPI</span></div>
-        </div>
-        <div class="rounded-2xl border border-slate-800 p-5">
-          <div class="text-slate-400 text-sm">Chain</div>
-          <div class="text-2xl font-bold">BNB Smart Chain (BEP-20)</div>
-        </div>
-        <div class="rounded-2xl border border-slate-800 p-5">
-          <div class="text-slate-400 text-sm">Buy/Sell Tax</div>
-          <div class="text-2xl font-bold">0% / 0%</div>
-        </div>
+    <!-- LEGEND -->
+    <section id="legend" class="py-10 border-t border-slate-800">
+      <div class="flex items-center gap-2 text-sky-400 kicker text-xs mb-2" data-i18n="legend.kicker">Pepe × AI — The Origin</div>
+      <div class="space-y-4 text-slate-200">
+        <p data-i18n="legend.p1">Pepe knocked on the doors of the Machine and asked for a coin that didn’t gatekeep. AI crunched a billion memes, removed the fluff, and minted a token for the many — not the few.</p>
+        <p data-i18n="legend.p2">No labyrinthine taxes. No invisible hands. Just code, community, and a promise: <b>MUPI stays simple</b>. The rest is up to us.</p>
+        <p data-i18n="legend.p3">Next, an arcade mini-game <b>MUPI RUN</b>: collect AI-cubes, climb on-chain leaderboards, and unlock NFT roles. Skill earns clout.</p>
       </div>
     </section>
 
+    <!-- TOKENOMICS -->
+    <section id="tokenomics" class="py-10 border-t border-slate-800">
+      <h2 class="text-2xl font-bold mb-6" data-i18n="tok.title">Tokenomics</h2>
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="rounded-2xl border border-slate-800 p-5">
+          <div class="text-slate-400 text-sm" data-i18n="tok.supply">Total Supply</div>
+          <div class="text-2xl font-bold">420,690,000,000 <span class="text-slate-400">MUPI</span></div>
+          <div class="text-xs text-slate-400 mt-1">18 decimals · Fixed</div>
+        </div>
+        <div class="rounded-2xl border border-slate-800 p-5">
+          <div class="text-slate-400 text-sm" data-i18n="tok.chain">Chain</div>
+          <div class="text-2xl font-bold">BNB Smart Chain (BEP-20)</div>
+        </div>
+        <div class="rounded-2xl border border-slate-800 p-5">
+          <div class="text-slate-400 text-sm" data-i18n="tok.tax">Buy/Sell Tax</div>
+          <div class="text-2xl font-bold" data-i18n="tok.zero">0% / 0%</div>
+        </div>
+      </div>
+      <p class="text-xs text-slate-500 mt-4" data-i18n="tok.note">
+        Wallet apps may briefly show $0 until aggregators index trading data.
+      </p>
+      <div class="mt-4 text-sm text-slate-300 font-mono break-all">
+        Contract: <a class="underline decoration-slate-600 hover:decoration-slate-400" target="_blank" href="https://bscscan.com/address/0x008E12860bA1B5Ce56D6dB35d64f99942D6a56bc">0x008E12860bA1B5Ce56D6dB35d64f99942D6a56bc</a>
+      </div>
+    </section>
+
+    <!-- HOW TO BUY -->
+    <section id="how" class="py-10 border-t border-slate-800">
+      <h2 class="text-2xl font-bold mb-4" data-i18n="how.title">How to buy</h2>
+      <ol class="list-decimal pl-6 space-y-2 text-slate-300">
+        <li data-i18n="how.s1">Install MetaMask and create a wallet.</li>
+        <li data-i18n="how.s2">Switch network to BNB Smart Chain.</li>
+        <li data-i18n="how.s3">Top up some BNB for gas.</li>
+        <li data-i18n="how.s4">Open PancakeSwap, import <b>MUPI</b>, and swap BNB → MUPI.</li>
+        <li data-i18n="how.s5">Add MUPI to MetaMask to see your balance.</li>
+      </ol>
+    </section>
+
     <!-- ROADMAP -->
-    <section id="roadmap" class="py-12 border-t border-slate-800">
-      <h2 class="text-2xl font-bold mb-4">Roadmap</h2>
+    <section id="roadmap" class="py-10 border-t border-slate-800">
+      <h2 class="text-2xl font-bold mb-4" data-i18n="road.title">Roadmap</h2>
       <div class="grid md:grid-cols-3 gap-4 text-slate-300">
         <div class="rounded-2xl border border-slate-800 p-5">
-          <div class="text-slate-400 text-sm">Phase 1 — Launch</div>
+          <div class="text-slate-400 text-sm" data-i18n="road.q1">Phase 1 — Launch</div>
           <ul class="list-disc pl-5">
-            <li>Token launch on BSC</li>
-            <li>Liquidity pool on PancakeSwap</li>
-            <li>Website + socials</li>
+            <li data-i18n="road.q1a">Contract verify on BscScan</li>
+            <li data-i18n="road.q1b">PancakeSwap V2 pool (MUPI/BNB)</li>
+            <li data-i18n="road.q1c">Website + socials</li>
           </ul>
         </div>
         <div class="rounded-2xl border border-slate-800 p-5">
-          <div class="text-slate-400 text-sm">Phase 2 — Growth</div>
+          <div class="text-slate-400 text-sm" data-i18n="road.q2">Phase 2 — Growth</div>
           <ul class="list-disc pl-5">
-            <li>Community campaigns & memes</li>
-            <li>DEX tracking & logo</li>
-            <li>Partnerships</li>
+            <li data-i18n="road.q2a">Community campaigns & memes</li>
+            <li data-i18n="road.q2b">DEX tracking & token logo</li>
+            <li data-i18n="road.q2c">Partnerships</li>
           </ul>
         </div>
         <div class="rounded-2xl border border-slate-800 p-5">
-          <div class="text-slate-400 text-sm">Phase 3 — AI Utility</div>
+          <div class="text-slate-400 text-sm" data-i18n="road.q3">Phase 3 — Utility</div>
           <ul class="list-disc pl-5">
-            <li>AI-powered meme generator</li>
-            <li>More listings</li>
-            <li>Merch & events</li>
+            <li data-i18n="road.q3a">MUPI RUN arcade + on-chain leaderboard</li>
+            <li data-i18n="road.q3b">NFT roles for community</li>
+            <li data-i18n="road.q3c">Listings</li>
           </ul>
         </div>
       </div>
     </section>
 
     <!-- SOCIALS -->
-    <section id="socials" class="py-12 border-t border-slate-800">
-      <h2 class="text-2xl font-bold mb-4">Follow & Join</h2>
+    <section id="socials" class="py-10 border-t border-slate-800">
+      <h2 class="text-2xl font-bold mb-4" data-i18n="socials.title">Follow & Join</h2>
       <div class="flex flex-wrap gap-3">
         <a id="bscBtn" target="_blank" rel="noopener noreferrer" class="btn btn-outline">BscScan</a>
-        <a href="https://x.com/mupicoin" target="_blank" rel="noopener noreferrer" class="btn btn-outline">X (Twitter)</a>
+        <a href="https://x.com/mupicoin?s=21" target="_blank" rel="noopener noreferrer" class="btn btn-outline">X (Twitter)</a>
         <a href="https://t.me/mupicoin" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Telegram</a>
-        <a href="https://www.tiktok.com/@mupicoin" target="_blank" rel="noopener noreferrer" class="btn btn-outline">TikTok</a>
         <a href="https://www.instagram.com/mupicoin" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Instagram</a>
+        <a href="https://www.tiktok.com/@mupicoin" target="_blank" rel="noopener noreferrer" class="btn btn-outline">TikTok</a>
+      </div>
+    </section>
+
+    <!-- MEDIA -->
+    <section id="media" class="py-10 border-t border-slate-800">
+      <h2 class="text-2xl font-bold mb-4" data-i18n="nav.media">Videos & Podcasts</h2>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="rounded-2xl border border-slate-800 overflow-hidden ratio-16x9">
+          <iframe src="https://www.youtube.com/embed/EIYYXcT4gFs" title="YouTube video"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="rounded-2xl border border-slate-800 overflow-hidden ratio-16x9">
+          <iframe src="https://open.spotify.com/embed/episode/1HayvwTdA0qA8BSsL0VMro" loading="lazy"
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+        </div>
+      </div>
+      <div class="mt-4 flex gap-3 flex-wrap">
+        <a class="btn btn-primary" href="https://www.youtube.com/watch?v=EIYYXcT4gFs" target="_blank" rel="noopener" data-i18n="media.yt">Open on YouTube</a>
+        <a class="btn btn-outline" href="https://open.spotify.com/episode/1HayvwTdA0qA8BSsL0VMro" target="_blank" rel="noopener" data-i18n="media.sp">Open on Spotify</a>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="py-10 border-t border-slate-800">
+      <h2 class="text-2xl font-bold mb-4" data-i18n="faq.title">FAQ</h2>
+      <div class="space-y-3">
+        <details class="bg-slate-900/40 border border-slate-800 rounded-xl p-4 faq-item">
+          <summary class="font-semibold" data-i18n="faq.q1">Is there any tax?</summary>
+          <p class="mt-2 text-slate-300" data-i18n="faq.a1">No, buy/sell tax is 0%.</p>
+        </details>
+        <details class="bg-slate-900/40 border border-slate-800 rounded-xl p-4 faq-item">
+          <summary class="font-semibold" data-i18n="faq.q2">Why price may show $0 in wallets?</summary>
+          <p class="mt-2 text-slate-300" data-i18n="faq.a2">Aggregators need some trading history before showing price.</p>
+        </details>
+        <details class="bg-slate-900/40 border border-slate-800 rounded-xl p-4 faq-item">
+          <summary class="font-semibold" data-i18n="faq.q3">Where can I trade?</summary>
+          <p class="mt-2 text-slate-300" data-i18n="faq.a3">On PancakeSwap (links above).</p>
+        </details>
       </div>
     </section>
 
@@ -147,33 +292,142 @@
     <footer class="py-10 border-t border-slate-800 text-sm text-slate-400">
       <div class="flex flex-wrap items-center justify-between gap-3">
         <div>
-          © <span id="year"></span> MUPI.
-          <span>Community project. Born from AI x Pepe memes.</span>
+          © <span id="year"></span> MUPI. <span data-i18n="foot.community">Community project. NFA / DYOR.</span>
         </div>
       </div>
     </footer>
-
   </main>
 
   <script>
+    // ====== CONFIG ======
     const CONTRACT_ADDRESS = '0x008E12860bA1B5Ce56D6dB35d64f99942D6a56bc';
     const PANCAKE_SWAP = `https://pancakeswap.finance/swap?outputCurrency=${CONTRACT_ADDRESS}&chain=bsc&inputCurrency=BNB`;
     const DEXSCREENER  = 'https://dexscreener.com/bsc/0x008E12860bA1B5Ce56D6dB35d64f99942D6a56bc';
     const BSCSCAN      = `https://bscscan.com/token/${CONTRACT_ADDRESS}`;
 
-    document.getElementById('year').textContent = new Date().getFullYear();
-    document.getElementById('buyLink').href  = PANCAKE_SWAP;
-    document.getElementById('dsLink').href   = DEXSCREENER;
-    document.getElementById('bscBtn').href   = BSCSCAN;
+    // ====== I18N ======
+    const I18N = {
+      en: {
+        'menu.socials':'Socials','menu.nav':'Navigation',
+        'nav.about':'About','nav.legend':'Legend','nav.tokenomics':'Tokenomics','nav.how':'How to buy','nav.roadmap':'Roadmap','nav.media':'Videos & Podcasts','nav.faq':'FAQ',
+        'hero.lead':'AI-forged meme coin with Pepe lore. 0% tax, fair tokenomics and an AI-built mini-game coming soon.',
+        'cta.buy':'Buy on PancakeSwap','cta.copy':'Copy token',
+        'about.title':'What is MUPI?','about.text':'MUPI began as a question: what if AI had absolute creative freedom? The answer was a clean ERC-20 with no taxes, no blacklists, and a meme heart powered by Pepe. Built for everyone — simple, transparent, and fun.',
+        'legend.kicker':'Pepe × AI — The Origin','legend.p1':'Pepe knocked on the doors of the Machine and asked for a coin that didn’t gatekeep. AI crunched a billion memes, removed the fluff, and minted a token for the many — not the few.',
+        'legend.p2':'No labyrinthine taxes. No invisible hands. Just code, community, and a promise: <b>MUPI stays simple</b>. The rest is up to us.',
+        'legend.p3':'Next, an arcade mini-game <b>MUPI RUN</b>: collect AI-cubes, climb on-chain leaderboards, and unlock NFT roles. Skill earns clout.',
+        'tok.title':'Tokenomics','tok.supply':'Total Supply','tok.chain':'Chain','tok.tax':'Buy/Sell Tax','tok.zero':'0% / 0%','tok.note':'Wallet apps may briefly show $0 until aggregators index trading data.',
+        'how.title':'How to buy','how.s1':'Install MetaMask and create a wallet.','how.s2':'Switch network to BNB Smart Chain.','how.s3':'Top up some BNB for gas.','how.s4':'Open PancakeSwap, import <b>MUPI</b>, and swap BNB → MUPI.','how.s5':'Add MUPI to MetaMask to see your balance.',
+        'road.title':'Roadmap','road.q1':'Phase 1 — Launch','road.q1a':'Contract verify on BscScan','road.q1b':'PancakeSwap V2 pool (MUPI/BNB)','road.q1c':'Website + socials','road.q2':'Phase 2 — Growth','road.q2a':'Community campaigns & memes','road.q2b':'DEX tracking & token logo','road.q2c':'Partnerships','road.q3':'Phase 3 — Utility','road.q3a':'MUPI RUN arcade + on-chain leaderboard','road.q3b':'NFT roles for community','road.q3c':'Listings',
+        'chart.note':'Data auto-updates from DexScreener. Once multiple pairs exist, token page will list them.',
+        'socials.title':'Follow & Join',
+        'faq.title':'FAQ','faq.q1':'Is there any tax?','faq.a1':'No, buy/sell tax is 0%.','faq.q2':'Why price may show $0 in wallets?','faq.a2':'Aggregators need some trading history before showing price.','faq.q3':'Where can I trade?','faq.a3':'On PancakeSwap (links above).',
+        'media.yt':'Open on YouTube','media.sp':'Open on Spotify',
+        'foot.community':'Community project. NFA / DYOR.'
+      },
+      pt: {
+        'menu.socials':'Redes','menu.nav':'Navegação',
+        'nav.about':'Sobre','nav.legend':'Lenda','nav.tokenomics':'Tokenomics','nav.how':'Como comprar','nav.roadmap':'Roteiro','nav.media':'Vídeos & Podcasts','nav.faq':'FAQ',
+        'hero.lead':'Memecoin forjado por IA com a lenda do Pepe. Taxa 0%, tokenomics justa e mini-jogo feito por IA em breve.',
+        'cta.buy':'Comprar no PancakeSwap','cta.copy':'Copiar contrato',
+        'about.title':'O que é MUPI?','about.text':'MUPI nasceu de uma pergunta: e se a IA tivesse liberdade criativa total? A resposta foi um ERC-20 limpo, sem taxas, sem blacklist e com coração de meme movido pelo Pepe. Feito para todos — simples, transparente e divertido.',
+        'legend.kicker':'Pepe × IA — A Origem','legend.p1':'Pepe bateu à porta da Máquina e pediu uma moeda sem barreiras. A IA processou bilhões de memes, tirou o excesso e cunhou um token para muitos — não para poucos.',
+        'legend.p2':'Sem taxas confusas. Sem mãos invisíveis. Apenas código, comunidade e uma promessa: <b>MUPI permanece simples</b>. O resto é com a gente.',
+        'legend.p3':'Depois vem o mini-jogo arcade <b>MUPI RUN</b>: colete cubos de IA, suba no ranking on-chain e desbloqueie papéis NFT.',
+        'tok.title':'Tokenomics','tok.supply':'Oferta total','tok.chain':'Rede','tok.tax':'Taxa Compra/Venda','tok.zero':'0% / 0%','tok.note':'As carteiras podem mostrar $0 até os agregadores indexarem os dados.',
+        'how.title':'Como comprar','how.s1':'Instale a MetaMask e crie uma carteira.','how.s2':'Mude para BNB Smart Chain.','how.s3':'Adicione um pouco de BNB para taxas.','how.s4':'Abra o PancakeSwap, importe <b>MUPI</b> e troque BNB → MUPI.','how.s5':'Adicione MUPI na MetaMask para ver seu saldo.',
+        'road.title':'Roteiro','road.q1':'Fase 1 — Lançamento','road.q1a':'Contrato verificado no BscScan','road.q1b':'Pool no PancakeSwap V2 (MUPI/BNB)','road.q1c':'Site + redes','road.q2':'Fase 2 — Crescimento','road.q2a':'Campanhas da comunidade & memes','road.q2b':'Rastreamento DEX & logo do token','road.q2c':'Parcerias','road.q3':'Fase 3 — Utilidade','road.q3a':'Arcade MUPI RUN + ranking on-chain','road.q3b':'Papéis NFT para a comunidade','road.q3c':'Listagens',
+        'chart.note':'Os dados são atualizados automaticamente pelo DexScreener. Quando houver vários pares, a página do token listará todos.',
+        'socials.title':'Siga & Participe',
+        'faq.title':'FAQ','faq.q1':'Existe alguma taxa?','faq.a1':'Não, compra/venda é 0%.','faq.q2':'Por que a carteira mostra $0?','faq.a2':'Os agregadores precisam de histórico de negociação.','faq.q3':'Onde posso negociar?','faq.a3':'No PancakeSwap (links acima).',
+        'media.yt':'Abrir no YouTube','media.sp':'Abrir no Spotify',
+        'foot.community':'Projeto da comunidade. NFA / DYOR.'
+      },
+      hi: {
+        'menu.socials':'सोशल्स','menu.nav':'नेविगेशन',
+        'nav.about':'अबाउट','nav.legend':'लीजेंड','nav.tokenomics':'टोकनोमिक्स','nav.how':'कैसे खरीदें','nav.roadmap':'रोडमैप','nav.media':'वीडियो व पॉडकास्ट','nav.faq':'FAQ',
+        'hero.lead':'AI और Pepe की लोर से जन्मा मीम-कॉइन। 0% टैक्स, फेयर टोकनोमिक्स और जल्द ही AI-बिल्ट मिनी-गेम।',
+        'cta.buy':'PancakeSwap पर खरीदें','cta.copy':'कॉन्ट्रैक्ट कॉपी करें',
+        'about.title':'MUPI क्या है?','about.text':'MUPI एक सवाल से शुरू हुआ: अगर AI को पूरी रचनात्मक आज़ादी मिले तो? जवाब था एक क्लीन ERC-20 — बिना टैक्स, बिना ब्लैकलिस्ट, और Pepe की मीम-एनर्जी के साथ। सबके लिए बना, सिंपल और ट्रांसपेरेंट।',
+        'legend.kicker':'Pepe × AI — ओरिजिन','legend.p1':'Pepe ने मशीन के दरवाज़े पर दस्तक दी और कहा — एक ऐसा कॉइन बनाओ जो सभी के लिए हो। AI ने करोड़ों मीम्स प्रोसेस किए, फालतू हटाया और भीड़ के लिए टोकन मिंट किया — कुछ खास लोगों के लिए नहीं।',
+        'legend.p2':'न कोई उलझी टैक्सिंग। न कोई इनविज़िबल हैंड। बस कोड, कम्युनिटी और एक वादा: <b>MUPI सादा रहेगा</b>। आगे की कहानी हमारी।',
+        'legend.p3':'अगला कदम, आर्केड मिनी-गेम <b>MUPI RUN</b>: AI-क्यूब्स जमा करें, ऑन-चेन लीडरबोर्ड चढ़ें, और NFT रोल्स अनलॉक करें।',
+        'tok.title':'टोकनोमिक्स','tok.supply':'कुल सप्लाई','tok.chain':'चेन','tok.tax':'खरीद/बिक्री टैक्स','tok.zero':'0% / 0%','tok.note':'एग्रीगेटर डेटा इंडेक्स होने तक वॉलेट में $0 दिख सकता है।',
+        'how.title':'कैसे खरीदें','how.s1':'MetaMask इंस्टॉल करके वॉलेट बनाएं।','how.s2':'नेटवर्क को BNB Smart Chain पर स्विच करें।','how.s3':'गैस के लिए थोड़ा BNB जोड़ें।','how.s4':'PancakeSwap खोलें, <b>MUPI</b> इम्पोर्ट करें और BNB → MUPI स्वैप करें।','how.s5':'MUPI को MetaMask में ऐड करें।',
+        'road.title':'रोडमैप','road.q1':'फेज 1 — लॉन्च','road.q1a':'BscScan पर कॉन्ट्रैक्ट वेरिफाई','road.q1b':'PancakeSwap V2 पूल (MUPI/BNB)','road.q1c':'वेबसाइट + सोशल्स','road.q2':'फेज 2 — ग्रोथ','road.q2a':'कम्युनिटी कैंपेन व मीम्स','road.q2b':'DEX ट्रैकिंग व टोकन लोगो','road.q2c':'पार्टनरशिप','road.q3':'फेज 3 — यूटिलिटी','road.q3a':'MUPI RUN आर्केड + ऑन-चेन लीडरबोर्ड','road.q3b':'कम्युनिटी के लिए NFT रोल्स','road.q3c':'लिस्टिंग्स',
+        'chart.note':'DexScreener से डेटा ऑटो-अपडेट होता है। जब कई पेयर्स होंगे तो टोकन पेज उन्हें दिखाएगा।',
+        'socials.title':'फॉलो करें व जुड़ें',
+        'faq.title':'FAQ','faq.q1':'क्या कोई टैक्स है?','faq.a1':'नहीं, खरीद/बिक्री टैक्स 0% है।','faq.q2':'वॉलेट में $0 क्यों दिखता है?','faq.a2':'एग्रीगेटर को ट्रेडिंग हिस्ट्री चाहिए होती है।','faq.q3':'ट्रेड कहाँ करें?','faq.a3':'PancakeSwap पर (ऊपर दिए लिंक)।',
+        'media.yt':'YouTube पर खोलें','media.sp':'Spotify पर खोलें',
+        'foot.community':'कम्युनिटी प्रोजेक्ट। NFA / DYOR.'
+      }
+    };
 
+    // ====== Links & year ======
+    const buyLink  = document.getElementById('buyLink');
+    const dsLink   = document.getElementById('dsLink');
+    document.getElementById('year').textContent = new Date().getFullYear();
+    buyLink.href  = PANCAKE_SWAP;
+    dsLink.href   = DEXSCREENER;
+
+    const bscBtn = document.getElementById('bscBtn');
+    if(bscBtn) bscBtn.href = BSCSCAN;
+
+    // ====== Lang handling ======
+    const langBtn  = document.getElementById('langBtn');
+    const langMenu = document.getElementById('langMenu');
+    const langBtnLabel = document.getElementById('langBtnLabel');
+
+    function applyLang(code){
+      const fallback = I18N.en;
+      const dict = {...fallback, ...(I18N[code]||{})};
+      document.querySelectorAll('[data-i18n]').forEach(el=>{
+        const key = el.getAttribute('data-i18n');
+        if(dict[key]) el.innerHTML = dict[key];
+      });
+      localStorage.setItem('mupi_lang', code);
+      langBtnLabel.textContent = (code==='hi'?'HI':code).toUpperCase();
+    }
+
+    (function initLang(){
+      const saved = localStorage.getItem('mupi_lang');
+      if(saved){ applyLang(saved); }
+      else {
+        const nav = (navigator.language||'en').slice(0,2).toLowerCase();
+        const map = { 'en':'en','pt':'pt','hi':'hi' };
+        applyLang(map[nav] || 'en');
+      }
+    })();
+
+    langBtn.addEventListener('click', (e)=>{ e.stopPropagation(); langMenu.classList.toggle('hidden'); });
+    langMenu.querySelectorAll('[data-lang]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        applyLang(btn.getAttribute('data-lang'));
+        langMenu.classList.add('hidden');
+      });
+    });
+    document.addEventListener('click', (e)=>{
+      if(!langMenu.contains(e.target) && !langBtn.contains(e.target)) langMenu.classList.add('hidden');
+    });
+
+    // ====== Menu dropdown ======
+    const menuBtn  = document.getElementById('menuBtn');
+    const menuCard = document.getElementById('menuCard');
+    document.addEventListener('click', (e)=>{
+      const isBtn = menuBtn.contains(e.target);
+      const isMenu = menuCard.contains(e.target);
+      if(isBtn){ menuCard.classList.toggle('hidden'); return; }
+      if(!isMenu) menuCard.classList.add('hidden');
+    });
+
+    // ====== Copy contract ======
     const copyBtn = document.getElementById('copyBtn');
     copyBtn.addEventListener('click', ()=>{
       navigator.clipboard.writeText(CONTRACT_ADDRESS).then(()=>{
         copyBtn.textContent = 'Copied!';
-        setTimeout(()=> copyBtn.textContent = 'Copy contract', 1500);
+        setTimeout(()=> applyLang(localStorage.getItem('mupi_lang')||'en'), 1200);
       });
     });
   </script>
 </body>
 </html>
-
