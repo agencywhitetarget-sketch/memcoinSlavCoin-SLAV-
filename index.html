@@ -3,66 +3,35 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SlavCoin (SLAV) — Meme Coin on BNB Chain</title>
-  <meta name="description" content="SlavCoin (SLAV) — community-driven meme coin on BNB Chain. Buy on PancakeSwap, see tokenomics, roadmap & FAQ. Multilingual: EN, PT, ES." />
-  <meta property="og:title" content="SlavCoin (SLAV) — Meme Coin on BNB Chain" />
-  <meta property="og:description" content="Buy SLAV on PancakeSwap. Transparent burn & circulating supply. Multilingual site." />
+  <title>MUPI — AI x Pepe Meme Coin on BNB Chain</title>
+  <meta name="description" content="MUPI — the first AI x Pepe meme coin, born from the fusion of artificial intelligence and meme culture. 420,690,000,000 supply. Buy on PancakeSwap, check tokenomics, roadmap & FAQ." />
+  <meta property="og:title" content="MUPI — AI x Pepe Meme Coin" />
+  <meta property="og:description" content="Created by AI, inspired by Pepe. Community-driven meme coin on BNB Chain." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="/logo.png" />
-  <link rel="icon" type="image/png" href="/logo.png" />
+  <meta property="og:image" content="/mupi-logo.png" />
+  <link rel="icon" type="image/png" href="/mupi-logo.png" />
   <meta name="theme-color" content="#111827" />
 
-  <meta name="reply-to" content="slavcoinfun@gmail.com" />
+  <meta name="reply-to" content="team@mupicoin.org" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "SlavCoin",
-    "url": "https://slavcoin.fun/",
-    "email": "slavcoinfun@gmail.com",
-    "logo": "https://slavcoin.fun/logo.png",
+    "name": "MUPI",
+    "url": "https://mupicoin.org/",
+    "email": "team@mupicoin.org",
+    "logo": "https://mupicoin.org/mupi-logo.png",
     "sameAs": [
-      "https://x.com/memecoinslav",
-      "https://www.tiktok.com/@slavcoin",
-      "https://www.instagram.com/memecoinslav",
-      "https://bscscan.com/token/0x7f0a062c4c9611c487461497f6ec9181518844ad",
-      "https://t.me/memeslavcoin"
+      "https://x.com/mupicoin",
+      "https://t.me/mupicoin",
+      "https://www.instagram.com/mupicoin",
+      "https://www.tiktok.com/@mupicoin",
+      "https://bscscan.com/token/0x008E12860bA1B5Ce56D6dB35d64f99942D6a56bc"
     ]
   }
   </script>
 
-  <!-- TailwindCSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <style>
-    .glass{backdrop-filter:saturate(180%) blur(10px); background:rgba(17,24,39,.55)}
-    .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.5rem 1rem;border-radius:.75rem;font-weight:600;transition:.15s transform;box-shadow:0 1px 1px rgba(0,0,0,.1)}
-    .btn:active{transform:scale(.98)}
-    .btn-primary{background:#0ea5e9;color:#fff}
-    .btn-primary:hover{background:#0284c7}
-    .btn-secondary{background:#0f172a;color:#e5e7eb}
-    .btn-secondary:hover{background:#111827}
-    .btn-outline{border:1px solid #334155;color:#e5e7eb}
-    .btn-outline:hover{border-color:#94a3b8}
-    .menu-card{box-shadow:0 10px 30px rgba(0,0,0,.35)}
-    .faq-item summary{cursor:pointer}
-    .ratio-16x9{position:relative; width:100%; padding-top:56.25%}
-    .ratio-16x9 > *{position:absolute; inset:0; width:100%; height:100%}
-    .kicker{letter-spacing:.08em;text-transform:uppercase}
-    .lang-btn{padding:.35rem .55rem;border-radius:.6rem;font-size:.85rem;line-height:1}
-    .lang-list{min-width:9rem}
-    /* bigger chart on mobile */
-    .chart-embed{position:relative;padding-bottom:65%;height:0;overflow:hidden;border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,.25)}
-    @media (max-width:640px){ .chart-embed{padding-bottom:130%} } /* ≈2x */
-  </style>
-  <!-- Twitter conversion tracking base code -->
-<script>
-!function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
-},s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='https://static.ads-twitter.com/uwt.js',
-a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
-twq('config','qfixf');
-</script>
-<!-- End Twitter conversion tracking base code -->
 </head>
 <body class="bg-slate-950 text-slate-100 selection:bg-sky-500/30">
 
@@ -70,392 +39,141 @@ twq('config','qfixf');
   <header class="sticky top-0 z-40 glass border-b border-slate-800/70">
     <div class="max-w-6xl mx-auto px-4 py-3 grid grid-cols-3 items-center">
       <a href="/" class="flex items-center gap-3">
-        <img src="/logo.png" alt="SLAV logo" class="w-9 h-9 rounded-xl ring-1 ring-slate-700 object-cover">
-        <span class="sr-only">SlavCoin (SLAV)</span>
+        <img src="/mupi-logo.png" alt="MUPI logo" class="w-9 h-9 rounded-xl ring-1 ring-slate-700 object-cover">
+        <span class="sr-only">MUPI Coin</span>
       </a>
-
-      <!-- Lang -->
-      <div class="flex justify-center">
-        <div class="relative">
-          <button id="langBtn" class="btn btn-outline lang-btn" aria-haspopup="true" aria-expanded="false">
-            <span id="langBtnLabel">EN</span>
-          </button>
-          <div id="langMenu" class="hidden absolute left-1/2 -translate-x-1/2 mt-2 lang-list rounded-xl border border-slate-800 bg-slate-900/95 menu-card p-2 text-sm">
-            <button class="w-full text-left px-3 py-1.5 rounded-md hover:bg-slate-800" data-lang="en">English</button>
-            <button class="w-full text-left px-3 py-1.5 rounded-md hover:bg-slate-800" data-lang="pt">Português</button>
-            <button class="w-full text-left px-3 py-1.5 rounded-md hover:bg-slate-800" data-lang="es">Español</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Menu -->
+      <div class="flex justify-center"></div>
       <div class="flex justify-end">
-        <div class="relative">
-          <button id="menuBtn" class="btn btn-secondary" aria-haspopup="true" aria-expanded="false">Menu</button>
-          <div id="menuCard" class="hidden absolute right-0 mt-2 w-64 rounded-xl border border-slate-800 bg-slate-900/95 menu-card">
-            <div class="p-3 border-b border-slate-800">
-              <div class="text-xs text-slate-400 mb-1" data-i18n="menu.socials">Socials</div>
-              <div class="grid grid-cols-1 gap-2">
-                <a href="https://x.com/memecoinslav" target="_blank" rel="noopener noreferrer" class="btn btn-outline justify-center">X (Twitter)</a>
-                <a href="https://t.me/memeslavcoin" target="_blank" rel="noopener noreferrer" class="btn btn-outline justify-center">Telegram</a>
-                <a href="https://www.tiktok.com/@slavcoin" target="_blank" rel="noopener noreferrer" class="btn btn-outline justify-center">TikTok</a>
-                <a href="https://www.instagram.com/memecoinslav" target="_blank" rel="noopener noreferrer" class="btn btn-outline justify-center">Instagram</a>
-              </div>
-            </div>
-            <div class="p-3">
-              <div class="text-xs text-slate-400 mb-1" data-i18n="menu.nav">Navigation</div>
-              <div class="grid grid-cols-1 gap-2 text-sm">
-                <a href="#about" class="btn btn-secondary justify-center" data-i18n="nav.about">About</a>
-                <a href="#burn" class="btn btn-secondary justify-center" data-i18n="nav.burn">Big News</a>
-                <a href="#tokenomics" class="btn btn-secondary justify-center" data-i18n="nav.tokenomics">Tokenomics</a>
-                <a href="#how" class="btn btn-secondary justify-center" data-i18n="nav.how">How to buy</a>
-                <a href="#roadmap" class="btn btn-secondary justify-center" data-i18n="nav.roadmap">Roadmap</a>
-                <a href="#media" class="btn btn-secondary justify-center" data-i18n="nav.media">Videos & Podcasts</a>
-                <a href="#faq" class="btn btn-secondary justify-center" data-i18n="nav.faq">FAQ</a>
-              </div>
-            </div>
-          </div>
-        </div>
+        <a href="https://x.com/mupicoin" target="_blank" class="btn btn-primary">Follow us</a>
       </div>
-
     </div>
   </header>
 
   <main class="max-w-6xl mx-auto px-4">
+
     <!-- HERO -->
-    <section class="py-10 md:py-14 grid md:grid-cols-2 gap-8 items-center">
+    <section class="py-12 grid md:grid-cols-2 gap-8 items-center">
       <div>
         <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">
-          SlavCoin <span class="text-sky-400">(SLAV)</span>
+          MUPI <span class="text-sky-400">(AI x Pepe)</span>
         </h1>
-        <p class="mt-4 text-slate-300 text-lg" data-i18n="hero.lead">
-          The unstoppable Slav-energy meme coin on BNB Chain. Community first. Zero fluff.
+        <p class="mt-4 text-slate-300 text-lg">
+          The world’s first meme coin fully inspired by <b>AI</b> and the legendary <b>Pepe</b>.  
+          420,690,000,000 supply. Community first. No limits.
         </p>
         <div class="mt-6 flex flex-wrap gap-3">
-          <a id="buyLink" target="_blank" rel="noopener noreferrer" class="btn btn-primary" data-i18n="cta.buy">Buy on PancakeSwap</a>
+          <a id="buyLink" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Buy on PancakeSwap</a>
           <a id="dsLink" target="_blank" rel="noopener noreferrer" class="btn btn-outline">View on DexScreener</a>
-          <a class="btn btn-outline" href="https://t.me/memeslavcoin" target="_blank" rel="noopener noreferrer">Join Telegram</a>
-          <button id="copyBtn" class="btn btn-outline" data-i18n="cta.copy">Copy token</button>
+          <a class="btn btn-outline" href="https://t.me/mupicoin" target="_blank" rel="noopener noreferrer">Join Telegram</a>
+          <button id="copyBtn" class="btn btn-outline">Copy contract</button>
         </div>
       </div>
-
-      <!-- Hero video -->
-     <video
-  src="assets/video/market.mp4"
-  autoplay
-  muted
-  loop
-  playsinline
-  class="w-full h-full object-cover"
-  poster="/logo.png">  <!-- опційно: кадр-заставка -->
-</video>
-      
-    <!-- LIVE CHART -->
-    <section id="chart" class="py-10 border-t border-slate-800">
-      <h2 class="text-2xl font-bold mb-4">Live Chart</h2>
-      <div class="chart-embed">
-        <iframe
-          src="https://dexscreener.com/bsc/0x9b798Cc83621A83C90AdCE1B558e0A8E69eB3429?embed=1&theme=dark&trades=0"
-          style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
-          allow="clipboard-write; clipboard-read; fullscreen"
-        ></iframe>
-      </div>
-      <div class="mt-3 text-sm text-slate-400">Data auto-updates from DexScreener (pair: SLAV/BNB).</div>
+      <img src="/mupi-banner.png" alt="MUPI AI Meme" class="rounded-2xl shadow-lg">
     </section>
 
     <!-- ABOUT -->
-    <section id="about" class="py-10 border-t border-slate-800">
-      <h2 class="text-2xl font-bold mb-3" data-i18n="about.title">What is SlavCoin?</h2>
-      <p class="text-slate-300" data-i18n="about.text">
-        SLAV is a community-driven meme coin built for fun and utility on BNB Smart Chain. Zero taxes, transparent liquidity, open community. Swap on PancakeSwap and join the movement.
+    <section id="about" class="py-12 border-t border-slate-800">
+      <h2 class="text-2xl font-bold mb-3">What is MUPI?</h2>
+      <p class="text-slate-300">
+        MUPI was created as an experiment: <b>what happens if AI gains full creative freedom?</b>  
+        Out of this experiment, Pepe met AI, and MUPI was born.  
+        A meme coin with 420,690,000,000 supply, no taxes, no blacklist, no limits. Just pure community energy.
       </p>
-    </section>
-
-    <!-- BURN -->
-    <section id="burn" class="py-10 border-t border-slate-800">
-      <div class="flex items-center gap-2 text-sky-400 kicker text-xs mb-2" data-i18n="burn.kicker">🔥 Big news for our community!</div>
-      <div class="space-y-4 text-slate-200">
-        <p data-i18n="burn.p1">At launch, the total supply of <b>1,000,000,000 SLAV</b> was created. But we made a bold decision: to burn the majority of the supply — <b>600,000,000 SLAV</b> have been permanently sent to the burn address:</p>
-        <p class="font-mono bg-slate-900/60 border border-slate-800 rounded-lg p-3 text-sky-300 break-all" data-i18n="burn.addr">👉 0x000000000000000000000000000000000000dEaD</p>
-        <p data-i18n="burn.p2">This is fully verifiable on the blockchain. Everyone can check it themselves.</p>
-        <p><b data-i18n="burn.p3bold">Now, only 400,000,000 SLAV remain in circulation.</b> <span data-i18n="burn.p3rest">This isn’t just a number — it’s proof that we are building a transparent and trustworthy project, where trust comes first.</span></p>
-        <p data-i18n="burn.p4">Our vision for SLAV is not to be “just another token.” We aim to make SLAV a legend in the crypto world. Our journey is only beginning, and we are committed to creating a strong community united by growth, transparency, and belief in the future.</p>
-        <ul class="list-disc pl-6">
-          <li data-i18n="burn.li1">💎 We believe in the future of SLAV.</li>
-          <li data-i18n="burn.li2">💎 We lead by example with transparent actions.</li>
-          <li data-i18n="burn.li3">💎 We know that with your support, this project will grow into something extraordinary.</li>
-        </ul>
-        <p class="text-slate-300" data-i18n="burn.p5">To everyone who shares our values:<br>— Follow us,<br>— Share your thoughts in the comments,<br>— Support this mission.</p>
-        <p class="text-slate-300" data-i18n="burn.p6">Together, we can turn SLAV into a story the whole world will talk about 🌍🚀</p>
-
-        <div class="mt-4 flex flex-wrap gap-3">
-          <a class="btn btn-primary" href="https://bscscan.com/address/0x000000000000000000000000000000000000dEaD" target="_blank" rel="noopener" data-i18n="burn.cta1">View burn address</a>
-          <a class="btn btn-outline" href="https://bscscan.com/token/0x7f0a062c4c9611c487461497f6ec9181518844ad" target="_blank" rel="noopener" data-i18n="burn.cta2">Token on BscScan</a>
-        </div>
-      </div>
     </section>
 
     <!-- TOKENOMICS -->
-    <section id="tokenomics" class="py-10 border-t border-slate-800">
-      <h2 class="text-2xl font-bold mb-6" data-i18n="tok.title">Tokenomics</h2>
+    <section id="tokenomics" class="py-12 border-t border-slate-800">
+      <h2 class="text-2xl font-bold mb-6">Tokenomics</h2>
       <div class="grid md:grid-cols-3 gap-4">
         <div class="rounded-2xl border border-slate-800 p-5">
-          <div class="text-slate-400 text-sm" data-i18n="tok.supply">Total Supply (circulating)</div>
-          <div class="text-2xl font-bold">400,000,000 <span class="text-slate-400">SLAV</span></div>
-          <div class="text-xs text-slate-400 mt-1" data-i18n="tok.afterburn">After burn of 600,000,000 SLAV</div>
+          <div class="text-slate-400 text-sm">Total Supply</div>
+          <div class="text-2xl font-bold">420,690,000,000 <span class="text-slate-400">MUPI</span></div>
         </div>
         <div class="rounded-2xl border border-slate-800 p-5">
-          <div class="text-slate-400 text-sm" data-i18n="tok.chain">Chain</div>
+          <div class="text-slate-400 text-sm">Chain</div>
           <div class="text-2xl font-bold">BNB Smart Chain (BEP-20)</div>
         </div>
         <div class="rounded-2xl border border-slate-800 p-5">
-          <div class="text-slate-400 text-sm" data-i18n="tok.tax">Buy/Sell Tax</div>
-          <div class="text-2xl font-bold" data-i18n="tok.zero">0% / 0%</div>
+          <div class="text-slate-400 text-sm">Buy/Sell Tax</div>
+          <div class="text-2xl font-bold">0% / 0%</div>
         </div>
       </div>
-      <p class="text-xs text-slate-500 mt-4" data-i18n="tok.note">
-        NOTE: Wallet price may show $0 until aggregators index enough trading data.
-      </p>
-    </section>
-
-    <!-- HOW TO BUY -->
-    <section id="how" class="py-10 border-t border-slate-800">
-      <h2 class="text-2xl font-bold mb-4" data-i18n="how.title">How to buy</h2>
-      <ol class="list-decimal pl-6 space-y-2 text-slate-300">
-        <li data-i18n="how.s1">Install MetaMask and create a wallet.</li>
-        <li data-i18n="how.s2">Switch to BNB Smart Chain.</li>
-        <li data-i18n="how.s3">Top up a little BNB for gas.</li>
-        <li data-i18n="how.s4">Open PancakeSwap, import SLAV and swap BNB → SLAV.</li>
-        <li data-i18n="how.s5">Click “Add SLAV to MetaMask” to see your balance.</li>
-      </ol>
     </section>
 
     <!-- ROADMAP -->
-    <section id="roadmap" class="py-10 border-t border-slate-800">
-      <h2 class="text-2xl font-bold mb-4" data-i18n="road.title">Roadmap</h2>
+    <section id="roadmap" class="py-12 border-t border-slate-800">
+      <h2 class="text-2xl font-bold mb-4">Roadmap</h2>
       <div class="grid md:grid-cols-3 gap-4 text-slate-300">
         <div class="rounded-2xl border border-slate-800 p-5">
-          <div class="text-slate-400 text-sm" data-i18n="road.q1">Phase 1 — Launch</div>
+          <div class="text-slate-400 text-sm">Phase 1 — Launch</div>
           <ul class="list-disc pl-5">
-            <li data-i18n="road.q1a">Token launch on BSC</li>
-            <li data-i18n="road.q1b">Initial liquidity</li>
-            <li data-i18n="road.q1c">Website + socials</li>
+            <li>Token launch on BSC</li>
+            <li>Liquidity pool on PancakeSwap</li>
+            <li>Website + socials</li>
           </ul>
         </div>
         <div class="rounded-2xl border border-slate-800 p-5">
-          <div class="text-slate-400 text-sm" data-i18n="road.q2">Phase 2 — Growth</div>
+          <div class="text-slate-400 text-sm">Phase 2 — Growth</div>
           <ul class="list-disc pl-5">
-            <li data-i18n="road.q2a">Community campaigns & memes</li>
-            <li data-i18n="road.q2b">DEX tracking & token logo</li>
-            <li data-i18n="road.q2c">Partnerships</li>
+            <li>Community campaigns & memes</li>
+            <li>DEX tracking & logo</li>
+            <li>Partnerships</li>
           </ul>
         </div>
         <div class="rounded-2xl border border-slate-800 p-5">
-          <div class="text-slate-400 text-sm" data-i18n="road.q3">Phase 3 — Utility</div>
+          <div class="text-slate-400 text-sm">Phase 3 — AI Utility</div>
           <ul class="list-disc pl-5">
-            <li data-i18n="road.q3a">Staking/utility exploration</li>
-            <li data-i18n="road.q3b">More listings</li>
-            <li data-i18n="road.q3c">Merch & events</li>
+            <li>AI-powered meme generator</li>
+            <li>More listings</li>
+            <li>Merch & events</li>
           </ul>
         </div>
       </div>
     </section>
 
-    <!-- SOCIALS (MOVED UP) -->
-    <section id="socials" class="py-10 border-t border-slate-800">
+    <!-- SOCIALS -->
+    <section id="socials" class="py-12 border-t border-slate-800">
       <h2 class="text-2xl font-bold mb-4">Follow & Join</h2>
       <div class="flex flex-wrap gap-3">
         <a id="bscBtn" target="_blank" rel="noopener noreferrer" class="btn btn-outline">BscScan</a>
-        <a href="https://x.com/memecoinslav" target="_blank" rel="noopener noreferrer" class="btn btn-outline">X (Twitter)</a>
-        <a href="https://t.me/memeslavcoin" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Telegram</a>
-        <a href="https://www.tiktok.com/@slavcoin" target="_blank" rel="noopener noreferrer" class="btn btn-outline">TikTok</a>
-        <a href="https://www.instagram.com/memecoinslav" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Instagram</a>
+        <a href="https://x.com/mupicoin" target="_blank" rel="noopener noreferrer" class="btn btn-outline">X (Twitter)</a>
+        <a href="https://t.me/mupicoin" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Telegram</a>
+        <a href="https://www.tiktok.com/@mupicoin" target="_blank" rel="noopener noreferrer" class="btn btn-outline">TikTok</a>
+        <a href="https://www.instagram.com/mupicoin" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Instagram</a>
       </div>
     </section>
 
-    <!-- MEDIA -->
-    <section id="media" class="py-10 border-t border-slate-800">
-      <h2 class="text-2xl font-bold mb-4" data-i18n="nav.media">Videos & Podcasts</h2>
-      <div class="grid md:grid-cols-2 gap-4">
-        <div class="rounded-2xl border border-slate-800 overflow-hidden ratio-16x9">
-          <iframe src="https://www.youtube.com/embed/EIYYXcT4gFs" title="YouTube video"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowfullscreen loading="lazy"></iframe>
-        </div>
-        <div class="rounded-2xl border border-slate-800 overflow-hidden ratio-16x9">
-          <iframe src="https://open.spotify.com/embed/episode/1HayvwTdA0qA8BSsL0VMro" loading="lazy"
-                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-        </div>
-      </div>
-      <div class="mt-4 flex gap-3 flex-wrap">
-        <a class="btn btn-primary" href="https://www.youtube.com/watch?v=EIYYXcT4gFs" target="_blank" rel="noopener" data-i18n="media.yt">Open on YouTube</a>
-        <a class="btn btn-outline" href="https://open.spotify.com/episode/1HayvwTdA0qA8BSsL0VMro" target="_blank" rel="noopener" data-i18n="media.sp">Open on Spotify</a>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section id="faq" class="py-10 border-t border-slate-800">
-      <h2 class="text-2xl font-bold mb-4" data-i18n="faq.title">FAQ</h2>
-      <div class="space-y-3">
-        <details class="bg-slate-900/40 border border-slate-800 rounded-xl p-4 faq-item">
-          <summary class="font-semibold" data-i18n="faq.q1">Is there any tax?</summary>
-          <p class="mt-2 text-slate-300" data-i18n="faq.a1">No, buy/sell tax is 0%.</p>
-        </details>
-        <details class="bg-slate-900/40 border border-slate-800 rounded-xl p-4 faq-item">
-          <summary class="font-semibold" data-i18n="faq.q2">Why price may show $0 in wallets?</summary>
-          <p class="mt-2 text-slate-300" data-i18n="faq.a2">Aggregators need some trading history before showing price.</p>
-        </details>
-        <details class="bg-slate-900/40 border border-slate-800 rounded-xl p-4 faq-item">
-          <summary class="font-semibold" data-i18n="faq.q3">Where can I trade?</summary>
-          <p class="mt-2 text-slate-300" data-i18n="faq.a3">On PancakeSwap (links above).</p>
-        </details>
-      </div>
-    </section>
-
-    <!-- FOOTER (clean) -->
+    <!-- FOOTER -->
     <footer class="py-10 border-t border-slate-800 text-sm text-slate-400">
       <div class="flex flex-wrap items-center justify-between gap-3">
         <div>
-          © <span id="year"></span> SLAV.
-          <span data-i18n="foot.community">Community project. No promises, just memes.</span>
-          <span class="ml-3">
-            Official contact:
-            <a class="u-email underline decoration-slate-600 hover:decoration-slate-400"
-               href="mailto:slavcoinfun@gmail.com">slavcoinfun@gmail.com</a>
-          </span>
+          © <span id="year"></span> MUPI.
+          <span>Community project. Born from AI x Pepe memes.</span>
         </div>
       </div>
     </footer>
+
   </main>
 
   <script>
-    // ====== CONFIG ======
-    const CONTRACT_ADDRESS = '0x7f0a062c4c9611c487461497f6ec9181518844ad';
-    const PANCAKE_SWAP = `https://pancakeswap.finance/swap?outputCurrency=${CONTRACT_ADDRESS}&chain=bsc`;
-    const DEXSCREENER  = 'https://dexscreener.com/bsc/0x9b798Cc83621A83C90AdCE1B558e0A8E69eB3429';
+    const CONTRACT_ADDRESS = '0x008E12860bA1B5Ce56D6dB35d64f99942D6a56bc';
+    const PANCAKE_SWAP = `https://pancakeswap.finance/swap?outputCurrency=${CONTRACT_ADDRESS}&chain=bsc&inputCurrency=BNB`;
+    const DEXSCREENER  = 'https://dexscreener.com/bsc/0x008E12860bA1B5Ce56D6dB35d64f99942D6a56bc';
     const BSCSCAN      = `https://bscscan.com/token/${CONTRACT_ADDRESS}`;
 
-    // ====== I18N ======
-    const I18N = {
-      en: {
-        'menu.socials':'Socials','menu.nav':'Navigation',
-        'nav.about':'About','nav.burn':'Big News','nav.tokenomics':'Tokenomics','nav.how':'How to buy','nav.roadmap':'Roadmap','nav.media':'Videos & Podcasts','nav.faq':'FAQ',
-        'hero.lead':'The unstoppable Slav-energy meme coin on BNB Chain. Community first. Zero fluff.',
-        'cta.buy':'Buy on PancakeSwap','cta.copy':'Copy token',
-        'about.title':'What is SlavCoin?','about.text':'SLAV is a community-driven meme coin built for fun and utility on BNB Smart Chain. Zero taxes, transparent liquidity, open community. Swap on PancakeSwap and join the movement.',
-        'burn.kicker':'🔥 Big news for our community!',
-        'burn.p1':'At launch, the total supply of <b>1,000,000,000 SLAV</b> was created. But we made a bold decision: to burn the majority of the supply — <b>600,000,000 SLAV</b> have been permanently sent to the burn address:',
-        'burn.addr':'👉 0x000000000000000000000000000000000000dEaD',
-        'burn.p2':'This is fully verifiable on the blockchain. Everyone can check it themselves.',
-        'burn.p3bold':'Now, only 400,000,000 SLAV remain in circulation.',
-        'burn.p3rest':'This isn’t just a number — it’s proof that we are building a transparent and trustworthy project, where trust comes first.',
-        'burn.p4':'Our vision for SLAV is not to be “just another token.” We aim to make SLAV a legend in the crypto world. Our journey is only beginning, and we are committed to creating a strong community united by growth, transparency, and belief in the future.',
-        'burn.li1':'💎 We believe in the future of SLAV.','burn.li2':'💎 We lead by example with transparent actions.','burn.li3':'💎 We know that with your support, this project will grow into something extraordinary.',
-        'burn.p5':'To everyone who shares our values:<br>— Follow us,<br>— Share your thoughts in the comments,<br>— Support this mission.',
-        'burn.p6':'Together, we can turn SLAV into a story the whole world will talk about 🌍🚀',
-        'burn.cta1':'View burn address','burn.cta2':'Token on BscScan',
-        'tok.title':'Tokenomics','tok.supply':'Total Supply (circulating)','tok.afterburn':'After burn of 600,000,000 SLAV','tok.chain':'Chain','tok.tax':'Buy/Sell Tax','tok.zero':'0% / 0%','tok.note':'NOTE: Wallet price may show $0 until aggregators index enough trading data.',
-        'how.title':'How to buy','how.s1':'Install MetaMask and create a wallet.','how.s2':'Switch to BNB Smart Chain.','how.s3':'Top up a little BNB for gas.','how.s4':'Open PancakeSwap, import SLAV and swap BNB → SLAV.','how.s5':'Click “Add SLAV to MetaMask” to see your balance.',
-        'road.title':'Roadmap','road.q1':'Phase 1 — Launch','road.q1a':'Token launch on BSC','road.q1b':'Initial liquidity','road.q1c':'Website + socials','road.q2':'Phase 2 — Growth','road.q2a':'Community campaigns & memes','road.q2b':'DEX tracking & token logo','road.q2c':'Partnerships','road.q3':'Phase 3 — Utility','road.q3a':'Staking/utility exploration','road.q3b':'More listings','road.q3c':'Merch & events',
-        'faq.title':'FAQ','faq.q1':'Is there any tax?','faq.a1':'No, buy/sell tax is 0%.','faq.q2':'Why price may show $0 in wallets?','faq.a2':'Aggregators need some trading history before showing price.','faq.q3':'Where can I trade?','faq.a3':'On PancakeSwap (links above).',
-        'media.yt':'Open on YouTube','media.sp':'Open on Spotify',
-        'foot.community':'Community project. No promises, just memes.'
-      },
-      pt: {
-        'menu.socials':'Redes','menu.nav':'Navegação',
-        'nav.about':'Sobre','nav.burn':'Grandes notícias','nav.tokenomics':'Tokenomics','nav.how':'Como comprar','nav.roadmap':'Roteiro','nav.media':'Vídeos & Podcasts','nav.faq':'FAQ',
-        'hero.lead':'O memecoin com energia Slav na BNB Chain. Comunidade em primeiro lugar.',
-        'cta.buy':'Comprar no PancakeSwap','cta.copy':'Copiar contrato',
-        'about.title':'O que é a SlavCoin?','about.text':'SLAV é um memecoin orientado pela comunidade na BNB Smart Chain. Zero taxas, liquidez transparente, comunidade aberta.',
-        'burn.kicker':'🔥 Grandes notícias para a nossa comunidade!',
-        'burn.p3bold':'Agora, apenas 400.000.000 SLAV estão em circulação.',
-        'tok.title':'Tokenomics','tok.supply':'Oferta total (em circulação)','tok.chain':'Rede','tok.tax':'Taxa de compra/venda','tok.zero':'0% / 0%',
-        'how.title':'Como comprar',
-        'faq.title':'FAQ','faq.q1':'Existe alguma taxa?','faq.a1':'Não, 0%.','faq.q2':'Por que a carteira pode mostrar $0?','faq.a2':'Agregadores precisam de histórico de negociações.','faq.q3':'Onde negociar?','faq.a3':'No PancakeSwap.',
-        'media.yt':'Abrir no YouTube','media.sp':'Abrir no Spotify',
-        'foot.community':'Projeto da comunidade. Sem promessas — apenas memes.'
-      },
-      es: {
-        'menu.socials':'Redes','menu.nav':'Navegación',
-        'nav.about':'Acerca de','nav.burn':'Grandes noticias','nav.tokenomics':'Tokenomics','nav.how':'Cómo comprar','nav.roadmap':'Hoja de ruta','nav.media':'Videos y podcasts','nav.faq':'FAQ',
-        'hero.lead':'El memecoin con energía Slav en BNB Chain. La comunidad primero.',
-        'cta.buy':'Comprar en PancakeSwap','cta.copy':'Copiar contrato',
-        'about.title':'¿Qué es SlavCoin?','about.text':'SLAV es un memecoin impulsado por la comunidad en BNB Smart Chain. Cero impuestos, liquidez transparente, comunidad abierta.',
-        'burn.kicker':'🔥 ¡Grandes noticias para nuestra comunidad!',
-        'burn.p3bold':'Ahora solo circulan 400.000.000 SLAV.',
-        'tok.title':'Tokenomics','tok.supply':'Suministro total (circulante)','tok.chain':'Red','tok.tax':'Impuesto compra/venta','tok.zero':'0% / 0%',
-        'how.title':'Cómo comprar',
-        'faq.title':'FAQ','faq.q1':'¿Hay impuestos?','faq.a1':'No, 0%.','faq.q2':'¿Por qué la cartera puede mostrar $0?','faq.a2':'Los agregadores necesitan historial de comercio.','faq.q3':'¿Dónde operar?','faq.a3':'En PancakeSwap.',
-        'media.yt':'Abrir en YouTube','media.sp':'Abrir en Spotify',
-        'foot.community':'Proyecto de la comunidad. Sin promesas, solo memes.'
-      }
-    };
-
-    // ====== Links & year ======
-    const buyLink  = document.getElementById('buyLink');
-    const dsLink   = document.getElementById('dsLink');
     document.getElementById('year').textContent = new Date().getFullYear();
-    buyLink.href  = PANCAKE_SWAP;
-    dsLink.href   = DEXSCREENER;
+    document.getElementById('buyLink').href  = PANCAKE_SWAP;
+    document.getElementById('dsLink').href   = DEXSCREENER;
+    document.getElementById('bscBtn').href   = BSCSCAN;
 
-    const bscBtn = document.getElementById('bscBtn');
-    if(bscBtn) bscBtn.href = BSCSCAN;
-
-    // ====== Lang handling ======
-    const langBtn  = document.getElementById('langBtn');
-    const langMenu = document.getElementById('langMenu');
-    const langBtnLabel = document.getElementById('langBtnLabel');
-
-    function applyLang(code){
-      const fallback = I18N.en;
-      const dict = {...fallback, ...(I18N[code]||{})};
-      document.querySelectorAll('[data-i18n]').forEach(el=>{
-        const key = el.getAttribute('data-i18n');
-        if(dict[key]) el.innerHTML = dict[key];
-      });
-      localStorage.setItem('slav_lang', code);
-      langBtnLabel.textContent = code.toUpperCase();
-    }
-
-    (function initLang(){
-      const saved = localStorage.getItem('slav_lang');
-      if(saved){ applyLang(saved); }
-      else {
-        const nav = (navigator.language||'en').slice(0,2).toLowerCase();
-        const map = { 'en':'en','pt':'pt','es':'es' };
-        applyLang(map[nav] || 'en');
-      }
-    })();
-
-    langBtn.addEventListener('click', (e)=>{ e.stopPropagation(); langMenu.classList.toggle('hidden'); });
-    langMenu.querySelectorAll('[data-lang]').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        applyLang(btn.getAttribute('data-lang'));
-        langMenu.classList.add('hidden');
-      });
-    });
-    document.addEventListener('click', (e)=>{
-      if(!langMenu.contains(e.target) && !langBtn.contains(e.target)) langMenu.classList.add('hidden');
-    });
-
-    // ====== Menu dropdown ======
-    const menuBtn  = document.getElementById('menuBtn');
-    const menuCard = document.getElementById('menuCard');
-    document.addEventListener('click', (e)=>{
-      const isBtn = menuBtn.contains(e.target);
-      const isMenu = menuCard.contains(e.target);
-      if(isBtn){ menuCard.classList.toggle('hidden'); return; }
-      if(!isMenu) menuCard.classList.add('hidden');
-    });
-
-    // ====== Copy contract ======
     const copyBtn = document.getElementById('copyBtn');
     copyBtn.addEventListener('click', ()=>{
       navigator.clipboard.writeText(CONTRACT_ADDRESS).then(()=>{
         copyBtn.textContent = 'Copied!';
-        setTimeout(()=> applyLang(localStorage.getItem('slav_lang')||'en'), 1200);
+        setTimeout(()=> copyBtn.textContent = 'Copy contract', 1500);
       });
     });
   </script>
 </body>
 </html>
+
