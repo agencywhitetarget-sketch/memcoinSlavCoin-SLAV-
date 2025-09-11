@@ -199,23 +199,36 @@
     </div>
   </section>
 
-  <!-- ====== MEDIA ====== -->
-  <section id="media" class="py-10 border-t border-slate-800">
-    <h2 class="text-2xl font-bold mb-4" data-i18n="media.title">🎥 Videos & Podcasts</h2>
-    <div class="grid md:grid-cols-2 gap-4">
-      <div class="ratio rounded-2xl border border-slate-800 overflow-hidden">
-        <iframe src="https://youtube.com/watch?v=-afSw5fiQ70&si=JOyPdz2rBGWy4OR4"
-                title="YouTube"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen loading="lazy"></iframe>
-      </div>
-      <div class="ratio rounded-2xl border border-slate-800 overflow-hidden">
-        <iframe src="https://open.spotify.com/embed/episode/1HayvwTdA0qA8BSsL0VMro"
-                loading="lazy"
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-      </div>
+  <!-- ===== MEDIA ===== -->
+<section id="media" class="py-10 border-t border-slate-800">
+  <h2 class="text-2xl font-bold mb-4" data-i18n="media.title">🎥 Videos & Podcasts</h2>
+  <div class="grid md:grid-cols-2 gap-4">
+
+    <!-- YouTube -->
+    <div class="ratio rounded-2xl border border-slate-800 overflow-hidden">
+      <iframe 
+        src="https://www.youtube.com/embed/-afSw5fiQ70"
+        title="YouTube video"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        loading="lazy"
+        class="w-full h-full">
+      </iframe>
     </div>
-  </section>
+
+    <!-- Spotify -->
+    <div class="ratio rounded-2xl border border-slate-800 overflow-hidden">
+      <iframe 
+        src="https://open.spotify.com/embed/episode/1HayvwTdA0qA8BSsL0VMro"
+        loading="lazy"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        class="w-full h-full">
+      </iframe>
+    </div>
+
+  </div>
+</section>
+
 
   <!-- ====== FOOTER ====== -->
   <footer class="py-10 border-t border-slate-800 text-sm text-slate-400">
