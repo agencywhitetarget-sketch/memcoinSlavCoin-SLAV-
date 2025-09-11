@@ -119,17 +119,20 @@
   </section>
 
   <!-- ====== LIVE CHART ====== -->
-  <section id="chart" class="py-10 border-t border-slate-800">
-    <h2 class="text-2xl font-bold mb-4" data-i18n="chart.title">Live Chart</h2>
-    <div class="chart-embed">
-      <iframe
-        src="https://dexscreener.com/bsc/0x8649f55031ae543d47d64d1bf0a97cd4d044b350?embed=1&theme=dark&trades=0"
-        allow="clipboard-write; clipboard-read; fullscreen"></iframe>
-    </div>
-    <div class="mt-3 text-sm text-slate-400" data-i18n="chart.note">
-      Data auto-updates from DexScreener.
-    </div>
-  </section>
+<section id="chart" class="py-10 border-t border-slate-800">
+  <h2 class="text-2xl font-bold mb-4" data-i18n="chart.title">📈 Live Chart</h2>
+  <div class="chart-embed rounded-xl overflow-hidden border border-slate-700">
+    <iframe 
+      src="https://dexscreener.com/bsc/0x8649f55031ae543d47d64d1bf0a97cd4d044b350" 
+      style="width:100%; height:800px; border:0;" 
+      allowfullscreen 
+      allow="clipboard-write; clipboard-read">
+    </iframe>
+  </div>
+  <p class="mt-3 text-sm text-slate-400" data-i18n="chart.note">
+    Data auto-updates from DexScreener.
+  </p>
+</section>
 
   <!-- ====== LEGEND ====== -->
   <section id="legend" class="py-10 border-t border-slate-800">
