@@ -3,14 +3,10 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>MUPI Quest — AI × Pepe Levels</title>
-  <meta name="theme-color" content="#0b1220"/>
+  <title>MUPI Quest — Follow • Engage • Buy $5 • Claim</title>
   <link rel="icon" href="mupi-logo.png"/>
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    .glass{backdrop-filter:saturate(180%) blur(10px); background:rgba(17,24,39,.55)}
-    .step-done{border-color:#22c55e !important}
-  </style>
+  <style>.glass{backdrop-filter:saturate(180%) blur(10px); background:rgba(17,24,39,.55)} .done{border-color:#22c55e}</style>
 </head>
 <body class="bg-slate-950 text-slate-100">
 <header class="sticky top-0 z-40 glass border-b border-slate-800/70">
@@ -19,189 +15,126 @@
       <img src="mupi-logo.png" class="w-9 h-9 rounded-lg ring-1 ring-slate-700" alt="MUPI"/>
       <b>MUPI Quest</b>
     </a>
-    <a class="btn btn-outline px-3 py-2 rounded-lg border border-slate-700" href="index.html">← Back</a>
+    <div class="flex items-center gap-2">
+      <a class="px-3 py-2 rounded-lg border border-slate-700 hover:bg-slate-800" href="index.html" data-i18n="back">← Back</a>
+      <button id="langBtn" class="px-2 py-1 rounded border border-slate-700">EN</button>
+      <div id="langMenu" class="hidden absolute mt-12 right-4 min-w-[9rem] rounded-xl border border-slate-800 bg-slate-900/95 p-2 text-sm">
+        <button class="w-full text-left px-3 py-1.5 rounded hover:bg-slate-800" data-lang="en">English</button>
+        <button class="w-full text-left px-3 py-1.5 rounded hover:bg-slate-800" data-lang="pt">Português</button>
+        <button class="w-full text-left px-3 py-1.5 rounded hover:bg-slate-800" data-lang="hi">हिन्दी</button>
+        <button class="w-full text-left px-3 py-1.5 rounded hover:bg-slate-800" data-lang="uk">Українська</button>
+      </div>
+    </div>
   </div>
 </header>
 
 <main class="max-w-5xl mx-auto px-4 py-8">
-  <section class="mb-8">
-    <h1 class="text-3xl font-extrabold">🎮 AI × Pepe Levels</h1>
-    <p class="text-slate-300 mt-2">
-      Complete quests, level up your AI × Pepe, invite friends and earn MUPI rewards.
-      Min buy <b>$5</b> required. Don’t share private keys — only public wallet & social IDs.
+  <h1 class="text-3xl font-extrabold" data-i18n="q_title">🎯 Community Quest</h1>
+  <p class="text-slate-300 mt-2" data-i18n="q_sub">
+    Complete ALL steps → submit claim → weekly distribution for verified users.
+  </p>
+
+  <!-- Step 1 -->
+  <div id="s1" class="mt-6 rounded-xl border border-slate-800 p-5">
+    <b data-i18n="s1_t">Step 1 — Follow</b>
+    <div class="grid sm:grid-cols-2 gap-2 mt-3">
+      <a class="px-3 py-2 border border-slate-700 rounded-lg text-center"
+         href="https://x.com/mupicoin?s=21" target="_blank" rel="noopener">Follow X</a>
+      <a class="px-3 py-2 border border-slate-700 rounded-lg text-center"
+         href="https://t.me/mupicoin" target="_blank" rel="noopener">Join Telegram</a>
+    </div>
+    <button class="mt-3 px-3 py-2 rounded-lg bg-sky-600 hover:bg-sky-700" onclick="done(1)" data-i18n="didit">I did it</button>
+  </div>
+
+  <!-- Step 2 -->
+  <div id="s2" class="mt-4 rounded-xl border border-slate-800 p-5">
+    <b data-i18n="s2_t">Step 2 — Repost + Comment</b>
+    <p class="text-slate-300 mt-2" data-i18n="s2_d">Open our pinned post, like, repost and leave a comment.</p>
+    <a class="mt-2 inline-block px-3 py-2 border border-slate-700 rounded-lg"
+       href="https://x.com/mupicoin?s=21" target="_blank" rel="noopener" data-i18n="open_x">Open X</a>
+    <button class="mt-2 px-3 py-2 rounded-lg bg-sky-600 hover:bg-sky-700" onclick="done(2)" data-i18n="didit">I did it</button>
+  </div>
+
+  <!-- Step 3 -->
+  <div id="s3" class="mt-4 rounded-xl border border-slate-800 p-5">
+    <b data-i18n="s3_t">Step 3 — Buy ≥ $5 MUPI</b>
+    <div class="flex flex-wrap gap-2 mt-2">
+      <a class="px-3 py-2 border border-slate-700 rounded-lg"
+         href="https://pancakeswap.finance/swap?outputCurrency=0x008E12860bA1B5Ce56D6dB35d64f99942D6a56bc&chain=bsc&inputCurrency=BNB"
+         target="_blank" rel="noopener" data-i18n="open_ps">Buy on PancakeSwap</a>
+      <a class="px-3 py-2 border border-slate-700 rounded-lg"
+         href="https://dexscreener.com/bsc/0x8649f55031ae543d47d64d1bf0a97cd4d044b350"
+         target="_blank" rel="noopener" data-i18n="live_price">Live Price</a>
+    </div>
+    <div class="text-xs text-slate-500 mt-2" data-i18n="s3_note">Keep your TX hash — you’ll put it in the form.</div>
+    <button class="mt-2 px-3 py-2 rounded-lg bg-sky-600 hover:bg-sky-700" onclick="done(3)" data-i18n="didit">I did it</button>
+  </div>
+
+  <!-- Step 4 -->
+  <div id="s4" class="mt-4 rounded-xl border border-slate-800 p-5">
+    <b data-i18n="s4_t">Step 4 — Submit claim</b>
+    <p class="text-slate-300 mt-2" data-i18n="s4_d">
+      Fill the form with your BSC wallet, X handle, Telegram username and TX hash of your $5+ buy.
     </p>
-  </section>
+    <a id="formBtn" class="mt-2 inline-block px-3 py-2 border border-slate-700 rounded-lg"
+       href="form.html" data-i18n="open_form">Open Claim Form</a>
+    <button class="mt-2 px-3 py-2 rounded-lg bg-sky-600 hover:bg-sky-700" onclick="done(4)" data-i18n="didit">I did it</button>
+  </div>
 
-  <!-- Progress + Level -->
-  <section class="grid md:grid-cols-3 gap-4 mb-8">
-    <div class="rounded-xl border border-slate-800 p-5">
-      <div class="text-slate-400 text-sm">Your Level</div>
-      <div id="level" class="text-3xl font-bold">1</div>
-      <div class="mt-2 text-sm text-slate-400">AI × Pepe evolves as you finish steps.</div>
+  <!-- Progress -->
+  <div class="mt-6 rounded-xl border border-slate-800 p-5">
+    <div class="flex items-center justify-between">
+      <div class="text-slate-400 text-sm" data-i18n="progress">Progress</div>
+      <div id="pl" class="text-sm font-semibold">0%</div>
     </div>
-    <div class="rounded-xl border border-slate-800 p-5 md:col-span-2">
-      <div class="flex items-center justify-between">
-        <div class="text-slate-400 text-sm">Progress</div>
-        <div id="progressLabel" class="text-sm font-semibold">0%</div>
-      </div>
-      <div class="w-full h-3 bg-slate-800 rounded mt-2">
-        <div id="progressBar" class="h-3 bg-sky-500 rounded" style="width:0%"></div>
-      </div>
-      <div class="text-xs text-slate-500 mt-2">
-        Base reward: <b>42,069 MUPI</b>. Referral: <b>+6,942 MUPI</b> per friend (max 420,690 per user).
-      </div>
+    <div class="w-full h-3 bg-slate-800 rounded mt-2">
+      <div id="pb" class="h-3 bg-sky-500 rounded" style="width:0%"></div>
     </div>
-  </section>
-
-  <!-- Steps -->
-  <section class="space-y-4">
-    <!-- Step 1 -->
-    <div class="rounded-xl border border-slate-800 p-5" id="s1">
-      <div class="flex justify-between items-center">
-        <b>Step 1 — Join our socials</b>
-        <span class="text-xs text-slate-400">Required</span>
-      </div>
-      <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-2 mt-3">
-        <a class="btn btn-outline border border-slate-700 text-center py-2 rounded-lg"
-           target="_blank" href="https://x.com/mupicoin">Follow X</a>
-        <a class="btn btn-outline border border-slate-700 text-center py-2 rounded-lg"
-           target="_blank" href="https://t.me/mupicoin">Join Telegram</a>
-        <a class="btn btn-outline border border-slate-700 text-center py-2 rounded-lg"
-           target="_blank" href="https://www.instagram.com/mupicoin">Follow Instagram</a>
-        <a class="btn btn-outline border border-slate-700 text-center py-2 rounded-lg"
-           target="_blank" href="https://www.tiktok.com/@mupicoin">Follow TikTok</a>
-      </div>
-      <button class="mt-3 text-sm px-3 py-2 rounded-lg bg-sky-600 hover:bg-sky-700"
-              onclick="markStep(1)">I did it</button>
+    <div class="text-xs text-slate-500 mt-2" data-i18n="weekly">
+      All steps are required. Rewards are distributed weekly after manual verification.
     </div>
-
-    <!-- Step 2 -->
-    <div class="rounded-xl border border-slate-800 p-5" id="s2">
-      <div class="flex justify-between items-center">
-        <b>Step 2 — Support the launch</b>
-        <span class="text-xs text-slate-400">Required</span>
-      </div>
-      <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-2 mt-3">
-        <a class="btn btn-outline border border-slate-700 text-center py-2 rounded-lg"
-           target="_blank" href="https://x.com/mupicoin">Like & Repost pinned</a>
-        <a class="btn btn-outline border border-slate-700 text-center py-2 rounded-lg"
-           target="_blank" href="https://t.me/mupicoin">Say “gm” in chat</a>
-        <a class="btn btn-outline border border-slate-700 text-center py-2 rounded-lg"
-           target="_blank" href="https://www.instagram.com/mupicoin">Share in story</a>
-      </div>
-      <button class="mt-3 text-sm px-3 py-2 rounded-lg bg-sky-600 hover:bg-sky-700"
-              onclick="markStep(2)">I did it</button>
-    </div>
-
-    <!-- Step 3 -->
-    <div class="rounded-xl border border-slate-800 p-5" id="s3">
-      <div class="flex justify-between items-center">
-        <b>Step 3 — Buy ≥ $5 MUPI</b>
-        <span class="text-xs text-slate-400">Required</span>
-      </div>
-      <p class="text-slate-300 mt-2">Buy on PancakeSwap (MUPI/BNB):</p>
-      <div class="flex flex-wrap gap-2 mt-2">
-        <a class="btn btn-outline border border-slate-700 px-3 py-2 rounded-lg"
-           target="_blank"
-           href="https://pancakeswap.finance/swap?outputCurrency=0x7f0A062c4c9611c487461497F6eC9181518844ad&chain=bsc&inputCurrency=BNB">
-           Open PancakeSwap
-        </a>
-        <a class="btn btn-outline border border-slate-700 px-3 py-2 rounded-lg"
-           target="_blank"
-           href="https://dexscreener.com/bsc/0x008E12860bA1B5Ce56D6dB35d64f99942D6a56bc">
-           Live Price (Dexscreener)
-        </a>
-      </div>
-      <button class="mt-3 text-sm px-3 py-2 rounded-lg bg-sky-600 hover:bg-sky-700"
-              onclick="markStep(3)">I bought ≥ $5</button>
-      <div class="text-xs text-slate-500 mt-2">You’ll submit your tx hash in the final form.</div>
-    </div>
-
-    <!-- Step 4 -->
-    <div class="rounded-xl border border-slate-800 p-5" id="s4">
-      <div class="flex justify-between items-center">
-        <b>Step 4 — Invite friends (referral)</b>
-        <span class="text-xs text-slate-400">Optional, but profitable</span>
-      </div>
-      <p class="text-slate-300 mt-2">
-        Share your unique link. You get <b>+6,942 MUPI</b> for each friend who completes all steps.
-      </p>
-      <div class="mt-2">
-        <div class="text-sm text-slate-400">Your referral link:</div>
-        <input id="refLink" class="w-full mt-1 bg-slate-900 border border-slate-800 rounded-lg px-3 py-2"
-               readonly value="">
-        <button class="mt-2 text-sm px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700"
-                onclick="navigator.clipboard.writeText(document.getElementById('refLink').value)">Copy link</button>
-      </div>
-      <button class="mt-3 text-sm px-3 py-2 rounded-lg bg-sky-600 hover:bg-sky-700"
-              onclick="markStep(4)">I shared it</button>
-    </div>
-  </section>
-
-  <!-- Submit -->
-  <section class="mt-8 rounded-xl border border-slate-800 p-5">
-    <h3 class="text-xl font-bold">Submit to claim rewards</h3>
-    <p class="text-slate-300 mt-2">
-      When all required steps are complete, submit the form with your wallet, social IDs and the
-      <b>tx hash</b> of your $5+ buy. We verify & distribute weekly.
-    </p>
-    <div class="mt-3 flex gap-3 flex-wrap">
-      <!-- TODO: replace GOOGLE_FORM_URL -->
-      <a id="submitBtn" class="btn btn-outline border border-slate-700 px-4 py-2 rounded-lg"
-         target="_blank" href="https://docs.google.com/forms/d/e/REPLACE_FORM_ID/viewform">
-        Open Submit Form
-      </a>
-      <a class="btn btn-outline border border-slate-700 px-4 py-2 rounded-lg"
-         href="https://bscscan.com/token/0x7f0a062c4c9611c487461497f6ec9181518844ad" target="_blank">
-        Token on BscScan
-      </a>
-    </div>
-  </section>
-
-  <footer class="py-10 text-sm text-slate-500">
-    <div class="border-t border-slate-800 pt-6">
-      Need help? Email <a class="underline" href="mailto:invest@mupicoin.com">invest@mupicoin.com</a>.
-      Do NOT share seed phrases. Rewards pool: 4,206,900,000 MUPI. T&Cs apply.
-    </div>
-  </footer>
+  </div>
 </main>
 
 <script>
-  // Basic local progress
-  const STEPS_TOTAL = 4;
-  const st = JSON.parse(localStorage.getItem('mupi_quest')||'{}');
-  if(!st.steps) st.steps = {};
-  init();
+  // local progress
+  const st = JSON.parse(localStorage.getItem('mupi_q')||'{}'); if(!st.s) st.s={};
+  function done(n){ st.s[n]=true; localStorage.setItem('mupi_q',JSON.stringify(st)); paint(); }
+  function paint(){ let d=0; for(let i=1;i<=4;i++){const el=document.getElementById('s'+i); if(st.s[i]){el.classList.add('done'); d++;} else el.classList.remove('done');}
+    const pct=Math.round(d/4*100); document.getElementById('pb').style.width=pct+'%'; document.getElementById('pl').textContent=pct+'%'; }
+  paint();
 
-  function init(){
-    updateUI();
-    // referral link
-    const params = new URLSearchParams(location.search);
-    const ref = (st.myRef || st.wallet || params.get('ref') || '').trim();
-    const base = location.origin + location.pathname.replace(/quest\.html$/,'quest.html');
-    document.getElementById('refLink').value = ref ? `${base}?ref=${encodeURIComponent(ref)}` : `${base}`;
-  }
-
-  function markStep(n){
-    st.steps[n] = true;
-    localStorage.setItem('mupi_quest', JSON.stringify(st));
-    updateUI();
-  }
-
-  function updateUI(){
-    let done = 0;
-    for(let i=1;i<=STEPS_TOTAL;i++){
-      const el = document.getElementById('s'+i);
-      if(st.steps[i]){ el.classList.add('step-done'); done++; } else { el.classList.remove('step-done');}
-    }
-    const pct = Math.round(done/STEPS_TOTAL*100);
-    document.getElementById('progressBar').style.width = pct+'%';
-    document.getElementById('progressLabel').textContent = pct+'%';
-    document.getElementById('level').textContent = Math.max(1, Math.ceil(done*1.5));
-  }
-
-  // (Optional) connect wallet just to generate personal ref-code later:
-  // You can add a Connect Wallet button and store st.wallet for personalized ref links.
+  // i18n
+  const I18N = {
+    en:{back:'← Back', q_title:'🎯 Community Quest', q_sub:'Complete ALL steps → submit claim → weekly distribution for verified users.',
+        s1_t:'Step 1 — Follow', didit:'I did it', s2_t:'Step 2 — Repost + Comment', s2_d:'Open our pinned post, like, repost and leave a comment.', open_x:'Open X',
+        s3_t:'Step 3 — Buy ≥ $5 MUPI', open_ps:'Buy on PancakeSwap', live_price:'Live Price', s3_note:'Keep your TX hash — you’ll put it in the form.',
+        s4_t:'Step 4 — Submit claim', s4_d:'Fill the form with your BSC wallet, X handle, Telegram username and TX hash of your $5+ buy.', open_form:'Open Claim Form',
+        progress:'Progress', weekly:'All steps are required. Rewards are distributed weekly after manual verification.'},
+    pt:{back:'← Voltar', q_title:'🎯 Community Quest', q_sub:'Complete todos os passos → envie o formulário → distribuição semanal para verificados.',
+        s1_t:'Passo 1 — Seguir', didit:'Feito', s2_t:'Passo 2 — Repost + Comentário', s2_d:'Abra o post fixado, dê like, repost e comente.', open_x:'Abrir X',
+        s3_t:'Passo 3 — Comprar ≥ $5 MUPI', open_ps:'Comprar no PancakeSwap', live_price:'Ver preço', s3_note:'Guarde o TX hash — você colocará no formulário.',
+        s4_t:'Passo 4 — Enviar solicitação', s4_d:'Preencha com sua carteira BSC, X e Telegram e o TX hash da compra ≥ $5.', open_form:'Abrir formulário',
+        progress:'Progresso', weekly:'Todos os passos são obrigatórios. Distribuição semanal após verificação.'},
+    hi:{back:'← वापस', q_title:'🎯 कम्युनिटी क्वेस्ट', q_sub:'सभी स्टेप पूरे करें → क्लेम सबमिट करें → साप्ताहिक डिस्ट्रीब्यूशन (वेरिफाइड यूज़र्स)।',
+        s1_t:'स्टेप 1 — फॉलो', didit:'हो गया', s2_t:'स्टेप 2 — रीपोस्ट + कमेंट', s2_d:'पिन्ड पोस्ट खोलें, लाइक करें, रीपोस्ट करें और कमेंट करें।', open_x:'X खोलें',
+        s3_t:'स्टेप 3 — ≥ $5 MUPI खरीद', open_ps:'PancakeSwap पर खरीदें', live_price:'लाइव प्राइस', s3_note:'अपना TX हैश संभालकर रखें — फॉर्म में डालना होगा।',
+        s4_t:'स्टेप 4 — क्लेम सबमिट', s4_d:'BSC वॉलेट, X हैंडल, Telegram यूज़रनेम और $5+ खरीद का TX हैश भरें।', open_form:'क्लेम फॉर्म खोलें',
+        progress:'प्रोग्रेस', weekly:'सभी स्टेप ज़रूरी हैं। वेरिफिकेशन के बाद साप्ताहिक डिस्ट्रीब्यूशन।'},
+    uk:{back:'← Назад', q_title:'🎯 Комʼюніті-квест', q_sub:'Виконай усі кроки → подай заявку → щотижневий розподіл для верифікованих.',
+        s1_t:'Крок 1 — Підписка', didit:'Зроблено', s2_t:'Крок 2 — Репост + Коментар', s2_d:'Відкрий закріплений твіт, вподобай, репости та залиш коментар.', open_x:'Відкрити X',
+        s3_t:'Крок 3 — Купівля ≥ $5 MUPI', open_ps:'Купити на PancakeSwap', live_price:'Графік ціни', s3_note:'Збережи TX hash — внесеш у форму.',
+        s4_t:'Крок 4 — Подати заявку', s4_d:'Заповни форму: гаманець BSC, нік у X і Telegram, TX hash купівлі на $5+.', open_form:'Відкрити форму',
+        progress:'Прогрес', weekly:'Усі кроки обовʼязкові. Розподіл щотижня після верифікації.'},
+  };
+  const langBtn=document.getElementById('langBtn'), langMenu=document.getElementById('langMenu');
+  function applyLang(code){const f=I18N.en, d={...f,...(I18N[code]||{})};
+    document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n'); if(d[k]) el.innerHTML=d[k];});
+    localStorage.setItem('mupi_lang', code); langBtn.textContent=code.toUpperCase();}
+  (function init(){applyLang(localStorage.getItem('mupi_lang')||'en')})();
+  langBtn.addEventListener('click',(e)=>{ e.stopPropagation(); langMenu.classList.toggle('hidden'); });
+  langMenu.querySelectorAll('[data-lang]').forEach(b=>b.addEventListener('click',()=>{applyLang(b.getAttribute('data-lang')); langMenu.classList.add('hidden');}));
+  document.addEventListener('click',(e)=>{ if(!langMenu.contains(e.target) && !langBtn.contains(e.target)) langMenu.classList.add('hidden');});
 </script>
 </body>
 </html>
