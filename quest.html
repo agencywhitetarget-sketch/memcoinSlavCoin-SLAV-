@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>MUPI Quest — AI × Pepe Levels</title>
+  <meta name="theme-color" content="#0b1220"/>
+  <link rel="icon" href="mupi-logo.png"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .glass{backdrop-filter:saturate(180%) blur(10px); background:rgba(17,24,39,.55)}
+    .step-done{border-color:#22c55e !important}
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100">
+<header class="sticky top-0 z-40 glass border-b border-slate-800/70">
+  <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-3">
+      <img src="mupi-logo.png" class="w-9 h-9 rounded-lg ring-1 ring-slate-700" alt="MUPI"/>
+      <b>MUPI Quest</b>
+    </a>
+    <a class="btn btn-outline px-3 py-2 rounded-lg border border-slate-700" href="index.html">← Back</a>
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-4 py-8">
+  <section class="mb-8">
+    <h1 class="text-3xl font-extrabold">🎮 AI × Pepe Levels</h1>
+    <p class="text-slate-300 mt-2">
+      Complete quests, level up your AI × Pepe, invite friends and earn MUPI rewards.
+      Min buy <b>$5</b> required. Don’t share private keys — only public wallet & social IDs.
+    </p>
+  </section>
+
+  <!-- Progress + Level -->
+  <section class="grid md:grid-cols-3 gap-4 mb-8">
+    <div class="rounded-xl border border-slate-800 p-5">
+      <div class="text-slate-400 text-sm">Your Level</div>
+      <div id="level" class="text-3xl font-bold">1</div>
+      <div class="mt-2 text-sm text-slate-400">AI × Pepe evolves as you finish steps.</div>
+    </div>
+    <div class="rounded-xl border border-slate-800 p-5 md:col-span-2">
+      <div class="flex items-center justify-between">
+        <div class="text-slate-400 text-sm">Progress</div>
+        <div id="progressLabel" class="text-sm font-semibold">0%</div>
+      </div>
+      <div class="w-full h-3 bg-slate-800 rounded mt-2">
+        <div id="progressBar" class="h-3 bg-sky-500 rounded" style="width:0%"></div>
+      </div>
+      <div class="text-xs text-slate-500 mt-2">
+        Base reward: <b>42,069 MUPI</b>. Referral: <b>+6,942 MUPI</b> per friend (max 420,690 per user).
+      </div>
+    </div>
+  </section>
+
+  <!-- Steps -->
+  <section class="space-y-4">
+    <!-- Step 1 -->
+    <div class="rounded-xl border border-slate-800 p-5" id="s1">
+      <div class="flex justify-between items-center">
+        <b>Step 1 — Join our socials</b>
+        <span class="text-xs text-slate-400">Required</span>
+      </div>
+      <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-2 mt-3">
+        <a class="btn btn-outline border border-slate-700 text-center py-2 rounded-lg"
+           target="_blank" href="https://x.com/mupicoin">Follow X</a>
+        <a class="btn btn-outline border border-slate-700 text-center py-2 rounded-lg"
+           target="_blank" href="https://t.me/mupicoin">Join Telegram</a>
+        <a class="btn btn-outline border border-slate-700 text-center py-2 rounded-lg"
+           target="_blank" href="https://www.instagram.com/mupicoin">Follow Instagram</a>
+        <a class="btn btn-outline border border-slate-700 text-center py-2 rounded-lg"
+           target="_blank" href="https://www.tiktok.com/@mupicoin">Follow TikTok</a>
+      </div>
+      <button class="mt-3 text-sm px-3 py-2 rounded-lg bg-sky-600 hover:bg-sky-700"
+              onclick="markStep(1)">I did it</button>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="rounded-xl border border-slate-800 p-5" id="s2">
+      <div class="flex justify-between items-center">
+        <b>Step 2 — Support the launch</b>
+        <span class="text-xs text-slate-400">Required</span>
+      </div>
+      <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-2 mt-3">
+        <a class="btn btn-outline border border-slate-700 text-center py-2 rounded-lg"
+           target="_blank" href="https://x.com/mupicoin">Like & Repost pinned</a>
+        <a class="btn btn-outline border border-slate-700 text-center py-2 rounded-lg"
+           target="_blank" href="https://t.me/mupicoin">Say “gm” in chat</a>
+        <a class="btn btn-outline border border-slate-700 text-center py-2 rounded-lg"
+           target="_blank" href="https://www.instagram.com/mupicoin">Share in story</a>
+      </div>
+      <button class="mt-3 text-sm px-3 py-2 rounded-lg bg-sky-600 hover:bg-sky-700"
+              onclick="markStep(2)">I did it</button>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="rounded-xl border border-slate-800 p-5" id="s3">
+      <div class="flex justify-between items-center">
+        <b>Step 3 — Buy ≥ $5 MUPI</b>
+        <span class="text-xs text-slate-400">Required</span>
+      </div>
+      <p class="text-slate-300 mt-2">Buy on PancakeSwap (MUPI/BNB):</p>
+      <div class="flex flex-wrap gap-2 mt-2">
+        <a class="btn btn-outline border border-slate-700 px-3 py-2 rounded-lg"
+           target="_blank"
+           href="https://pancakeswap.finance/swap?outputCurrency=0x7f0A062c4c9611c487461497F6eC9181518844ad&chain=bsc&inputCurrency=BNB">
+           Open PancakeSwap
+        </a>
+        <a class="btn btn-outline border border-slate-700 px-3 py-2 rounded-lg"
+           target="_blank"
+           href="https://dexscreener.com/bsc/0x008E12860bA1B5Ce56D6dB35d64f99942D6a56bc">
+           Live Price (Dexscreener)
+        </a>
+      </div>
+      <button class="mt-3 text-sm px-3 py-2 rounded-lg bg-sky-600 hover:bg-sky-700"
+              onclick="markStep(3)">I bought ≥ $5</button>
+      <div class="text-xs text-slate-500 mt-2">You’ll submit your tx hash in the final form.</div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="rounded-xl border border-slate-800 p-5" id="s4">
+      <div class="flex justify-between items-center">
+        <b>Step 4 — Invite friends (referral)</b>
+        <span class="text-xs text-slate-400">Optional, but profitable</span>
+      </div>
+      <p class="text-slate-300 mt-2">
+        Share your unique link. You get <b>+6,942 MUPI</b> for each friend who completes all steps.
+      </p>
+      <div class="mt-2">
+        <div class="text-sm text-slate-400">Your referral link:</div>
+        <input id="refLink" class="w-full mt-1 bg-slate-900 border border-slate-800 rounded-lg px-3 py-2"
+               readonly value="">
+        <button class="mt-2 text-sm px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700"
+                onclick="navigator.clipboard.writeText(document.getElementById('refLink').value)">Copy link</button>
+      </div>
+      <button class="mt-3 text-sm px-3 py-2 rounded-lg bg-sky-600 hover:bg-sky-700"
+              onclick="markStep(4)">I shared it</button>
+    </div>
+  </section>
+
+  <!-- Submit -->
+  <section class="mt-8 rounded-xl border border-slate-800 p-5">
+    <h3 class="text-xl font-bold">Submit to claim rewards</h3>
+    <p class="text-slate-300 mt-2">
+      When all required steps are complete, submit the form with your wallet, social IDs and the
+      <b>tx hash</b> of your $5+ buy. We verify & distribute weekly.
+    </p>
+    <div class="mt-3 flex gap-3 flex-wrap">
+      <!-- TODO: replace GOOGLE_FORM_URL -->
+      <a id="submitBtn" class="btn btn-outline border border-slate-700 px-4 py-2 rounded-lg"
+         target="_blank" href="https://docs.google.com/forms/d/e/REPLACE_FORM_ID/viewform">
+        Open Submit Form
+      </a>
+      <a class="btn btn-outline border border-slate-700 px-4 py-2 rounded-lg"
+         href="https://bscscan.com/token/0x7f0a062c4c9611c487461497f6ec9181518844ad" target="_blank">
+        Token on BscScan
+      </a>
+    </div>
+  </section>
+
+  <footer class="py-10 text-sm text-slate-500">
+    <div class="border-t border-slate-800 pt-6">
+      Need help? Email <a class="underline" href="mailto:invest@mupicoin.com">invest@mupicoin.com</a>.
+      Do NOT share seed phrases. Rewards pool: 4,206,900,000 MUPI. T&Cs apply.
+    </div>
+  </footer>
+</main>
+
+<script>
+  // Basic local progress
+  const STEPS_TOTAL = 4;
+  const st = JSON.parse(localStorage.getItem('mupi_quest')||'{}');
+  if(!st.steps) st.steps = {};
+  init();
+
+  function init(){
+    updateUI();
+    // referral link
+    const params = new URLSearchParams(location.search);
+    const ref = (st.myRef || st.wallet || params.get('ref') || '').trim();
+    const base = location.origin + location.pathname.replace(/quest\.html$/,'quest.html');
+    document.getElementById('refLink').value = ref ? `${base}?ref=${encodeURIComponent(ref)}` : `${base}`;
+  }
+
+  function markStep(n){
+    st.steps[n] = true;
+    localStorage.setItem('mupi_quest', JSON.stringify(st));
+    updateUI();
+  }
+
+  function updateUI(){
+    let done = 0;
+    for(let i=1;i<=STEPS_TOTAL;i++){
+      const el = document.getElementById('s'+i);
+      if(st.steps[i]){ el.classList.add('step-done'); done++; } else { el.classList.remove('step-done');}
+    }
+    const pct = Math.round(done/STEPS_TOTAL*100);
+    document.getElementById('progressBar').style.width = pct+'%';
+    document.getElementById('progressLabel').textContent = pct+'%';
+    document.getElementById('level').textContent = Math.max(1, Math.ceil(done*1.5));
+  }
+
+  // (Optional) connect wallet just to generate personal ref-code later:
+  // You can add a Connect Wallet button and store st.wallet for personalized ref links.
+</script>
+</body>
+</html>
