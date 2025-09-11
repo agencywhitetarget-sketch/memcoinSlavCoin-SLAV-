@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>MUPI — Claim Submission</title>
+  <link rel="icon" href="mupi-logo.png"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-slate-100">
+<main class="max-w-xl mx-auto px-4 py-10">
+  <section class="py-10 border-t border-slate-800 text-center">
+    <h2 class="text-2xl font-bold mb-4">Submit your claim</h2>
+    <p class="text-slate-300 mb-6">We verify weekly. Make sure all fields are correct.</p>
+    <a href="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform" 
+       target="_blank" 
+       class="btn btn-primary px-6 py-3 rounded-lg">
+       Open Claim Form
+    </a>
+  </section>
+</main>
+
+  <!-- VARIANT A: Formspree (recommended). Create a form, replace YOUR_ID -->
+  <form action="https://formspree.io/f/https://docs.google.com/forms/d/e/1FAIpQLSe3O2G3_i3E0V7Plmxo2wt04xpDWSdH3ABfSSFLwPRfPgpU0Q/viewform?usp=header" method="POST" class="mt-6 space-y-4">
+    <div>
+      <label class="text-sm text-slate-400">BSC Wallet (0x...)</label>
+      <input name="wallet" required minlength="42" maxlength="66"
+             class="w-full mt-1 bg-slate-900 border border-slate-800 rounded-lg px-3 py-2" placeholder="0x..." />
+    </div>
+
+    <div class="grid sm:grid-cols-2 gap-3">
+      <div>
+        <label class="text-sm text-slate-400">X (Twitter) handle</label>
+        <input name="twitter" required class="w-full mt-1 bg-slate-900 border border-slate-800 rounded-lg px-3 py-2" placeholder="@your_x" />
+      </div>
+      <div>
+        <label class="text-sm text-slate-400">Telegram username</label>
+        <input name="telegram" required class="w-full mt-1 bg-slate-900 border border-slate-800 rounded-lg px-3 py-2" placeholder="@your_tg" />
+      </div>
+    </div>
+
+    <div>
+      <label class="text-sm text-slate-400">TX Hash (your $5+ buy)</label>
+      <input name="txhash" required minlength="66" maxlength="66"
+             class="w-full mt-1 bg-slate-900 border border-slate-800 rounded-lg px-3 py-2" placeholder="0x..." />
+      <div class="text-xs text-slate-500 mt-1">Find it on <a class="underline" target="_blank" href="https://bscscan.com">BscScan</a>.</div>
+    </div>
+
+    <div>
+      <label class="text-sm text-slate-400">Comments (optional)</label>
+      <textarea name="comment" class="w-full mt-1 bg-slate-900 border border-slate-800 rounded-lg px-3 py-2" rows="3" placeholder="Anything we should know"></textarea>
+    </div>
+
+    <div class="text-xs text-slate-400">
+      By submitting you confirm you followed & engaged on
+      <a class="underline" target="_blank" href="https://x.com/mupicoin?s=21">X</a> and
+      <a class="underline" target="_blank" href="https://t.me/mupicoin">Telegram</a>,
+      and bought ≥ $5 MUPI.
+    </div>
+
+    <button class="mt-2 px-4 py-2 rounded-lg bg-sky-600 hover:bg-sky-700">Submit</button>
+  </form>
+
+  <div class="mt-5 text-sm text-slate-500">
+    Or email us directly: <a class="underline" href="mailto:mupicoin.official@gmail.com">mupicoin.official@gmail.com</a>
+  </div>
+</main>
+</body>
+</html>
