@@ -231,6 +231,14 @@
       Data auto-updates from DexScreener. Click and interact with the full chart inside the frame.
     </p>
   </section>
+<!-- ====== TOKEN METRICS ====== -->
+<section id="metrics" class="py-10 border-t border-slate-800">
+  <h2 class="text-2xl font-bold mb-4">📊 Token Metrics</h2>
+  <div class="grid md:grid-cols-2 gap-4 text-slate-300">
+    <div>Total Supply: <span id="supply">Loading...</span></div>
+    <div>Holders: <span id="holders">Loading...</span></div>
+  </div>
+</section>
 
   <!-- ====== LEGEND ====== -->
   <section id="legend" class="py-10 border-t border-slate-800">
@@ -474,6 +482,28 @@
   document.addEventListener('click', (e)=>{
     if(!langMenu.contains(e.target) && !langBtn.contains(e.target)) langMenu.classList.add('hidden');
   });
+</script>
+<script>
+  const API_KEY = "6PDXS3YFHWYCAFFEKMSMT6QJ9VRXE63VSA";
+  const CONTRACT = "0x008E12860bA1B5Ce56D6dB35d64f99942D6a56bc";
+
+  // Supply
+  fetch(`https://api.bscscan.com/api?module=stats&action=tokensupply&contractaddress=${CONTRACT}&apikey=${API_KEY}`)
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById('supply').textContent = Number(data.result).toLocaleString();
+    });
+
+  // Holders
+  fetch(`https://api.bscscan.com/api?module=token&action=tokenholderlist&contractaddress=${CONTRACT}&page=1&offset=1&apikey=${API_KEY}`)
+    .then(res => res.json())
+    .then(data => {
+      if(data.result) {
+        document.getElementById('holders').textContent = data.result.length + " (top shown)";
+      } else {
+        document.getElementById('holders').textContent = "N/A";
+      }
+    });
 </script>
 </body>
 </html>
