@@ -533,23 +533,96 @@
   })();
 </script>
 
-  // Supply
-  fetch(`https://api.bscscan.com/api?module=stats&action=tokensupply&contractaddress=${CONTRACT}&apikey=${API_KEY}`)
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById('supply').textContent = Number(data.result).toLocaleString();
-    });
+<!-- новий API-блок -->
+<script>
+(() => {
+  const API_KEY  = "6PDXS3YFHWYCAFFEKMSMT6QJ9VRXE63VSA";
+  const CONTRACT = "0x008E12860bA1B5Ce56D6dB35d64f99942D6a56bc";
 
-  // Holders
-  fetch(`https://api.bscscan.com/api?module=token&action=tokenholderlist&contractaddress=${CONTRACT}&page=1&offset=1&apikey=${API_KEY}`)
-    .then(res => res.json())
-    .then(data => {
-      if(data.result) {
-        document.getElementById('holders').textContent = data.result.length + " (top shown)";
-      } else {
-        document.getElementById('holders').textContent = "N/A";
+  const els = {
+    supply:      document.getElementById('supply'),
+    holdersMain: document.getElementById('holders'),
+    holdersBox:  document.getElementById('holdersCount'),
+  };
+
+  const setText = (el, v) => { if (el) el.textContent = v; };
+
+  const group = (s) => s.replace(/\B(?=(\d{3})+(?!\d))/g, '\u2009');
+
+  function formatUnits(rawStr, decimals) {
+    try {
+      const raw = BigInt(rawStr);
+      const d   = BigInt(decimals ?? 18);
+      if (d === 0n) return group(raw.toString());
+      const base  = 10n ** d;
+      const whole = raw / base;
+      const frac  = raw % base;
+      if (frac === 0n) return group(whole.toString());
+      let fracStr = (frac + base).toString().slice(1);
+      fracStr = fracStr.replace(/0+$/, '').slice(0, 4);
+      return `${group(whole.toString())}.${fracStr}`;
+    } catch {
+      return 'N/A';
+    }
+  }
+
+  async function getJSON(url) {
+    const r = await fetch(url);
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    const j = await r.json();
+    return j;
+  }
+
+  async function fetchTokenInfo() {
+    try {
+      const j = await getJSON(`https://api.bscscan.com/api?module=token&action=tokeninfo&contractaddress=${CONTRACT}&apikey=${API_KEY}`);
+      const info = Array.isArray(j.result) ? j.result[0] : j.result;
+      const decimals = parseInt(info?.decimals ?? info?.tokenDecimal ?? '18', 10);
+      const holdersGuess = info?.holders ?? info?.holderCount ?? null;
+      if (holdersGuess) {
+        setText(els.holdersMain, group(String(holdersGuess)));
+        setText(els.holdersBox, group(String(holdersGuess)));
       }
-    });
+      return Number.isFinite(decimals) ? decimals : 18;
+    } catch (e) {
+      console.warn('tokeninfo error:', e);
+      return 18;
+    }
+  }
+
+  async function fetchSupply(decimals) {
+    try {
+      const j = await getJSON(`https://api.bscscan.com/api?module=stats&action=tokensupply&contractaddress=${CONTRACT}&apikey=${API_KEY}`);
+      setText(els.supply, formatUnits(String(j.result), decimals));
+    } catch (e) {
+      console.warn('supply error:', e);
+      setText(els.supply, 'N/A');
+    }
+  }
+
+  async function fetchHoldersFallback() {
+    try {
+      const j = await getJSON(`https://api.bscscan.com/api?module=token&action=tokenholderlist&contractaddress=${CONTRACT}&page=1&offset=200&apikey=${API_KEY}`);
+      if (Array.isArray(j.result)) {
+        const val = group(String(j.result.length)) + ' (sample)';
+        setText(els.holdersMain, val);
+        setText(els.holdersBox, group(String(j.result.length)));
+      }
+    } catch (e) {
+      console.warn('holders fallback error:', e);
+      setText(els.holdersMain, '—');
+      setText(els.holdersBox, '—');
+    }
+  }
+
+  (async () => {
+    const decimals = await fetchTokenInfo();
+    await fetchSupply(decimals);
+    if (!els.holdersMain.textContent || /Loading|N\/A|—/i.test(els.holdersMain.textContent)) {
+      fetchHoldersFallback();
+    }
+  })();
+})();
 </script>
 </body>
 </html>
