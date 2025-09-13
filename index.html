@@ -7,7 +7,6 @@
   <meta name="description" content="MUPI — AI × Pepe meme coin on BNB. 0% tax, fair tokenomics, community-first. Join quest, buy ≥ $5 and claim weekly rewards."/>
   <meta property="og:title" content="MUPI — AI × Pepe Meme Coin"/>
   <meta property="og:description" content="Giveaway for active users. Follow, repost, comment, join TG, buy ≥ $5, submit claim."/>
-  <meta property="og:image" content="/mupi-a1.png"/>
 <img src="./mupi-ai1.png" alt="MUPI AI Pepe" class="w-full h-auto object-cover"/>
 <link rel="icon" type="image/png" href="./mupi-logo.png"/>
   <script src="https://cdn.tailwindcss.com"></script>
@@ -36,26 +35,31 @@
       <b class="text-lg">MUPI</b>
     </a>
 
-    <!-- Lang -->
-    <div class="flex justify-center">
-      <div class="relative">
-        <button id="langBtn" class="btn btn-muted px-3 py-1.5" aria-haspopup="true" aria-expanded="false"><span id="langBtnLabel">EN</span></button>
-        <div id="langMenu" class="hidden absolute left-1/2 -translate-x-1/2 mt-2 min-w-[9rem] rounded-xl border border-slate-800 bg-slate-900/95 menu-card p-2 text-sm">
-          <button class="w-full text-left px-3 py-1.5 rounded-md hover:bg-slate-800" data-lang="en">English</button>
-          <button class="w-full text-left px-3 py-1.5 rounded-md hover:bg-slate-800" data-lang="pt">Português</button>
-          <button class="w-full text-left px-3 py-1.5 rounded-md hover:bg-slate-800" data-lang="hi">हिन्दी</button>
-          <button class="w-full text-left px-3 py-1.5 rounded-md hover:bg-slate-800" data-lang="uk">Українська</button>
-        </div>
-      </div>
+    <!-- Lang + YouTube + Menu -->
+<div class="flex justify-end items-center gap-3">
+  
+  <!-- Lang -->
+  <div class="relative">
+    <button id="langBtn" class="btn btn-muted px-3 py-1.5" aria-haspopup="true" aria-expanded="false">
+      <span id="langBtnLabel">EN</span>
+    </button>
+    <div id="langMenu" class="hidden absolute left-1/2 -translate-x-1/2 mt-2 min-w-[9rem] rounded-xl border border-slate-800 bg-slate-900/95 menu-card p-2 text-sm">
+      <button class="w-full text-left px-3 py-1.5 rounded-md hover:bg-slate-800" data-lang="en">English</button>
+      <button class="w-full text-left px-3 py-1.5 rounded-md hover:bg-slate-800" data-lang="pt">Português</button>
+      <button class="w-full text-left px-3 py-1.5 rounded-md hover:bg-slate-800" data-lang="hi">हिन्दी</button>
+      <button class="w-full text-left px-3 py-1.5 rounded-md hover:bg-slate-800" data-lang="uk">Українська</button>
     </div>
-<!-- YouTube button -->
-<a href="https://www.youtube.com/@MUPICoin" target="_blank" 
-   class="inline-flex items-center px-4 py-2 bg-red-600 text-white font-semibold rounded-lg shadow hover:bg-red-700 transition">
-  <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-    <path d="M23.498 6.186a2.998 2.998 0 0 0-2.112-2.123C19.388 3.5 12 3.5 12 3.5s-7.388 0-9.386.563A2.998 2.998 0 0 0 .502 6.186 31.027 31.027 0 0 0 0 12a31.027 31.027 0 0 0 .502 5.814 2.998 2.998 0 0 0 2.112 2.123C4.612 20.5 12 20.5 12 20.5s7.388 0 9.386-.563a2.998 2.998 0 0 0 2.112-2.123A31.027 31.027 0 0 0 24 12a31.027 31.027 0 0 0-.502-5.814zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/>
-  </svg>
-  YouTube
-</a>
+  </div>
+
+  <!-- YouTube button -->
+  <a href="https://www.youtube.com/@MUPICoin" target="_blank"
+     class="inline-flex items-center px-4 py-2 bg-red-600 text-white font-semibold rounded-lg shadow hover:bg-red-700 transition">
+    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M23.498 6.186a2.998 2.998 0 0 0-2.112-2.123C19.388 3.5 12 3.5 12 3.5s-7.388 0-9.386.563A2.998 2.998 0 0 0 .502 6.186 31.027 31.027 0 0 0 0 12a31.027 31.027 0 0 0 .502 5.814 2.998 2.998 0 0 0 2.112 2.123C4.612 20.5 12 20.5 12 20.5s7.388 0 9.386-.563a2.998 2.998 0 0 0 2.112-2.123A31.027 31.027 0 0 0 24 12a31.027 31.027 0 0 0-.502-5.814zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/>
+    </svg>
+    YouTube
+  </a>
+  
     <!-- Menu -->
     <div class="flex justify-end">
       <div class="relative">
@@ -109,7 +113,13 @@
         <a class="btn btn-muted" href="form.html" data-i18n="cta.claim">Submit Claim</a>
       </div>
     </div>
-
+    
+<!-- Hero Image -->
+<section id="hero" class="mt-8 flex justify-center">
+  <img src="./mupi-ai1.png" 
+       alt="MUPI AI Pepe" 
+       class="w-full max-w-4xl h-auto rounded-lg shadow-lg"/>
+</section>
 
     <!-- ctas -->
     <div class="mt-6 flex flex-wrap gap-3">
