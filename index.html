@@ -472,20 +472,66 @@
     }
   })();
 
-  langBtn.addEventListener('click', (e)=>{ e.stopPropagation(); langMenu.classList.toggle('hidden'); });
-  langMenu.querySelectorAll('[data-lang]').forEach(b=>{
-    b.addEventListener('click', ()=>{
-      applyLang(b.getAttribute('data-lang'));
-      langMenu.classList.add('hidden');
+  <script>
+  const API_KEY   = "6PDXS3YFHWYCAFFEKMSMT6QJ9VRXE63VSA";
+  const CONTRACT  = "0x008E12860bA1B5Ce56D6dB35d64f99942D6a56bc";
+  // якщо знаєш точні decimals — вкажи тут; інакше лиш 18 як типово для BEP-20
+  const DECIMALS  = 18;
+
+  // helpers
+  const fmt = (n) => Number(n).toLocaleString(undefined, {maximumFractionDigits: 0});
+
+  // ---- SUPPLY (нормалізуємо на 10^DECIMALS)
+  (async () => {
+    try {
+      const r = await fetch(`https://api.bscscan.com/api?module=stats&action=tokensupply&contractaddress=${CONTRACT}&apikey=${API_KEY}`);
+      const j = await r.json();
+      if (j.status === "1" && j.result) {
+        // raw string (велике число) -> ділимо на 10^DECIMALS через BigInt
+        const raw = BigInt(j.result);
+        const base = BigInt(10) ** BigInt(DECIMALS);
+        const whole = raw / base;
+        document.getElementById('supply').textContent = fmt(whole);
+      } else {
+        document.getElementById('supply').textContent = "N/A";
+      }
+    } catch (e) {
+      document.getElementById('supply').textContent = "N/A";
+    }
+  })();
+
+  // ---- HOLDERS (якщо ендпоінт не дає total, показуємо N/A)
+  (async () => {
+    const holdersEl1 = document.getElementById('holders');
+    const holdersEl2 = document.getElementById('holdersCount'); // верхній бейдж, якщо є
+    try {
+      const r = await fetch(`https://api.bscscan.com/api?module=token&action=tokenholderlist&contractaddress=${CONTRACT}&page=1&offset=1&apikey=${API_KEY}`);
+      const j = await r.json();
+      // у безкоштовному API часто немає total — тоді лише “N/A”
+      const val = (j?.result && Array.isArray(j.result)) ? `~${j.result.length} (top shown)` : "N/A";
+      if (holdersEl1) holdersEl1.textContent = val;
+      if (holdersEl2) holdersEl2.textContent = val;
+    } catch (e) {
+      if (holdersEl1) holdersEl1.textContent = "N/A";
+      if (holdersEl2) holdersEl2.textContent = "N/A";
+    }
+  })();
+
+  // ---- COPY tooltip фікс: міняємо атрибут на обгортці .tooltip
+  (function fixCopyTip(){
+    const wrap = document.querySelector('.tooltip[data-tip]'); // контейнер з data-tip
+    const btn  = document.getElementById('copyContract');
+    if (!wrap || !btn) return;
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(CONTRACT);
+        const old = wrap.getAttribute('data-tip') || 'Click to copy';
+        wrap.setAttribute('data-tip','Copied!');
+        setTimeout(()=>wrap.setAttribute('data-tip', old), 1200);
+      } catch {}
     });
-  });
-  document.addEventListener('click', (e)=>{
-    if(!langMenu.contains(e.target) && !langBtn.contains(e.target)) langMenu.classList.add('hidden');
-  });
+  })();
 </script>
-<script>
-  const API_KEY = "6PDXS3YFHWYCAFFEKMSMT6QJ9VRXE63VSA";
-  const CONTRACT = "0x008E12860bA1B5Ce56D6dB35d64f99942D6a56bc";
 
   // Supply
   fetch(`https://api.bscscan.com/api?module=stats&action=tokensupply&contractaddress=${CONTRACT}&apikey=${API_KEY}`)
