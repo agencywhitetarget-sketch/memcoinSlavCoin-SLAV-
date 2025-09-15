@@ -218,17 +218,25 @@
     <h2 class="text-2xl font-bold">🎮 PEPE RUNNER — Collect MUPI</h2>
     <button id="gameStart" class="btn btn-primary glow">Start</button>
   </div>
+
   <div class="glass rounded-2xl p-4">
-    <canvas id="pepeGame" width="900" height="260" class="w-full rounded-xl border border-slate-800 bg-slate-900"></canvas>
+    <canvas id="pepeGame" width="900" height="260"
+            class="w-full rounded-xl border border-slate-800 bg-slate-900"></canvas>
     <div class="mt-3 text-slate-400 text-sm">
       Press <b>Space</b> or <b>Tap</b> to jump • Get <b>30+</b> score to unlock a reward link
     </div>
+    <div class="mt-2 flex items-center gap-6 text-sm text-slate-400">
+      <div>Score: <b id="scoreVal">0</b></div>
+      <div>Best: <b id="bestVal">0</b></div>
+    </div>
   </div>
+
   <div id="gameCta" class="hidden mt-4">
     <a href="quest.html" class="btn btn-primary glow">Start Quest</a>
     <a href="form.html" class="btn btn-muted">Submit Claim</a>
   </div>
 </section>
+
 
   <!-- ====== TOKEN METRICS ====== -->
   <section id="metrics" class="py-10 border-t border-slate-800">
@@ -516,143 +524,181 @@
     }
   })();
 </script>
-
+  
 <script>
 (() => {
-  const c = document.getElementById('pepeGame'); if(!c) return;
-  const ctx = c.getContext('2d');
-  let running=false, t=0, score=0, best=+localStorage.getItem('mupi_best')||0;
-  const g = 0.55, jumpV = -9.6;
-  const state = { y: 200, vy: 0, onGround: true };
-  const coins=[], spikes=[];
-  const rand=(a,b)=>Math.random()*(b-a)+a;
+  const canvas = document.getElementById('pepeGame');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const startBtn = document.getElementById('gameStart');
+  const scoreEl = document.getElementById('scoreVal');
+  const bestEl  = document.getElementById('bestVal');
+  const ctaBox  = document.getElementById('gameCta');
 
-  function addSpike(){ spikes.push({ x: c.width+rand(0,200), w: 18, h: rand(28,42), s: rand(3.2,4.6) }); }
-  function addCoin(){ coins.push({ x: c.width+rand(60,180), y: rand(90,170), r: 6, s: rand(2.8,4.2) }); }
+  // ─── Assets ───────────────────────────────────────────────────────────────
+  const coinImg = new Image();
+  coinImg.src = './mupi-logo.png'; // <- твоє лого
+  let coinReady = false;
+  coinImg.onload = () => coinReady = true;
 
-  function reset(){
-    running = true; t=0; score=0;
-    state.y=200; state.vy=0; state.onGround=true;
-    coins.length=0; spikes.length=0;
-    for(let i=0;i<3;i++){ addSpike(); addCoin(); }
-    document.getElementById('gameCta')?.classList.add('hidden');
+  // ─── World / Player ───────────────────────────────────────────────────────
+  const G = 0.55, JUMP = -9.6, FLOOR_Y = 225;
+  const player = { x: 70, y: FLOOR_Y, vy: 0, w: 22, h: 26, onGround: true };
+  let running = false, raf = null, t = 0, score = 0;
+  let best = +localStorage.getItem('mupi_runner_best') || 0;
+  bestEl.textContent = best;
+
+  const spikes = []; // {x,w,h,s}
+  const coins  = []; // {x,y,r,s}
+  const rnd = (a,b)=>Math.random()*(b-a)+a;
+
+  function addSpike() { spikes.push({ x: canvas.width + rnd(0,180), w: 18, h: rnd(30,46), s: rnd(3.2,4.6) }); }
+  function addCoin()  { coins .push({ x: canvas.width + rnd(80,220), y: rnd(90,170), r: 10,  s: rnd(2.6,3.8) }); }
+
+  function reset() {
+    running = true; t = 0; score = 0;
+    scoreEl.textContent = '0';
+    player.y = FLOOR_Y; player.vy = 0; player.onGround = true;
+    spikes.length = 0; coins.length = 0;
+    for (let i=0;i<3;i++) { addSpike(); addCoin(); }
+    ctaBox?.classList.add('hidden');
+    loop();
   }
 
-  function jump(){
-    if(!running){ reset(); return; }
-    if(state.onGround){ state.vy = jumpV; state.onGround=false; }
+  function jump() {
+    if (!running) { reset(); return; }
+    if (player.onGround) { player.vy = JUMP; player.onGround = false; }
   }
 
-  function drawBg(){
-    ctx.fillStyle = '#0b1220'; ctx.fillRect(0,0,c.width,c.height);
-    // ground
-    ctx.fillStyle = '#0f172a'; ctx.fillRect(0,230,c.width,30);
-    // parallax lines
-    ctx.strokeStyle = 'rgba(56,189,248,.18)'; ctx.lineWidth=1;
-    for(let i=0;i<4;i++){
+  // ─── Render helpers ───────────────────────────────────────────────────────
+  function drawBG() {
+    ctx.fillStyle = '#0b1220'; ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.strokeStyle = 'rgba(56,189,248,.18)'; ctx.lineWidth = 1;
+    for (let i=0;i<4;i++) { // паралакс-лінії
       ctx.beginPath();
-      ctx.moveTo(((t*0.6)+i*220)% (c.width+220)-220, 80+i*30);
-      ctx.lineTo(((t*0.6)+i*220)% (c.width+220)+120, 80+i*30);
-      ctx.stroke();
+      const sx = ((t*0.6)+i*220)%(canvas.width+220)-220;
+      const y  = 70 + i*34;
+      ctx.moveTo(sx, y); ctx.lineTo(sx+160, y); ctx.stroke();
     }
+    ctx.fillStyle = '#0f172a'; ctx.fillRect(0, FLOOR_Y+25, canvas.width, 40); // земля тінь
+    ctx.strokeStyle = 'rgba(148,163,184,.25)';
+    ctx.beginPath(); ctx.moveTo(0,FLOOR_Y+0.5); ctx.lineTo(canvas.width, FLOOR_Y+0.5); ctx.stroke();
   }
 
-  function drawPepe(x,y){
-    // простий “космошолом” у стилі AI × Pepe
-    ctx.fillStyle = '#1e293b';
-    ctx.fillRect(x-14,y-18,28,28); // body
-    ctx.fillStyle = '#38bdf8';
-    ctx.beginPath(); ctx.arc(x,y-6,10,0,Math.PI*2); ctx.fill(); // visor
-    ctx.fillStyle = '#22c55e';
-    ctx.fillRect(x-16,y+10,32,6); // board
+  function drawPepe(x,y) {
+    // корпус
+    ctx.fillStyle = '#1e293b'; ctx.fillRect(x-14, y-18, 28, 28);
+    // візор
+    ctx.beginPath(); ctx.fillStyle = '#38bdf8';
+    ctx.arc(x, y-6, 10, 0, Math.PI*2); ctx.fill();
+    // дошка
+    ctx.fillStyle = '#22c55e'; ctx.fillRect(x-16, y+10, 32, 6);
+    // «тяга» при різкому стрибку
+    if (player.vy < -1) { ctx.fillStyle = 'rgba(56,189,248,.25)'; ctx.fillRect(x-18, y+12, 8, 3); }
   }
 
-  function drawSpike(o){
+  function drawSpike(o) {
     ctx.fillStyle = '#f87171';
     ctx.beginPath();
-    ctx.moveTo(o.x, 230); ctx.lineTo(o.x+o.w/2, 230-o.h); ctx.lineTo(o.x+o.w,230); ctx.closePath(); ctx.fill();
+    ctx.moveTo(o.x, FLOOR_Y+25);
+    ctx.lineTo(o.x + o.w/2, FLOOR_Y+25 - o.h);
+    ctx.lineTo(o.x + o.w, FLOOR_Y+25);
+    ctx.closePath(); ctx.fill();
   }
 
-  function drawCoin(o){
-    ctx.fillStyle = '#fbbf24';
-    ctx.beginPath(); ctx.arc(o.x,o.y,o.r,0,Math.PI*2); ctx.fill();
-    ctx.fillStyle = '#fde68a';
-    ctx.beginPath(); ctx.arc(o.x-2,o.y-2,o.r*0.55,0,Math.PI*2); ctx.fill();
+  function drawCoin(o) {
+    if (coinReady) {
+      const size = o.r*2;
+      ctx.save();
+      ctx.beginPath(); ctx.arc(o.x, o.y, o.r, 0, Math.PI*2); ctx.clip();
+      ctx.drawImage(coinImg, o.x - o.r, o.y - o.r, size, size);
+      ctx.restore();
+      // блиск
+      ctx.strokeStyle = 'rgba(253, 230, 138, .8)';
+      ctx.beginPath(); ctx.arc(o.x, o.y, o.r-1, 0, Math.PI*2); ctx.stroke();
+    } else {
+      // фолбек — жовте коло
+      ctx.fillStyle = '#fbbf24';
+      ctx.beginPath(); ctx.arc(o.x,o.y,o.r,0,Math.PI*2); ctx.fill();
+    }
   }
 
-  function collideRectCircle(rx,ry,rw,rh, cx,cy,cr){
+  function collideRectCircle(rx, ry, rw, rh, cx, cy, cr) {
     const nx = Math.max(rx, Math.min(cx, rx+rw));
     const ny = Math.max(ry, Math.min(cy, ry+rh));
-    const dx = cx-nx, dy=cy-ny;
-    return (dx*dx+dy*dy) <= cr*cr;
+    const dx = cx - nx, dy = cy - ny;
+    return (dx*dx + dy*dy) <= cr*cr;
   }
 
-  function loop(){
-    if(!running) return;
-    t+=1; ctx.clearRect(0,0,c.width,c.height); drawBg();
+  function overlay(msg, color) {
+    ctx.fillStyle = 'rgba(2,6,23,.6)'; ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle = color; ctx.font = 'bold 32px ui-sans-serif, system-ui';
+    ctx.textAlign = 'center'; ctx.fillText(msg, canvas.width/2, 120);
+    ctx.fillStyle = '#e5e7eb'; ctx.font = '16px ui-sans-serif, system-ui';
+    ctx.fillText('Press Space or Tap to restart', canvas.width/2, 150);
+    ctx.textAlign = 'start';
+  }
 
-    // physics
-    state.vy += g; state.y += state.vy;
-    if(state.y>=200){ state.y=200; state.vy=0; state.onGround=true; }
+  // ─── Loop ─────────────────────────────────────────────────────────────────
+  function loop() {
+    if (!running) return;
+    t++;
 
-    // spawn pacing
-    if(t%120===0) addSpike();
-    if(t%90===0) addCoin();
+    // фізика
+    player.vy += G; player.y += player.vy;
+    if (player.y >= FLOOR_Y) { player.y = FLOOR_Y; player.vy = 0; player.onGround = true; }
+    if (player.y < 10) { player.y = 10; player.vy = 0; }
 
-    // move & draw spikes
-    for(let i=spikes.length-1;i>=0;i--){
-      const o = spikes[i]; o.x -= o.s;
-      drawSpike(o);
-      // collision (player ~ 22×26 bbox)
-      if(o.x < 80 && o.x+o.w>58){
-        const hit = !( (200-26) > (230-o.h) || (200) < 230 || (80) > (o.x+o.w) || (80-22) < o.x );
-        if(hit){
-          best = Math.max(best, score);
-          localStorage.setItem('mupi_best', best);
-          running=false; // game over
-          // show CTA if good score
-          if(score>=30) document.getElementById('gameCta')?.classList.remove('hidden');
-          drawOverlay('GAME OVER', '#f87171');
-          return;
-        }
-      }
-      if(o.x+o.w < -10) spikes.splice(i,1);
+    // спавн
+    if (t % 110 === 0) addSpike();
+    if (t % 90  === 0) addCoin();
+
+    // рух перешкод
+    for (let i = spikes.length-1; i >= 0; i--) {
+      const o = spikes[i]; o.x -= o.s; drawSpike(o);
+      // колізія з гравцем (прямокутник 22×26 біля (player.x-11, player.y-13))
+      const hitTop = (player.y-13) <= (FLOOR_Y+25 - o.h);
+      const overlapX = (player.x+11) > o.x && (player.x-11) < (o.x + o.w);
+      const overlapY = (player.y+13) > (FLOOR_Y+25 - o.h);
+      if (overlapX && hitTop && overlapY) return gameOver();
+      if (o.x + o.w < -10) spikes.splice(i,1);
     }
 
-    // move & draw coins
-    for(let i=coins.length-1;i>=0;i--){
-      const o = coins[i]; o.x -= o.s;
-      drawCoin(o);
-      const got = collideRectCircle(58,200-26,22,26, o.x,o.y,o.r);
-      if(got){ score++; coins.splice(i,1); }
-      else if(o.x+o.r < -10) coins.splice(i,1);
+    // рух монет
+    for (let i = coins.length-1; i >= 0; i--) {
+      const o = coins[i]; o.x -= o.s; drawCoin(o);
+      if (collideRectCircle(player.x-11, player.y-13, 22, 26, o.x, o.y, o.r)) {
+        score++; scoreEl.textContent = score; coins.splice(i,1);
+      } else if (o.x + o.r < -10) coins.splice(i,1);
     }
 
-    // draw player
-    drawPepe(70, state.y);
-
-    // HUD
-    ctx.fillStyle='#e5e7eb'; ctx.font='bold 16px ui-monospace, SFMono-Regular, Menlo, monospace';
+    // фон + пепе + HUD
+    drawBG(); drawPepe(player.x, player.y);
+    ctx.fillStyle = '#e5e7eb'; ctx.font = 'bold 16px ui-monospace, Menlo, monospace';
     ctx.fillText(`SCORE ${score}`, 14, 20);
-    ctx.fillStyle='#94a3b8'; ctx.fillText(`BEST ${best}`, 14, 40);
+    ctx.fillStyle = '#94a3b8'; ctx.fillText(`BEST ${best}`, 14, 40);
 
-    requestAnimationFrame(loop);
+    raf = requestAnimationFrame(loop);
   }
 
-  function drawOverlay(text, color){
-    ctx.fillStyle='rgba(2,6,23,.6)'; ctx.fillRect(0,0,c.width,c.height);
-    ctx.fillStyle=color; ctx.font='bold 32px ui-sans-serif, system-ui';
-    ctx.textAlign='center'; ctx.fillText(text, c.width/2, 120);
-    ctx.fillStyle='#e5e7eb'; ctx.font='16px ui-sans-serif, system-ui';
-    ctx.fillText('Press Space or Tap to restart', c.width/2, 150);
-    ctx.textAlign='start';
+  function gameOver() {
+    running = false;
+    best = Math.max(best, score); localStorage.setItem('mupi_runner_best', best);
+    bestEl.textContent = best;
+    overlay('GAME OVER', '#f87171');
+    if (score >= 30) ctaBox?.classList.remove('hidden');
   }
 
-  // events
-  document.getElementById('gameStart')?.addEventListener('click', ()=>{ reset(); loop(); });
-  window.addEventListener('keydown', e=>{ if(e.code==='Space'){ e.preventDefault(); jump(); if(!running){ reset(); loop(); } }});
-  c.addEventListener('touchstart', e=>{ e.preventDefault(); jump(); if(!running){ reset(); loop(); } }, {passive:false});
+  // ─── Controls ─────────────────────────────────────────────────────────────
+  startBtn?.addEventListener('click', reset);
+  window.addEventListener('keydown', (e) => {
+    if (e.code === 'Space') { e.preventDefault(); jump(); }
+  }, { passive:false });
+  canvas.addEventListener('touchstart', (e) => {
+    e.preventDefault(); jump();
+  }, { passive:false });
+
+  // idle frame
+  drawBG(); drawPepe(player.x, player.y);
 })();
 </script>
-</body>
-</html>
