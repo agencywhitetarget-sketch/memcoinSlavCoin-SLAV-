@@ -155,7 +155,10 @@
     </p>
     <div class="mt-4 flex flex-wrap gap-3">
       <a class="btn btn-primary glow" href="quest.html" data-i18n="cta.quest">Start Quest</a>
-      <a href="https://forms.gle/niLyj6uakLbQapP59" target="_blank">Submit Claim</a>
+      <a class="btn btn-primary glow"
+   href="https://forms.gle/niLyj6uakLbQapP59"
+   target="_blank" rel="noopener"
+   data-i18n="cta.claim">Submit Claim</a>
     </div>
   </div>
 </section>
@@ -338,32 +341,25 @@
 
 <!-- ===== Core UI scripts (year, links, menu, i18n, copy) ===== -->
 <script>
-  // Year + links
+(function(){
   const CONTRACT_ADDRESS = '0x008E12860bA1B5Ce56D6dB35d64f99942D6a56bc';
   const PANCAKE_SWAP = `https://pancakeswap.finance/swap?outputCurrency=${CONTRACT_ADDRESS}&chain=bsc&inputCurrency=BNB`;
   const DEXSCREENER  = 'https://dexscreener.com/bsc/0x8649f55031ae543d47d64d1bf0a97cd4d044b350';
   const BSCSCAN      = `https://bscscan.com/token/${CONTRACT_ADDRESS}`;
 
-  document.getElementById('year').textContent = new Date().getFullYear();
-  document.getElementById('buyLink').href = PANCAKE_SWAP;
-  document.getElementById('dsLink').href  = DEXSCREENER;
-  const bscBtn = document.getElementById('bscBtn'); if (bscBtn) bscBtn.href = BSCSCAN;
-  document.getElementById('caShort').textContent = `${CONTRACT_ADDRESS.slice(0,6)}...${CONTRACT_ADDRESS.slice(-6)}`;
+  const setText = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
+  const setHref = (id, url)  => { const el = document.getElementById(id); if (el) el.href = url; };
 
-  // Copy contract + tooltip
-  (function fixCopyTip(){
-    const wrap = document.querySelector('.tooltip[data-tip]');
-    const btn  = document.getElementById('copyContract');
-    if (!wrap || !btn) return;
-    btn.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(CONTRACT_ADDRESS);
-        const old = wrap.getAttribute('data-tip') || 'Click to copy';
-        wrap.setAttribute('data-tip','Copied!');
-        setTimeout(()=>wrap.setAttribute('data-tip', old), 1200);
-      } catch {}
-    });
-  })();
+  setText('year', String(new Date().getFullYear()));
+  setHref('buyLink', PANCAKE_SWAP);
+  setHref('dsLink',  DEXSCREENER);
+  setHref('bscBtn',  BSCSCAN);
+
+  // скорочена адреса в бейджі контракту (працює тільки якщо #caShort є на сторінці)
+  setText('caShort', `${CONTRACT_ADDRESS.slice(0,6)}...${CONTRACT_ADDRESS.slice(-6)}`);
+})();
+</script>
+
 
   // Menu
   (function menuInit(){
