@@ -174,18 +174,7 @@
       <a class="btn btn-muted justify-center" target="_blank" rel="noopener" href="https://t.me/mupicoin">Telegram</a>
     </div>
 
-    <!-- Token Metrics -->
-   <div class="glass rounded-xl p-3 text-center">
-  <div class="text-xs text-slate-400">Holders</div>
-  <div class="text-lg font-bold">
-    <span id="holdersCount">—</span>
-    <a id="holdersLive"
-       class="ml-2 align-middle text-xs underline decoration-slate-600 hover:decoration-slate-400"
-       target="_blank" rel="noopener">(live)</a>
-  </div>
-</div>
-
-
+   
   <!-- ====== AS SEEN ON ====== -->
   <section class="py-8 border-t border-slate-800">
     <div class="text-xs text-slate-400 uppercase tracking-widest mb-3">As seen on</div>
@@ -603,50 +592,3 @@ const I18N = {
         if (!isMenu) menuCard.classList.add('hidden');
       });
     }
-
-    // 2) I18N dictionary: гарантуємо єдиний екземпляр
-    window.I18N = window.I18N || {}; // <-- якщо десь вище вже є I18N, не падаємо
-
-    const langBtn      = document.getElementById('langBtn');
-    const langMenu     = document.getElementById('langMenu');
-    const langBtnLabel = document.getElementById('langBtnLabel');
-
-    function applyLang(code){
-      const dict = {...(window.I18N.en||{}), ...(window.I18N[code]||{})};
-      document.querySelectorAll('[data-i18n]').forEach(el=>{
-        const key = el.getAttribute('data-i18n');
-        if (dict[key]) el.innerHTML = dict[key];
-      });
-      localStorage.setItem('mupi_lang', code);
-      if (langBtnLabel) langBtnLabel.textContent = code.toUpperCase();
-    }
-
-    // 3) Стартова мова (з урахуванням ES)
-    const saved = localStorage.getItem('mupi_lang');
-    if (saved) applyLang(saved);
-    else {
-      const nav = (navigator.language||'en').slice(0,2).toLowerCase();
-      const map = {en:'en', pt:'pt', hi:'hi', uk:'uk', es:'es'};  // <-- важливо, додано es
-      applyLang(map[nav] || 'en');
-    }
-
-    // 4) Випадаюче меню мов
-    if (langBtn && langMenu){
-      langBtn.addEventListener('click', (e)=>{
-        e.stopPropagation();
-        langMenu.classList.toggle('hidden');
-      });
-      langMenu.querySelectorAll('[data-lang]').forEach(b=>{
-        b.addEventListener('click', ()=>{
-          applyLang(b.getAttribute('data-lang'));
-          langMenu.classList.add('hidden');
-        });
-      });
-      document.addEventListener('click', (e)=>{
-        if (!langMenu.contains(e.target) && !langBtn.contains(e.target)){
-          langMenu.classList.add('hidden');
-        }
-      });
-    }
-  })();
-</script>
