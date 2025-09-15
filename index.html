@@ -141,30 +141,25 @@
     Born by AI, powered by memes. 420,690,000,000 supply. 0% tax. Community-first.
   </p>
 
-  <!-- Тут ми додали слоган -->
-  <p class="mt-3 text-sky-400 text-lg font-semibold">
+  <!-- Слоган (з перекладом) -->
+  <p class="mt-3 text-sky-400 text-lg font-semibold" data-i18n="hero.slogan">
     👉 Don’t trade millions for pizza again. Join MUPI.
   </p>
 
-  <!-- Далі йде блок Giveaway -->
+  <!-- Giveaway -->
   <div class="mt-6 rounded-2xl border border-slate-800 p-5 bg-slate-900/40">
-    ...
+    <div class="kicker text-sky-400 text-xs mb-1" data-i18n="gw.kicker">Giveaway</div>
+    <h3 class="text-2xl font-bold mb-2" data-i18n="gw.title">GIVEAWAY: 4,206,900,000 MUPI FOR ACTIVE USERS 🎁</h3>
+    <p class="text-slate-300" data-i18n="gw.text">
+      Complete the Quest (follow + repost + comment + join TG + buy ≥ $5) and submit your claim. Weekly distribution.
+    </p>
+    <div class="mt-4 flex flex-wrap gap-3">
+      <a class="btn btn-primary glow" href="quest.html" data-i18n="cta.quest">Start Quest</a>
+      <a class="btn btn-muted" href="form.html" data-i18n="cta.claim">Submit Claim</a>
+    </div>
   </div>
 </section>
 
-
-    <!-- Giveaway -->
-    <div class="mt-6 rounded-2xl border border-slate-800 p-5 bg-slate-900/40">
-      <div class="kicker text-sky-400 text-xs mb-1" data-i18n="gw.kicker">Giveaway</div>
-      <h3 class="text-2xl font-bold mb-2" data-i18n="gw.title">GIVEAWAY: 4,206,900,000 MUPI FOR ACTIVE USERS 🎁</h3>
-      <p class="text-slate-300" data-i18n="gw.text">
-        Complete the Quest (follow + repost + comment + join TG + buy ≥ $5) and submit your claim. Weekly distribution.
-      </p>
-      <div class="mt-4 flex flex-wrap gap-3">
-        <a class="btn btn-primary glow" href="quest.html" data-i18n="cta.quest">Start Quest</a>
-        <a class="btn btn-muted" href="form.html" data-i18n="cta.claim">Submit Claim</a>
-      </div>
-    </div>
 
     <!-- Hero Image -->
     <section id="hero" class="mt-8 flex justify-center">
@@ -405,12 +400,13 @@
     });
   })();
 
-// I18N dictionaries
+// I18N dictionaries (full, with hero.slogan + FAQ)
 const I18N = {
   en:{
     'menu.socials':'Socials','menu.nav':'Navigation',
     'nav.legend':'Legend','nav.how':'How to buy','nav.roadmap':'Roadmap','nav.media':'Media',
     'hero.lead':'Born by AI, powered by memes. 420,690,000,000 supply. 0% tax. Community-first.',
+    'hero.slogan':'👉 Don’t trade millions for pizza again. Join MUPI.',
     'gw.kicker':'Giveaway','gw.title':'GIVEAWAY: 4,206,900,000 MUPI FOR ACTIVE USERS 🎁',
     'gw.text':'Complete the Quest (follow + repost + comment + join TG + buy ≥ $5) and submit your claim. Weekly distribution.',
     'cta.quest':'Start Quest','cta.claim':'Submit Claim','cta.buy':'Buy on PancakeSwap','cta.chart':'View Chart',
@@ -429,12 +425,18 @@ const I18N = {
     'road.q1b':'Initial liquidity','road.q1c':'Website + socials','road.q2':'Phase 2 — Growth',
     'road.q2a':'Community campaigns & memes','road.q2b':'DEX tracking & logo','road.q2c':'Partnerships',
     'road.q3':'Phase 3 — Utility','road.q3a':'Staking/utility exploration','road.q3b':'More listings','road.q3c':'Merch & events',
-    'socials.title':'🔗 Follow & Join','media.title':'🎥 Videos & Podcasts'
+    'socials.title':'🔗 Follow & Join','media.title':'🎥 Videos & Podcasts',
+    'faq.title':'❓ FAQ',
+    'faq.q1':'Is MUPI taxed?','faq.a1':'No. MUPI has 0% buy/sell tax.',
+    'faq.q2':'What’s the total and circulating supply?','faq.a2':'Total/Max supply is 420,690,000,000. Circulating is updated via API on our site.',
+    'faq.q3':'How to join the giveaway?','faq.a3':'Complete the quest (follow, repost, comment, join TG, buy ≥ $5) and submit your claim weekly.'
   },
+
   pt:{
     'menu.socials':'Redes','menu.nav':'Navegação',
     'nav.legend':'Lenda','nav.how':'Como comprar','nav.roadmap':'Roteiro','nav.media':'Mídia',
     'hero.lead':'Nascido pela IA, movido por memes. 420.690.000.000 de suprimento. 0% taxa. Comunidade em primeiro lugar.',
+    'hero.slogan':'👉 Não troque milhões por pizza novamente. Junte-se ao MUPI.',
     'gw.kicker':'Sorteio','gw.title':'SORTEIO: 4.206.900.000 MUPI PARA USUÁRIOS ATIVOS 🎁',
     'gw.text':'Complete a Missão (seguir + repostar + comentar + entrar no TG + comprar ≥ $5) e envie sua solicitação. Distribuição semanal.',
     'cta.quest':'Começar Missão','cta.claim':'Enviar Solicitação','cta.buy':'Comprar no PancakeSwap','cta.chart':'Ver Gráfico',
@@ -453,12 +455,18 @@ const I18N = {
     'road.q1b':'Liquidez inicial','road.q1c':'Site + redes sociais','road.q2':'Fase 2 — Crescimento',
     'road.q2a':'Campanhas da comunidade e memes','road.q2b':'Rastreamento DEX e logo','road.q2c':'Parcerias',
     'road.q3':'Fase 3 — Utilidade','road.q3a':'Exploração de staking/utilidade','road.q3b':'Mais listagens','road.q3c':'Merch & eventos',
-    'socials.title':'🔗 Siga & Participe','media.title':'🎥 Vídeos & Podcasts'
+    'socials.title':'🔗 Siga & Participe','media.title':'🎥 Vídeos & Podcasts',
+    'faq.title':'❓ FAQ',
+    'faq.q1':'O MUPI tem taxa?','faq.a1':'Não. MUPI tem 0% de taxa de compra/venda.',
+    'faq.q2':'Qual é o fornecimento total e circulante?','faq.a2':'O fornecimento total/máximo é 420.690.000.000. O circulante é atualizado via API no site.',
+    'faq.q3':'Como participar do sorteio?','faq.a3':'Complete a missão (seguir, repostar, comentar, entrar no TG, comprar ≥ $5) e envie seu pedido semanalmente.'
   },
+
   hi:{
     'menu.socials':'सोशल्स','menu.nav':'नेविगेशन',
     'nav.legend':'लीजेंड','nav.how':'कैसे खरीदें','nav.roadmap':'रोडमैप','nav.media':'मीडिया',
     'hero.lead':'AI से जन्मा, मीम्स से संचालित। 420,690,000,000 आपूर्ति। 0% टैक्स। समुदाय पहले।',
+    'hero.slogan':'👉 पिज़्ज़ा के लिए फिर से लाखों मत बदलो। MUPI से जुड़ो।',
     'gw.kicker':'गिवअवे','gw.title':'गिवअवे: 4,206,900,000 MUPI सक्रिय उपयोगकर्ताओं के लिए 🎁',
     'gw.text':'क्वेस्ट पूरा करें (फॉलो + रीपोस्ट + कमेंट + TG में जुड़ें + ≥ $5 खरीदें) और अपना दावा सबमिट करें। साप्ताहिक वितरण।',
     'cta.quest':'क्वेस्ट शुरू करें','cta.claim':'क्लेम सबमिट करें','cta.buy':'PancakeSwap पर खरीदें','cta.chart':'चार्ट देखें',
@@ -477,12 +485,18 @@ const I18N = {
     'road.q1b':'प्रारंभिक लिक्विडिटी','road.q1c':'वेबसाइट + सोशल्स','road.q2':'फेज 2 — ग्रोथ',
     'road.q2a':'समुदाय अभियान और मीम्स','road.q2b':'DEX ट्रैकिंग और लोगो','road.q2c':'साझेदारियाँ',
     'road.q3':'फेज 3 — यूटिलिटी','road.q3a':'स्टेकिंग/यूटिलिटी की खोज','road.q3b':'अधिक लिस्टिंग्स','road.q3c':'मर्च & इवेंट्स',
-    'socials.title':'🔗 फॉलो करें & जुड़ें','media.title':'🎥 वीडियो & पॉडकास्ट्स'
+    'socials.title':'🔗 फॉलो करें & जुड़ें','media.title':'🎥 वीडियो & पॉडकास्ट्स',
+    'faq.title':'❓ अक्सर पूछे जाने वाले प्रश्न',
+    'faq.q1':'क्या MUPI पर टैक्स है?','faq.a1':'नहीं। MUPI पर खरीद/बिक्री टैक्स 0% है।',
+    'faq.q2':'कुल और परिसंचारी आपूर्ति क्या है?','faq.a2':'कुल/अधिकतम आपूर्ति 420,690,000,000 है। परिसंचारी सप्लाई हमारी साइट पर API से अपडेट होती है।',
+    'faq.q3':'गिवअवे में कैसे जुड़ें?','faq.a3':'क्वेस्ट पूरा करें (फॉलो, रीपोस्ट, कमेंट, TG में जुड़ें, ≥ $5 खरीदें) और साप्ताहिक क्लेम सबमिट करें।'
   },
+
   uk:{
     'menu.socials':'Соціальні','menu.nav':'Навігація',
     'nav.legend':'Легенда','nav.how':'Як купити','nav.roadmap':'Дорожня карта','nav.media':'Медіа',
     'hero.lead':'Народжено ШІ, рухається мемами. 420 690 000 000 в обігу. 0% податків. Спільнота на першому місці.',
+    'hero.slogan':'👉 Не міняй мільйони на піцу знову. Приєднуйся до MUPI.',
     'gw.kicker':'Розіграш','gw.title':'РОЗІГРАШ: 4 206 900 000 MUPI для активних користувачів 🎁',
     'gw.text':'Виконай Квест (підписка + репост + коментар + TG + покупка ≥ $5) та подай заявку. Щотижневий розподіл.',
     'cta.quest':'Почати Квест','cta.claim':'Подати заявку','cta.buy':'Купити на PancakeSwap','cta.chart':'Переглянути графік',
@@ -501,36 +515,47 @@ const I18N = {
     'road.q1b':'Початкова ліквідність','road.q1c':'Сайт + соцмережі','road.q2':'Фаза 2 — Зростання',
     'road.q2a':'Кампанії комʼюніті та меми','road.q2b':'DEX-трекінг і логотип','road.q2c':'Партнерства',
     'road.q3':'Фаза 3 — Юзкейси','road.q3a':'Дослідження утиліті/стейкінгу','road.q3b':'Більше лістингів','road.q3c':'Мерч та івенти',
-    'socials.title':'🔗 Підписуйся та приєднуйся','media.title':'🎥 Відео та подкасти'
+    'socials.title':'🔗 Підписуйся та приєднуйся','media.title':'🎥 Відео та подкасти',
+    'faq.title':'❓ Питання та відповіді',
+    'faq.q1':'Чи є податок у MUPI?','faq.a1':'Ні. Купівля/продаж MUPI — 0% податків.',
+    'faq.q2':'Яка загальна та циркулююча пропозиція?','faq.a2':'Загальна/макс пропозиція — 420 690 000 000. Циркулююча оновлюється через API на сайті.',
+    'faq.q3':'Як приєднатися до розіграшу?','faq.a3':'Виконай квест (підписка, репост, коментар, TG, покупка ≥ $5) і щотижня подавай заявку.'
   },
+
   es:{
-  'menu.socials':'Redes sociales','menu.nav':'Navegación',
-  'nav.legend':'Leyenda','nav.how':'Cómo comprar','nav.roadmap':'Hoja de ruta','nav.media':'Medios',
-  'hero.lead':'Nacido de la IA, impulsado por memes. 420.690.000.000 suministro. 0% impuestos. Comunidad primero.',
-  'gw.kicker':'Sorteo',
-  'gw.title':'SORTEO: 4.206.900.000 MUPI PARA USUARIOS ACTIVOS 🎁',
-  'gw.text':'Completa la Misión (seguir + repostear + comentar + unirte a TG + comprar ≥ $5) y envía tu reclamo. Distribución semanal.',
-  'cta.quest':'Iniciar Misión','cta.claim':'Enviar Reclamo','cta.buy':'Comprar en PancakeSwap','cta.chart':'Ver Gráfico',
-  'legend.title':'🧵 La Leyenda de MUPI',
-  'legend.body':'Dentro de la matriz de IA, Pepe conoció un modelo curioso que amaba más los memes que los datos. Su colaboración forjó MUPI — una moneda sin impuestos, con vibras transparentes y poder comunitario. No solo otro token, sino una historia que escribimos juntos: cerebros de IA × caos de Pepe.',
-  'why.title':'🔥 ¿Por qué MUPI?','why.lead':'MUPI es más que un meme coin. Es un símbolo y un movimiento.',
-  'why.ai':'🧠 Sinergia IA × Meme — nacido de la Inteligencia Artificial y la cultura de los memes, uniendo dos de las mayores tendencias de nuestro tiempo.',
-  'why.quest':'🎁 Quest2Earn — recompensas semanales para miembros activos de la comunidad. Mantén y únete a misiones para crecer con nosotros.',
-  'why.pizza':'🍕 Símbolo Anti-Pizza — nunca repitas el error de la pizza de Bitcoin. No cambies millones por una porción.',
-  'why.community':'🌍 Comunidad primero — 0% impuestos, vibras transparentes y fuerza en los números.',
-  'why.outro':'👉 Cuando compras MUPI, no solo compras un token. Te unes a una leyenda.',
-  'how.title':'🛒 Cómo comprar',
-  'how.s1':'Instala MetaMask y cambia a BNB Smart Chain.',
-  'how.s2':'Abre PancakeSwap e importa MUPI.',
-  'how.s3':'Compra cualquier cantidad (≥ $5 para la misión).',
-  'how.s4':'Guarda el hash de la transacción — lo necesitarás en el formulario de reclamo.',
-  'road.title':'🗺️ Hoja de ruta',
-  'road.q1':'Fase 1 — Lanzamiento','road.q1a':'Lanzamiento del token en BSC','road.q1b':'Liquidez inicial','road.q1c':'Sitio web + redes sociales',
-  'road.q2':'Fase 2 — Crecimiento','road.q2a':'Campañas comunitarias y memes','road.q2b':'Seguimiento DEX y logo','road.q2c':'Asociaciones',
-  'road.q3':'Fase 3 — Utilidad','road.q3a':'Exploración de staking/utilidad','road.q3b':'Más listados','road.q3c':'Merch y eventos',
-  'socials.title':'🔗 Síguenos & Únete','media.title':'🎥 Videos & Podcasts'
-}
+    'menu.socials':'Redes sociales','menu.nav':'Navegación',
+    'nav.legend':'Leyenda','nav.how':'Cómo comprar','nav.roadmap':'Hoja de ruta','nav.media':'Medios',
+    'hero.lead':'Nacido de la IA, impulsado por memes. 420.690.000.000 suministro. 0% impuestos. Comunidad primero.',
+    'hero.slogan':'👉 No vuelvas a cambiar millones por una pizza. Únete a MUPI.',
+    'gw.kicker':'Sorteo',
+    'gw.title':'SORTEO: 4.206.900.000 MUPI PARA USUARIOS ACTIVOS 🎁',
+    'gw.text':'Completa la Misión (seguir + repostear + comentar + unirte a TG + comprar ≥ $5) y envía tu reclamo. Distribución semanal.',
+    'cta.quest':'Iniciar Misión','cta.claim':'Enviar Reclamo','cta.buy':'Comprar en PancakeSwap','cta.chart':'Ver Gráfico',
+    'legend.title':'🧵 La Leyenda de MUPI',
+    'legend.body':'Dentro de la matriz de IA, Pepe conoció un modelo curioso que amaba más los memes que los datos. Su colaboración forjó MUPI — una moneda sin impuestos, con vibras transparentes y poder comunitario. No solo otro token, sino una historia que escribimos juntos: cerebros de IA × caos de Pepe.',
+    'why.title':'🔥 ¿Por qué MUPI?','why.lead':'MUPI es más que un meme coin. Es un símbolo y un movimiento.',
+    'why.ai':'🧠 Sinergia IA × Meme — nacido de la Inteligencia Artificial y la cultura de los memes, uniendo dos de las mayores tendencias de nuestro tiempo.',
+    'why.quest':'🎁 Quest2Earn — recompensas semanales para miembros activos de la comunidad. Mantén y únete a misiones para crecer con nosotros.',
+    'why.pizza':'🍕 Símbolo Anti-Pizza — nunca repitas el error de la pizza de Bitcoin. No cambies millones por una porción.',
+    'why.community':'🌍 Comunidad primero — 0% impuestos, vibras transparentes y fuerza en los números.',
+    'why.outro':'👉 Cuando compras MUPI, no solo compras un token. Te unes a una leyenda.',
+    'how.title':'🛒 Cómo comprar',
+    'how.s1':'Instala MetaMask y cambia a BNB Smart Chain.',
+    'how.s2':'Abre PancakeSwap e importa MUPI.',
+    'how.s3':'Compra cualquier cantidad (≥ $5 para la misión).',
+    'how.s4':'Guarda el hash de la transacción — lo necesitarás en el formulario de reclamo.',
+    'road.title':'🗺️ Hoja de ruta',
+    'road.q1':'Fase 1 — Lanzamiento','road.q1a':'Lanzamiento del token en BSC','road.q1b':'Liquidez inicial','road.q1c':'Sitio web + redes sociales',
+    'road.q2':'Fase 2 — Crecimiento','road.q2a':'Campañas comunitarias y memes','road.q2b':'Seguimiento DEX y logo','road.q2c':'Asociaciones',
+    'road.q3':'Fase 3 — Utilidad','road.q3a':'Exploración de staking/utilidad','road.q3b':'Más listados','road.q3c':'Merch y eventos',
+    'socials.title':'🔗 Síguenos & Únete','media.title':'🎥 Videos & Podcasts',
+    'faq.title':'❓ Preguntas frecuentes',
+    'faq.q1':'¿MUPI tiene impuestos?','faq.a1':'No. MUPI tiene 0% de impuesto en compra/venta.',
+    'faq.q2':'¿Cuál es el suministro total y circulante?','faq.a2':'El suministro total/máximo es 420.690.000.000. El circulante se actualiza vía API en nuestro sitio.',
+    'faq.q3':'¿Cómo unirse al sorteo?','faq.a3':'Completa la misión (seguir, repostear, comentar, unirte a TG, comprar ≥ $5) y envía tu reclamo semanalmente.'
+  }
 };
+
 
   const langBtn  = document.getElementById('langBtn');
   const langMenu = document.getElementById('langMenu');
