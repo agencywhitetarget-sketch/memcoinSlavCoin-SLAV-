@@ -589,116 +589,64 @@ const I18N = {
   })();
 </script>
 
-<!-- ===== On-chain holders count via logs (no PRO API) ===== -->
 <script>
-  const CONTRACT = "0x008E12860bA1B5Ce56D6dB35d64f99942D6a56bc";
-  const RPC      = "https://bsc-dataseed.binance.org";
-
-  // (опційно) якщо знаєш блок створення — вкажи його тут для пришвидшення:
-  const CREATION_BLOCK = null; // наприклад: 39567890; залиш null, щоб сканити останні ~2 млн блоків
-
-  const els = {
-    holdersMain: document.getElementById('holders'),
-    holdersBox:  document.getElementById('holdersCount'),
-    holdersLive: document.getElementById('holdersLive'),
-  };
-  if (els.holdersLive) {
-    els.holdersLive.href = `https://bscscan.com/token/tokenholderchart/${CONTRACT}`;
-  }
-  const group = s => s.replace(/\B(?=(\d{3})+(?!\d))/g, '\u2009');
-
-  async function rpc(method, params = []) {
-    const r = await fetch(RPC, {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ jsonrpc: '2.0', id: 1, method, params })
-    });
-    const j = await r.json();
-    if (!j.result) throw new Error(j.error?.message || 'RPC error');
-    return j.result;
-  }
-
-  function hex(n){ return '0x' + n.toString(16); }
-  function addrFromTopic(t){ return '0x' + t.slice(26); } // останні 40 hex
-
-  async function getLatestBlock() {
-    return parseInt(await rpc('eth_blockNumber'), 16);
-  }
-
-  async function getLogsChunk(from, to) {
-    const TRANSFER_SIG = '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef';
-    return await rpc('eth_getLogs', [{
-      address: CONTRACT,
-      fromBlock: hex(from),
-      toBlock:   hex(to),
-      topics: [TRANSFER_SIG]
-    }]);
-  }
-
-  function makeBalanceOfData(address){
-    const sig = '0x70a08231';
-    const a = address.toLowerCase().replace(/^0x/, '');
-    return sig + a.padStart(64, '0');
-  }
-
-  async function balanceOf(address){
-    const res = await rpc('eth_call', [{ to: CONTRACT, data: makeBalanceOfData(address) }, 'latest']);
-    return BigInt(res);
-  }
-
-  // ліміт одночасних баланс-запитів, щоб не задушити RPC
-  async function withLimit(items, limit, fn){
-    const ret = [];
-    let i = 0, active = 0;
-    return new Promise(resolve=>{
-      const next = ()=>{
-        while(active < limit && i < items.length){
-          active++;
-          const idx = i++;
-          fn(items[idx]).then(v=>ret[idx]=v).catch(()=>ret[idx]=null).finally(()=>{
-            active--; (i >= items.length && active === 0) ? resolve(ret) : next();
-          });
-        }
-      };
-      next();
-    });
-  }
-
-  async function loadHoldersViaLogs(){
-    try {
-      const latest = await getLatestBlock();
-      const START  = CREATION_BLOCK ?? Math.max(0, latest - 2_000_000); // ~2 млн блоків назад
-      const STEP   = 120_000; // невеликі чанки, щоб не впиратись у ліміти
-
-      const addrs = new Set();
-      for (let from = START; from <= latest; from += STEP+1){
-        const to = Math.min(from + STEP, latest);
-        const logs = await getLogsChunk(from, to);
-        for (const lg of logs){
-          const fromA = addrFromTopic(lg.topics[1]);
-          const toA   = addrFromTopic(lg.topics[2]);
-          if (fromA !== '0x0000000000000000000000000000000000000000') addrs.add(fromA);
-          if (toA   !== '0x0000000000000000000000000000000000000000') addrs.add(toA);
-        }
-        // мікропаузи – ввічливо до RPC
-        await new Promise(r => setTimeout(r, 120));
-      }
-
-      // перевіряємо баланси і рахуємо тільки адреси з balance > 0
-      const uniq = Array.from(addrs);
-      const balances = await withLimit(uniq, 6, a => balanceOf(a)); // 6 паралельно
-      let holders = 0;
-      for (const b of balances){ if (b && b > 0n) holders++; }
-
-      const nice = group(String(holders));
-      if (els.holdersMain) els.holdersMain.textContent = nice;
-      if (els.holdersBox)  els.holdersBox.textContent  = nice;
-    } catch (e){
-      if (els.holdersMain) els.holdersMain.textContent = '—';
-      if (els.holdersBox)  els.holdersBox.textContent  = '—';
-      // console.warn('holders failed', e);
+  // --- SAFE Menu + Lang init (idempotent, без глобальних конфліктів) ---
+  (function(){
+    // 1) Menu
+    const menuBtn  = document.getElementById('menuBtn');
+    const menuCard = document.getElementById('menuCard');
+    if (menuBtn && menuCard){
+      document.addEventListener('click', (e)=>{
+        const isBtn  = menuBtn.contains(e.target);
+        const isMenu = menuCard.contains(e.target);
+        if (isBtn){ menuCard.classList.toggle('hidden'); return; }
+        if (!isMenu) menuCard.classList.add('hidden');
+      });
     }
-  }
 
-  loadHoldersViaLogs();
+    // 2) I18N dictionary: гарантуємо єдиний екземпляр
+    window.I18N = window.I18N || {}; // <-- якщо десь вище вже є I18N, не падаємо
+
+    const langBtn      = document.getElementById('langBtn');
+    const langMenu     = document.getElementById('langMenu');
+    const langBtnLabel = document.getElementById('langBtnLabel');
+
+    function applyLang(code){
+      const dict = {...(window.I18N.en||{}), ...(window.I18N[code]||{})};
+      document.querySelectorAll('[data-i18n]').forEach(el=>{
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) el.innerHTML = dict[key];
+      });
+      localStorage.setItem('mupi_lang', code);
+      if (langBtnLabel) langBtnLabel.textContent = code.toUpperCase();
+    }
+
+    // 3) Стартова мова (з урахуванням ES)
+    const saved = localStorage.getItem('mupi_lang');
+    if (saved) applyLang(saved);
+    else {
+      const nav = (navigator.language||'en').slice(0,2).toLowerCase();
+      const map = {en:'en', pt:'pt', hi:'hi', uk:'uk', es:'es'};  // <-- важливо, додано es
+      applyLang(map[nav] || 'en');
+    }
+
+    // 4) Випадаюче меню мов
+    if (langBtn && langMenu){
+      langBtn.addEventListener('click', (e)=>{
+        e.stopPropagation();
+        langMenu.classList.toggle('hidden');
+      });
+      langMenu.querySelectorAll('[data-lang]').forEach(b=>{
+        b.addEventListener('click', ()=>{
+          applyLang(b.getAttribute('data-lang'));
+          langMenu.classList.add('hidden');
+        });
+      });
+      document.addEventListener('click', (e)=>{
+        if (!langMenu.contains(e.target) && !langBtn.contains(e.target)){
+          langMenu.classList.add('hidden');
+        }
+      });
+    }
+  })();
 </script>
