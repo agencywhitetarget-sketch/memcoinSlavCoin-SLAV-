@@ -175,32 +175,16 @@
     </div>
 
     <!-- Token Metrics -->
-    <section class="mt-6 grid grid-cols-2 sm:grid-cols-5 gap-3">
-      <div class="glass rounded-xl p-3 text-center">
-        <div class="text-xs text-slate-400">Max Supply</div>
-        <div class="text-lg font-bold">420,690,000,000</div>
-      </div>
-      <div class="glass rounded-xl p-3 text-center">
-        <div class="text-xs text-slate-400">Tax</div>
-        <div class="text-lg font-bold">0%</div>
-      </div>
-      <div class="glass rounded-xl p-3 text-center">
-        <div class="text-xs text-slate-400">LP Locked</div>
-        <div class="text-lg font-bold">✅</div>
-      </div>
-      <div class="glass rounded-xl p-3 text-center">
-        <div class="text-xs text-slate-400">Holders</div>
-        <div class="text-lg font-bold" id="holdersCount">—</div>
-      </div>
-      <div class="glass rounded-xl p-3 text-center tooltip" data-tip="Click to copy">
-        <div class="text-xs text-slate-400">Contract</div>
-        <button id="copyContract" class="mx-auto mt-1 inline-flex items-center gap-2 px-2 py-1 rounded-md border border-slate-700 hover:bg-slate-800 transition">
-          <span class="font-mono text-sm truncate max-w-[10rem]" id="caShort">0x008E...6a56bc</span>
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 9h9v12H9z" stroke="#94a3b8"/><path d="M6 3h9v3" stroke="#94a3b8"/></svg>
-        </button>
-      </div>
-    </section>
-  </section>
+   <div class="glass rounded-xl p-3 text-center">
+  <div class="text-xs text-slate-400">Holders</div>
+  <div class="text-lg font-bold">
+    <span id="holders">—</span>
+    <a id="holdersLive"
+       class="ml-2 align-middle text-xs underline decoration-slate-600 hover:decoration-slate-400"
+       target="_blank" rel="noopener">(live)</a>
+  </div>
+</div>
+
 
   <!-- ====== AS SEEN ON ====== -->
   <section class="py-8 border-t border-slate-800">
@@ -605,19 +589,24 @@ const I18N = {
   })();
 </script>
 
-<!-- ===== On-chain supply + safe holders fallback ===== -->
+<!-- ===== On-chain supply + accurate holders count (paged) ===== -->
 <script>
   const CONTRACT  = "0x008E12860bA1B5Ce56D6dB35d64f99942D6a56bc";
-  const API_KEY   = "6PDXS3YFHWYCAFFEKMSMT6QJ9VRXE63VSA";            // для холдерів (optional)
-  const RPC       = "https://bsc-dataseed.binance.org";               // публічний RPC
+  const API_KEY   = "6PDXS3YFHWYCAFFEKMSMT6QJ9VRXE63VSA";
+  const RPC       = "https://bsc-dataseed.binance.org";
 
   const els = {
     supply:      document.getElementById('supply'),
     holdersMain: document.getElementById('holders'),
     holdersBox:  document.getElementById('holdersCount'),
+    holdersLive: document.getElementById('holdersLive'),
   };
 
   const group = (s) => s.replace(/\B(?=(\d{3})+(?!\d))/g, '\u2009');
+
+  // ---- live link
+  const HOLDERS_LIVE = `https://bscscan.com/token/tokenholderchart/${CONTRACT}`;
+  if (els.holdersLive) els.holdersLive.href = HOLDERS_LIVE;
 
   async function ethCall(data){
     const r = await fetch(RPC, {
@@ -630,42 +619,59 @@ const I18N = {
     });
     const j = await r.json();
     if(!j.result) throw new Error('no result');
-    return j.result; // hex string like 0x...
+    return j.result;
   }
 
   async function loadSupply(){
-    // decimals() = 0x313ce567, totalSupply() = 0x18160ddd
+    // decimals() 0x313ce567, totalSupply() 0x18160ddd
     const [decHex, supHex] = await Promise.all([
       ethCall('0x313ce567'),
       ethCall('0x18160ddd'),
     ]);
     const decimals = parseInt(decHex, 16);
-    const total    = BigInt(supHex);                     // hex -> BigInt
-    const whole    = total / (10n ** BigInt(decimals));  // відкидаємо дробову частину
-    const pretty   = group(whole.toString());
-    if (els.supply) els.supply.textContent = pretty;
+    const total    = BigInt(supHex);
+    const whole    = total / (10n ** BigInt(decimals));
+    els.supply && (els.supply.textContent = group(whole.toString()));
   }
 
-  async function loadHolders(){
-    try{
-      const url = `https://api.bscscan.com/api?module=token&action=tokenholderlist&contractaddress=${CONTRACT}&page=1&offset=200&apikey=${API_KEY}`;
+  // Пагінований підрахунок холдерів. Для раннього етапу достатньо 5 сторінок × 1000.
+  async function fetchHoldersCountPaged({offset = 1000, maxPages = 5} = {}) {
+    let page = 1, total = 0;
+    while (page <= maxPages) {
+      const url = `https://api.bscscan.com/api?module=token&action=tokenholderlist&contractaddress=${CONTRACT}&page=${page}&offset=${offset}&apikey=${API_KEY}`;
       const r = await fetch(url);
       const j = await r.json();
-      if (Array.isArray(j.result) && j.result.length){
-        const val = group(String(j.result.length)) + ' (sample)';
-        if (els.holdersMain) els.holdersMain.textContent = val;
-        if (els.holdersBox)  els.holdersBox.textContent  = group(String(j.result.length));
+
+      if (!j || j.status !== "1" || !Array.isArray(j.result)) break;
+
+      total += j.result.length;
+
+      // якщо на сторінці менше offset — це остання сторінка
+      if (j.result.length < offset) break;
+
+      page++;
+      // невелика пауза, щоб не впертись у rate-limit
+      await new Promise(res => setTimeout(res, 300));
+    }
+    return total || null;
+  }
+
+  async function loadHoldersAccurate(){
+    try{
+      const holdersCnt = await fetchHoldersCountPaged({offset: 1000, maxPages: 5});
+      if (holdersCnt){
+        const val = group(String(holdersCnt));
+        els.holdersMain && (els.holdersMain.textContent = val);
+        els.holdersBox  && (els.holdersBox.textContent  = val);
         return;
       }
-    }catch(e){}
-    // фолбек — не ламаємо верстку
-    if (els.holdersMain) els.holdersMain.textContent = '—';
-    if (els.holdersBox)  els.holdersBox.textContent  = '—';
+    }catch{}
+    els.holdersMain && (els.holdersMain.textContent = '—');
+    els.holdersBox  && (els.holdersBox.textContent  = '—');
   }
 
   (async ()=>{
-    try { await loadSupply(); }
-    catch { if (els.supply) els.supply.textContent = 'N/A'; }
-    loadHolders();
+    try { await loadSupply(); } catch { els.supply && (els.supply.textContent = 'N/A'); }
+    loadHoldersAccurate();
   })();
 </script>
