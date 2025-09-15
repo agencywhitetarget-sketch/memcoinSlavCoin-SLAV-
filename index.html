@@ -73,20 +73,22 @@
         <b class="text-lg">MUPI</b>
       </a>
 
-      <!-- Right block -->
-      <div class="relative flex items-center gap-3">
-        <!-- Lang -->
-        <div class="relative">
-          <button id="langBtn" class="btn btn-muted px-3 py-1.5" aria-haspopup="true" aria-expanded="false">
-            <span id="langBtnLabel">EN</span>
-          </button>
-          <div id="langMenu" class="hidden absolute left-1/2 -translate-x-1/2 mt-2 min-w-[9rem] rounded-xl border border-slate-800 bg-slate-900/95 menu-card p-2 text-sm">
-            <button class="w-full text-left px-3 py-1.5 rounded-md hover:bg-slate-800" data-lang="en">English</button>
-            <button class="w-full text-left px-3 py-1.5 rounded-md hover:bg-slate-800" data-lang="pt">Português</button>
-            <button class="w-full text-left px-3 py-1.5 rounded-md hover:bg-slate-800" data-lang="hi">हिन्दी</button>
-            <button class="w-full text-left px-3 py-1.5 rounded-md hover:bg-slate-800" data-lang="uk">Українська</button>
-          </div>
-        </div>
+ <!-- Right block -->
+<div class="relative flex items-center gap-3">
+  <!-- Lang -->
+  <div class="relative">
+    <button id="langBtn" class="btn btn-muted px-3 py-1.5" aria-haspopup="true" aria-expanded="false">
+      <span id="langBtnLabel">EN</span>
+    </button>
+    <div id="langMenu" class="hidden absolute left-1/2 -translate-x-1/2 mt-2 min-w-[9rem] rounded-xl border border-slate-800 bg-slate-900/95 menu-card p-2 text-sm">
+      <button class="w-full text-left px-3 py-1.5 rounded-md hover:bg-slate-800" data-lang="en">English</button>
+      <button class="w-full text-left px-3 py-1.5 rounded-md hover:bg-slate-800" data-lang="pt">Português</button>
+      <button class="w-full text-left px-3 py-1.5 rounded-md hover:bg-slate-800" data-lang="hi">हिन्दी</button>
+      <button class="w-full text-left px-3 py-1.5 rounded-md hover:bg-slate-800" data-lang="uk">Українська</button>
+      <button class="w-full text-left px-3 py-1.5 rounded-md hover:bg-slate-800" data-lang="es">Español</button>
+    </div>
+  </div>
+</div>
 
         <!-- YouTube -->
         <a href="https://www.youtube.com/@MUPICoin" target="_blank"
@@ -500,7 +502,34 @@ const I18N = {
     'road.q2a':'Кампанії комʼюніті та меми','road.q2b':'DEX-трекінг і логотип','road.q2c':'Партнерства',
     'road.q3':'Фаза 3 — Юзкейси','road.q3a':'Дослідження утиліті/стейкінгу','road.q3b':'Більше лістингів','road.q3c':'Мерч та івенти',
     'socials.title':'🔗 Підписуйся та приєднуйся','media.title':'🎥 Відео та подкасти'
-  }
+  },
+  es:{
+  'menu.socials':'Redes sociales','menu.nav':'Navegación',
+  'nav.legend':'Leyenda','nav.how':'Cómo comprar','nav.roadmap':'Hoja de ruta','nav.media':'Medios',
+  'hero.lead':'Nacido de la IA, impulsado por memes. 420.690.000.000 suministro. 0% impuestos. Comunidad primero.',
+  'gw.kicker':'Sorteo',
+  'gw.title':'SORTEO: 4.206.900.000 MUPI PARA USUARIOS ACTIVOS 🎁',
+  'gw.text':'Completa la Misión (seguir + repostear + comentar + unirte a TG + comprar ≥ $5) y envía tu reclamo. Distribución semanal.',
+  'cta.quest':'Iniciar Misión','cta.claim':'Enviar Reclamo','cta.buy':'Comprar en PancakeSwap','cta.chart':'Ver Gráfico',
+  'legend.title':'🧵 La Leyenda de MUPI',
+  'legend.body':'Dentro de la matriz de IA, Pepe conoció un modelo curioso que amaba más los memes que los datos. Su colaboración forjó MUPI — una moneda sin impuestos, con vibras transparentes y poder comunitario. No solo otro token, sino una historia que escribimos juntos: cerebros de IA × caos de Pepe.',
+  'why.title':'🔥 ¿Por qué MUPI?','why.lead':'MUPI es más que un meme coin. Es un símbolo y un movimiento.',
+  'why.ai':'🧠 Sinergia IA × Meme — nacido de la Inteligencia Artificial y la cultura de los memes, uniendo dos de las mayores tendencias de nuestro tiempo.',
+  'why.quest':'🎁 Quest2Earn — recompensas semanales para miembros activos de la comunidad. Mantén y únete a misiones para crecer con nosotros.',
+  'why.pizza':'🍕 Símbolo Anti-Pizza — nunca repitas el error de la pizza de Bitcoin. No cambies millones por una porción.',
+  'why.community':'🌍 Comunidad primero — 0% impuestos, vibras transparentes y fuerza en los números.',
+  'why.outro':'👉 Cuando compras MUPI, no solo compras un token. Te unes a una leyenda.',
+  'how.title':'🛒 Cómo comprar',
+  'how.s1':'Instala MetaMask y cambia a BNB Smart Chain.',
+  'how.s2':'Abre PancakeSwap e importa MUPI.',
+  'how.s3':'Compra cualquier cantidad (≥ $5 para la misión).',
+  'how.s4':'Guarda el hash de la transacción — lo necesitarás en el formulario de reclamo.',
+  'road.title':'🗺️ Hoja de ruta',
+  'road.q1':'Fase 1 — Lanzamiento','road.q1a':'Lanzamiento del token en BSC','road.q1b':'Liquidez inicial','road.q1c':'Sitio web + redes sociales',
+  'road.q2':'Fase 2 — Crecimiento','road.q2a':'Campañas comunitarias y memes','road.q2b':'Seguimiento DEX y logo','road.q2c':'Asociaciones',
+  'road.q3':'Fase 3 — Utilidad','road.q3a':'Exploración de staking/utilidad','road.q3b':'Más listados','road.q3c':'Merch y eventos',
+  'socials.title':'🔗 Síguenos & Únete','media.title':'🎥 Videos & Podcasts'
+}
 };
 
   const langBtn  = document.getElementById('langBtn');
